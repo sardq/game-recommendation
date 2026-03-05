@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: Game recommendation system
