@@ -7,15 +7,13 @@ import com.diplome.game_recommendation.dtos.CredentialsDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.core.exceptions.AppException;
 import com.diplome.game_recommendation.models.UserEntity;
-import org.springframework.data.domain.Pageable;
+import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.repositories.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ import java.nio.CharBuffer;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
@@ -38,7 +35,6 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Value("${app.default-password}")
     private String defaultPassword;
-    private final UserService self;
 
     public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserMapper userMapper,
             @Lazy UserAuthenticationProvider userAuthenticationProvider,
@@ -46,7 +42,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
         this.repository = repository;
-        this.self = self;
         this.userAuthenticationProvider = userAuthenticationProvider;
     }
 
@@ -116,26 +111,15 @@ public class UserService {
 
         return userDto;
     }
-
-    public void resetPassword(String email) {
+    public List<UserGames> getUserHistory(Long userId){
+        return null;
+    }
+    public void resetPassword(String email, String newPassword) {
         UserEntity user = repository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Пользователь с таким email не найден"));
 
-        String newPassword = generateRandomPassword(10);
 
-        user.setPasswordHash(passwordEncoder.encode(newPassword));
         repository.save(user);
 
-    }
-
-    private String generateRandomPassword(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            sb.append(chars.charAt(random.nextInt(chars.length())));
-        }
-
-        return sb.toString();
     }
 }

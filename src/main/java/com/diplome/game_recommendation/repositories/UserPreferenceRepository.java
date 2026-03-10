@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface UserPreferenceRepository extends JpaRepository<UserPreference, Long> {
 
-    List<UserPreference> findByUser(UserEntity user);
+    List<UserPreference> findByUserId(Long userId);
+    void deleteByUserId(Long userId);
 
 }

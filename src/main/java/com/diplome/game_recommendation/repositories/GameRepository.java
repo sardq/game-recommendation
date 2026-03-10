@@ -17,6 +17,8 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
 
     List<GameEntity> findByMetacriticRateGreaterThanEqual(Integer score);
     Page<GameEntity> findAll(Pageable pageable);
-
+    //jpql запрос
+    Page<GameEntity> findByTagId(Long tagId, Pageable pageable);
+    Page<GameEntity> filterBySearch(String search, Pageable pageable);
     Page<GameEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }
