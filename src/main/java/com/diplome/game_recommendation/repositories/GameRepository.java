@@ -6,19 +6,33 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.diplome.game_recommendation.models.GameEntity;
 
 public interface GameRepository extends JpaRepository<GameEntity, Long> {
-    List<GameEntity> findByNameContainingIgnoreCase(String name);
-    Page<GameEntity> findByRatingGreaterThanEqual(BigDecimal rating, Pageable pageable);
-    List<GameEntity> findByRatingGreaterThanEqual(Double rating);
-    Page<GameEntity> findByRatingGreaterThanEqual(Double rating, Pageable pageable);
 
-    List<GameEntity> findByMetacriticRateGreaterThanEqual(Integer score);
-    Page<GameEntity> findAll(Pageable pageable);
-    //jpql запрос
-    Page<GameEntity> findByTagId(Long tagId, Pageable pageable);
-    Page<GameEntity> filterBySearch(String search, Pageable pageable);
     Page<GameEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    Page<GameEntity> findAll(Pageable pageable);
+
+    Page<GameEntity> findByRatingGreaterThanEqual(BigDecimal rating, Pageable pageable);
+
+    Page<GameEntity> findByMetacriticRateGreaterThanEqual(BigDecimal score, Pageable pageable);
+
+    @Query("""
+    SELECT g 
+    FROM GameEntity g 
+    JOIN GameTag gt ON g.id = gt.game.id
+    WHERE gt.tag.id = :tagId
+    """)
+    Page<GameEntity> findByTagId(Long tagId, Pageable pageable);
+    @Query("""
+    SELECT DISTINCT g
+    FROM GameEntity g
+    JOIN GameTag gt ON g.id = gt.game.id
+    WHERE gt.tag.id IN :tagIds
+    """)
+    Page<GameEntity> findByTagIds(List<Long> tagIds, Pageable pageable);
+    Page<GameEntity> findTop20ByOrderByReleaseDateDesc();
 }

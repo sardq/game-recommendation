@@ -1,9 +1,12 @@
 package com.diplome.game_recommendation.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "game_tags")
+@Getter @Setter
 public class GameTag {
 
     @EmbeddedId
@@ -27,19 +30,5 @@ public class GameTag {
         this.id = new GameTagId(game.getId(), tag.getId());
     }
 
-    public GameEntity getGame() {
-        return game;
-    }
-
-    public void setGame(GameEntity game) {
-        this.game = game;
-    }
-
-    public TagEntity getTag() {
-        return tag;
-    }
-
-    public void setTag(TagEntity tag) {
-        this.tag = tag;
-    }
+    
 }
