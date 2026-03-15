@@ -12,8 +12,11 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @Table(name = "games")
+@Getter @Setter
 public class GameEntity extends BaseEntity {
     private String name;
     private Long rawgId;
@@ -42,93 +45,6 @@ public class GameEntity extends BaseEntity {
         this.rating = rating;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getRawgId() {
-        return rawgId;
-    }
-
-    public void setRawgId(Long rawgId) {
-        this.rawgId = rawgId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public Set<PlatformEnum> getPlatforms() {
-        return platforms;
-    }
-
-    public void setPlatforms(Set<PlatformEnum> platforms) {
-        this.platforms = platforms;
-    }
-
-    public String getPosterUrl() {
-        return posterUrl;
-    }
-
-    public void setPosterUrl(String posterUrl) {
-        this.posterUrl = posterUrl;
-    }
-
-    public String getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(String developers) {
-        this.developers = developers;
-    }
-
-    public String getPublishers() {
-        return publishers;
-    }
-
-    public void setPublishers(String publishers) {
-        this.publishers = publishers;
-    }
-
-    public BigDecimal getMetacriticRate() {
-        return metacriticRate;
-    }
-
-    public void setMetacriticRate(BigDecimal metacritic_rate) {
-        this.metacriticRate = metacritic_rate;
-    }
-
-    public Integer getPlaytime() {
-        return playtime;
-    }
-
-    public void setPlaytime(Integer playtime) {
-        this.playtime = playtime;
-    }
-
-    public BigDecimal getRating() {
-        return rating;
-    }
-
-    public void setRating(BigDecimal rating) {
-        this.rating = rating;
-    }
 
     @Override
     public String toString() {
