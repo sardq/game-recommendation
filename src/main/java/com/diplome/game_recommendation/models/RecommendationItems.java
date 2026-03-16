@@ -1,6 +1,5 @@
 package com.diplome.game_recommendation.models;
 
-import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,8 +18,8 @@ public class RecommendationItems extends BaseEntity{
     @JoinColumn(name = "session_id", nullable = false)
     private RecommendationSession session;
     private Integer rank;
-    private BigDecimal score;
-    public RecommendationItems(GameEntity gameEntity,RecommendationSession session, Integer rank, BigDecimal score){
+    private Double score;
+    public RecommendationItems(GameEntity gameEntity,RecommendationSession session, Integer rank, Double score){
         this.game = gameEntity;
         this.session = session;
         this.rank = rank;

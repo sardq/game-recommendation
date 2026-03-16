@@ -1,6 +1,5 @@
 package com.diplome.game_recommendation.repositories;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -13,12 +12,12 @@ import com.diplome.game_recommendation.models.GameEntity;
 public interface GameRepository extends JpaRepository<GameEntity, Long> {
 
     Page<GameEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
-
+    boolean existsByRawgId(Long rawgId);
     Page<GameEntity> findAll(Pageable pageable);
 
-    Page<GameEntity> findByRatingGreaterThanEqual(BigDecimal rating, Pageable pageable);
+    Page<GameEntity> findByRatingGreaterThanEqual(Double rating, Pageable pageable);
 
-    Page<GameEntity> findByMetacriticRateGreaterThanEqual(BigDecimal score, Pageable pageable);
+    Page<GameEntity> findByMetacriticRateGreaterThanEqual(Double score, Pageable pageable);
 
     @Query("""
     SELECT g 
@@ -34,5 +33,12 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
     WHERE gt.tag.id IN :tagIds
     """)
     Page<GameEntity> findByTagIds(List<Long> tagIds, Pageable pageable);
+    @Query("""
+    SELECT g
+    FROM GameEntity g
+    WHERE LOWER(g.name) LIKE LOWER(CONCAT('%', :search, '%'))
+    """)
+    Page<GameEntity> filterBySearch(String search, Pageable pageable);
     Page<GameEntity> findTop20ByOrderByReleaseDateDesc();
+    Page<GameEntity> findTop20ByOrderByRatingDesc();
 }

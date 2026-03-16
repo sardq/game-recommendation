@@ -1,6 +1,5 @@
 package com.diplome.game_recommendation.models;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -30,13 +29,13 @@ public class GameEntity extends BaseEntity {
     private String posterUrl;
     private String developers;
     private String publishers;
-    private BigDecimal metacriticRate;
+    private Double metacriticRate;
     private Integer playtime ;
-    private BigDecimal rating;
+    private Double rating;
     public GameEntity(){
     }
      public GameEntity(String name, String description, Date releaseDate, 
-                      Set<PlatformEnum> platforms, String posterUrl, BigDecimal rating) {
+                      Set<PlatformEnum> platforms, String posterUrl, Double rating) {
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;

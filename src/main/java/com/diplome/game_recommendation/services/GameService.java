@@ -1,5 +1,7 @@
 package com.diplome.game_recommendation.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,14 +11,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.diplome.game_recommendation.models.GameEntity;
+import com.diplome.game_recommendation.models.InteractionEnum;
+import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.repositories.GameRepository;
+import com.diplome.game_recommendation.repositories.UserGameRepository;
 @Service
 public class GameService {
      private static final Logger logger = LoggerFactory.getLogger(TagService.class);
     private static final String LOG_RESPONSE = "Ответ: {}";
     private final GameRepository gameRepository;
-    public GameService(GameRepository gameRepository){
+    private final UserGameRepository userGameRepository;
+    public GameService(GameRepository gameRepository, UserGameRepository userGameRepository){
         this.gameRepository = gameRepository;
+        this.userGameRepository = userGameRepository;
     }
     public Page<GameEntity> getGames(int page, int size){
         logger.info("Получение игр: {}, {}", page, size);
@@ -51,5 +58,15 @@ public class GameService {
         var result = gameRepository.findById(gameId).orElse(null);
         logger.info(LOG_RESPONSE, result);
         return result;
+    }
+    public List<GameEntity> getFavorites(Long userId){
+        return userGameRepository
+                .findByUserIdAndInteraction(userId, InteractionEnum.Favorite)
+                .stream()
+                .map(UserGames::getGame)
+                .toList();
+    }
+    public Page<GameEntity> getPopularGames(){
+        return gameRepository.findTop20ByOrderByReleaseDateDesc();
     }
 }

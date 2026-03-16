@@ -1,6 +1,5 @@
 package com.diplome.game_recommendation.dtos;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.Getter;
@@ -14,7 +13,7 @@ public class GameDto {
 
     private String posterUrl;
 
-    private BigDecimal rating;
+    private Double rating;
 
     private Integer metacriticRate;
 

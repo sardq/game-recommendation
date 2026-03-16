@@ -60,17 +60,30 @@ public class InteractionService {
     }
 
     public void addToFavorites(Long userId, Long gameId) {
-
         UserEntity user = userRepository.findById(userId).orElseThrow();
         GameEntity game = gameRepository.findById(gameId).orElseThrow();
-
         UserGames interaction = new UserGames();
-
         interaction.setUser(user);
         interaction.setGame(game);
         interaction.setInteraction(InteractionEnum.Favorite);
         interaction.setTime(LocalDateTime.now());
-
         userGamesRepository.save(interaction);
+    }
+    public void removeFromFavorites(Long userId, Long gameId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+        GameEntity game = gameRepository.findById(gameId).orElseThrow();
+        var interaction = userGamesRepository
+                .findByUserIdAndGameIdAndInteraction(user.getId(), game.getId(), InteractionEnum.Favorite);
+
+        interaction.ifPresent(userGamesRepository::delete);
+    }
+    public boolean isFavorite(Long userId, Long gameId){
+
+    UserEntity user = userRepository.findById(userId).orElseThrow();
+    GameEntity game = gameRepository.findById(gameId).orElseThrow();
+
+    return userGamesRepository
+            .findByUserIdAndGameIdAndInteraction(user.getId(), game.getId(), InteractionEnum.Favorite)
+            .isPresent();
     }
 }

@@ -40,11 +40,11 @@ public class UserPreferenceService {
     }
     public void updateUserPreferences(Long userId) {
         UserEntity user = userRepository.findById(userId).orElseThrow();
-        List<UserGames> interactions = userGamesRepository.findByUser(user);
+        List<UserGames> interactions = userGamesRepository.findByUserId(user.getId());
         Map<Long, Double> tagWeights = new HashMap<>();
         for (UserGames interaction : interactions) {
             GameEntity game = interaction.getGame();
-            List<GameTag> tags = gameTagRepository.findByGame(game);
+            List<GameTag> tags = gameTagRepository.findByGameId(game.getId());
             double weight = getInteractionWeight(interaction);
             for (GameTag gameTag : tags) {
                 Long tagId = gameTag.getTag().getId();

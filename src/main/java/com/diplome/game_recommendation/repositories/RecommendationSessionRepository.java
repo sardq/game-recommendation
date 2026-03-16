@@ -8,7 +8,7 @@ import com.diplome.game_recommendation.models.RecommendationSession;
 
 public interface RecommendationSessionRepository 
         extends JpaRepository<RecommendationSession, Long> {
-
+    
     List<RecommendationSession> findByUserIdOrderByGeneratedAtDesc(Long userId);
 
 }
