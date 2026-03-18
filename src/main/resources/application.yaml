@@ -1,3 +1,43 @@
+server:
+  port: 8080
+
+logging:
+  file:
+    name: logs/application.log
+  level:
+    root: INFO
+    '[com.diplome.game_recommendation]': DEBUG
+
 spring:
-  application:
-    name: Game recommendation system
+  output:
+    ansi:
+      enabled: always
+
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/soft_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+minio:
+    url: http://localhost:9000
+    access-key: ${MINIO_ACCESS_KEY}
+    secret-key: ${MINIO_SECRET_KEY}
+    bucket: journal-logs

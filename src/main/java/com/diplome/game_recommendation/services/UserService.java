@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.CharBuffer;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -45,17 +46,13 @@ public class UserService {
         this.repository = repository;
         this.userAuthenticationProvider = userAuthenticationProvider;
     }
-
-    private void checkEmail(Long id, String email) {
-        logger.info("Проверка существования пользователя: id={}", id);
-        final Optional<UserEntity> existsUser = repository.findByEmailIgnoreCase(email);
-        if (existsUser.isPresent() && !existsUser.get().getId().equals(id)) {
-            logger.warn("Пользователь с такой почтой уже существует");
-            throw new IllegalArgumentException("Пользователь с такой почтой уже существует");
-        }
+    @Transactional(readOnly = true)
+    public Page<UserEntity> getAll(int page, int size) {
+        logger.info("Получение тегов: {}, {}", page, size);
+        var result = repository.findAll(PageRequest.of(page, size));
+        logger.info(LOG_RESPONSE, result);
+        return result;
     }
-
-
     @Transactional(readOnly = true)
     public UserEntity get(Long id) {
         logger.info("Получение пользователя: {}", id);
