@@ -100,10 +100,12 @@ public class GameController {
     }
 
     @GetMapping("/popular")
-    public List<GameDto> popular() {
+    public List<GameDto> popular( 
+        @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
         logger.info("Популярные игры");
 
-        return service.getPopularGames()
+        return service.getPopularGames(page, size)
                 .getContent()
                 .stream()
                 .map(this::toDto)

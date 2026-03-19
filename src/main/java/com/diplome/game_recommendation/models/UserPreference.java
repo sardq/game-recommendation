@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "userPreference")
 @Getter @Setter
-public class UserPreference {
+public class UserPreference extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

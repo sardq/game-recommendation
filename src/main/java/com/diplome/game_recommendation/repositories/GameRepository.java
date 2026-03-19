@@ -39,6 +39,6 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
     WHERE LOWER(g.name) LIKE LOWER(CONCAT('%', :search, '%'))
     """)
     Page<GameEntity> filterBySearch(String search, Pageable pageable);
-    Page<GameEntity> findTop20ByOrderByReleaseDateDesc();
-    Page<GameEntity> findTop20ByOrderByRatingDesc();
+    Page<GameEntity> findTop20ByOrderByReleaseDateDesc(Pageable pageable);
+    Page<GameEntity> findTop20ByOrderByRatingDesc(Pageable pageable);
 }

@@ -34,12 +34,11 @@ public class UserService {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private static final String LOG_RESPONSE = "Ответ: {}";
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    @Value("${app.default-password}")
+    @Value("${DEFAULT_PASSWORD}")
     private String defaultPassword;
 
     public UserService(UserRepository repository,UserGameRepository userGameRepository, PasswordEncoder passwordEncoder, UserMapper userMapper,
-            @Lazy UserAuthenticationProvider userAuthenticationProvider,
-            @Lazy UserService self) {
+            @Lazy UserAuthenticationProvider userAuthenticationProvider) {
         this.passwordEncoder = passwordEncoder;
         this.userGameRepository = userGameRepository;
         this.userMapper = userMapper;

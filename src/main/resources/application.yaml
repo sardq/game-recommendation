@@ -9,12 +9,14 @@ logging:
     '[com.diplome.game_recommendation]': DEBUG
 
 spring:
+  config:
+      import: optional:file:.env[.properties]
   output:
     ansi:
       enabled: always
 
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/soft_db
+    url: jdbc:postgresql://127.0.0.1:5432/game_recommendation
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
