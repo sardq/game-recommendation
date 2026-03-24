@@ -1,4 +1,4 @@
-package com.diplome.game_recommendation.dtos;
+package com.diplome.game_recommendation.dtos.rawg;
 
 import lombok.Data;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.List;
 public class RawgTagResponse {
 
     private int count;
+    private String next;
 
     private List<RawgTagDto> results;
 

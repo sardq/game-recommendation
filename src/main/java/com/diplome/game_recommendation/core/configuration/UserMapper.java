@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.core.configuration;
 
 import com.diplome.game_recommendation.dtos.UserDto;
+import com.diplome.game_recommendation.dtos.UserSignupDto;
 import com.diplome.game_recommendation.models.UserEntity;
 
 import org.mapstruct.Mapper;
@@ -11,5 +12,7 @@ public interface UserMapper {
 
     @Mapping(target = "token", ignore = true)
     UserDto toUserDto(UserEntity user);
+
+    UserEntity signUpToUser(UserSignupDto userEntity);
 
 }

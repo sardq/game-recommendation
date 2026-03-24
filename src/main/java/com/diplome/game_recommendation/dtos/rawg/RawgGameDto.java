@@ -1,6 +1,9 @@
-package com.diplome.game_recommendation.dtos;
+package com.diplome.game_recommendation.dtos.rawg;
 
 import lombok.Data;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class RawgGameDto {
@@ -11,14 +14,16 @@ public class RawgGameDto {
 
     private String description;
 
-    private Integer metacritic;
-
     private String released;
 
     private Double rating;
 
+    private Integer metacritic;
+
+    private Integer playtime;
+
     private String background_image;
 
-    private String updated;
+    private List<Map<String, Object>> platforms;
 
 }

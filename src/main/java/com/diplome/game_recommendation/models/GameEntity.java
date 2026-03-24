@@ -27,8 +27,6 @@ public class GameEntity extends BaseEntity {
     @Column(name = "platform")
     private Set<PlatformEnum> platforms;
     private String posterUrl;
-    private String developers;
-    private String publishers;
     private Double metacriticRate;
     private Integer playtime ;
     private Double rating;
@@ -54,8 +52,6 @@ public class GameEntity extends BaseEntity {
                 ", description='" + description + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", posterUrl='" + posterUrl + '\'' +
-                ", developers='" + developers + '\'' +
-                ", publishers='" + publishers + '\'' +
                 ", metacritic_rate=" + metacriticRate +
                 ", playtime=" + playtime +
                 ", rating=" + rating +

@@ -21,10 +21,6 @@ public class GameDetailsDto {
 
     private String posterUrl;
 
-    private String developers;
-
-    private String publishers;
-
     private BigDecimal rating;
 
     private BigDecimal metacriticRate;

@@ -1,5 +1,6 @@
 package com.diplome.game_recommendation.controllers;
 
+import java.net.URI;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.diplome.game_recommendation.core.configuration.UserAuthenticationProvider;
 import com.diplome.game_recommendation.dtos.CredentialsDto;
 import com.diplome.game_recommendation.dtos.UserDto;
+import com.diplome.game_recommendation.dtos.UserSignupDto;
 import com.diplome.game_recommendation.services.UserService;
 
 import jakarta.validation.Valid;
@@ -51,5 +53,12 @@ public class AuthController {
         }
         userService.resetPassword(email, "newPassword"); 
         return ResponseEntity.ok("Password reset instructions sent.");
+    }
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> register(@RequestBody @Valid UserSignupDto user) {
+        logger.info("Запрос на регистрацию");
+        UserDto createdUser = userService.register(user);
+        createdUser.setToken(authProvider.createToken(user.getEmail()));
+        return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 }

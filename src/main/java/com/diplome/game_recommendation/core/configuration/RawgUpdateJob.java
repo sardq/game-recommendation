@@ -1,29 +1,25 @@
-// package com.diplome.game_recommendation.core.configuration;
+package com.diplome.game_recommendation.core.configuration;
 
-// import org.quartz.Job;
-// import org.quartz.JobExecutionContext;
-// import org.springframework.beans.factory.annotation.Autowired;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-// import com.diplome.game_recommendation.services.GameImportService;
-// import com.diplome.game_recommendation.services.TagImportService;
+import com.diplome.game_recommendation.services.rawg.GameImportService;
 
-// public class RawgUpdateJob implements Job {
+public class RawgUpdateJob implements Job {
 
-//     @Autowired
-//     private GameImportService gameImportService;
+    @Autowired
+    private GameImportService gameImportService;
 
-//     @Autowired
-//     private TagImportService tagImportService;
 
-//     @Override
-//     public void execute(JobExecutionContext context){
+    @Override
+    public void execute(JobExecutionContext context){
 
-//         tagImportService.importTags();
 
-//         for(int i=1;i<=40;i++){
-//             gameImportService.importGames(i);
-//         }
+        for(int i=1;i<=40;i++){
+            gameImportService.importGames(i);
+        }
 
-//     }
+    }
 
-// }
+}

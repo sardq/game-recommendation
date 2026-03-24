@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
     WHERE gt.tag.id = :tagId
     """)
     Page<GameEntity> findByTagId(Long tagId, Pageable pageable);
+    Optional<GameEntity> findByRawgId(Long rawgId);
     @Query("""
     SELECT DISTINCT g
     FROM GameEntity g

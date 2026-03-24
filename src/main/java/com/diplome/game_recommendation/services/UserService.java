@@ -5,6 +5,7 @@ import com.diplome.game_recommendation.core.configuration.UserMapper;
 import com.diplome.game_recommendation.core.exceptions.NotFoundException;
 import com.diplome.game_recommendation.dtos.CredentialsDto;
 import com.diplome.game_recommendation.dtos.UserDto;
+import com.diplome.game_recommendation.dtos.UserSignupDto;
 import com.diplome.game_recommendation.core.exceptions.AppException;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.models.UserGames;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.CharBuffer;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -100,6 +102,22 @@ public class UserService {
         logger.debug("Создан токен для пользователя: {}",
                 user.getEmail() );
         return userDto;
+    }
+    public UserDto register(UserSignupDto UserEntity) {
+        logger.info("Попытка регистрации: {}", UserEntity);
+
+        Optional<UserEntity> optionalUser = repository.findByEmail(UserEntity.getEmail());
+
+        if (optionalUser.isPresent()) {
+            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+        }
+        UserEntity user = userMapper.signUpToUser(UserEntity);
+        user.setPasswordHash(passwordEncoder.encode(CharBuffer.wrap(UserEntity.getPassword())));
+
+        UserEntity savedUser = repository.save(user);
+        logger.info("Пользователь зарегистрирован: {}", savedUser);
+
+        return userMapper.toUserDto(savedUser);
     }
     public List<UserGames> getUserHistory(Long userId) {
         return userGameRepository.findByUserId(userId)

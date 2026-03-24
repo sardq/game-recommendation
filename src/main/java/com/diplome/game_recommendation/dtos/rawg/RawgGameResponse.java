@@ -1,4 +1,4 @@
-package com.diplome.game_recommendation.dtos;
+package com.diplome.game_recommendation.dtos.rawg;
 
 import lombok.Data;
 import java.util.List;
