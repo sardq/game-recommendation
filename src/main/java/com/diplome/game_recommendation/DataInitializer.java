@@ -32,7 +32,6 @@ public class DataInitializer {
             if (tagRepository.count() == 0) {
             System.out.println("БД пустая — начинаем первичную загрузку популярных тегов...");
             tagImportService.importImportantTags();
-            }
             System.out.println("Фильтруем теги через GigaChat...");
             try {
                 filterTagService.filterTagsFromDb(); 
@@ -40,9 +39,11 @@ public class DataInitializer {
                 System.err.println("Ошибка фильтрации тегов: " + e.getMessage());
                 e.printStackTrace();
             }
-            // System.out.println("Популярные теги загружены. Начинаем импорт игр по этим тегам...");
+            }
+            
+            System.out.println("Популярные теги загружены. Начинаем импорт игр по этим тегам...");
 
-            // gameImportService.importGamesByTags();
+            gameImportService.importGamesByTags();
 
             System.out.println("Первичная загрузка тегов и игр завершена.");
         };

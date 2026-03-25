@@ -58,29 +58,29 @@ public class GameImportService {
             game.setPosterUrl(dto.getBackground_image());
             game.setRating(dto.getRating());
             game.setPlaytime(dto.getPlaytime());
-            if(dto.getPlatforms() != null){
-            Set<PlatformEnum> platformEnums = dto.getPlatforms().stream()
-                    .map(p -> {
-                        Map<String, Object> platform = (Map<String, Object>) p.get("platform");
-                        String name = (String) platform.get("name");
+            if (dto.getPlatforms() != null) {
+            Set<PlatformEnum> platforms = dto.getPlatforms().stream()
+                .map(p -> {
+                    Map<String, Object> platformMap = (Map<String, Object>) p.get("platform");
+                    String name = ((String) platformMap.get("name")).toUpperCase()
+                                    .replaceAll(" ", "_"); 
+                    try {
+                        return PlatformEnum.valueOf(name);
+                    } catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
-                        try {
-                            return PlatformEnum.valueOf(name.toUpperCase());
-                        } catch (Exception e){
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-
-            game.setPlatforms(platformEnums);
+            game.setPlatforms(platforms);
         }
             gameRepository.save(game);
         }
 
     }
     public void importGamesByTags() {
-    List<TagEntity> importantTags = tagRepository.findAll();
+    List<TagEntity> importantTags = tagRepository.findByKeep(true);
 
     for (TagEntity tag : importantTags) {
         for (int page = 1; page <= 5; page++) {
@@ -112,7 +112,7 @@ public class GameImportService {
         game.setPosterUrl(dto.getBackground_image());
         game.setRating(dto.getRating());
         game.setPlaytime(dto.getPlaytime());
-
+        
         if (dto.getPlatforms() != null) {
             Set<PlatformEnum> platforms = dto.getPlatforms().stream()
                     .map(p -> {

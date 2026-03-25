@@ -27,5 +27,6 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     WHERE gt.game.id = :gameId
     """)
     List<TagEntity> findTagsByGameId(Long gameId);
+    List<TagEntity> findByKeep(Boolean keep);
     
 }

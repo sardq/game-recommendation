@@ -4,8 +4,10 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDto;
@@ -21,17 +23,24 @@ public class RawgApiService {
 
     private final WebClient webClient;
 
-    private static final String API_KEY = "e129d6fa38994d7e88db556623ce617a";
+    @Value("${rawg.key}")
+    private String apiKey;
 
     public RawgApiService(WebClient.Builder builder){
-
+        int size = 16 * 1024 * 1024;
+        ExchangeStrategies strategies = ExchangeStrategies.builder()
+            .codecs(configurer -> configurer
+                    .defaultCodecs()
+                    .maxInMemorySize(size))
+            .build();
         this.webClient =
                 builder.baseUrl("https://api.rawg.io/api")
                 .clientConnector(new ReactorClientHttpConnector(
                         HttpClient.create()
-                        .responseTimeout(Duration.ofSeconds(30))
+                        .responseTimeout(Duration.ofSeconds(120))
                         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 ))
+                .exchangeStrategies(strategies)
                 .build();
     }
 
@@ -40,7 +49,7 @@ public class RawgApiService {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/games")
-                        .queryParam("key",API_KEY)
+                        .queryParam("key",apiKey)
                         .queryParam("page",page)
                         .queryParam("page_size",40)
                         .queryParam("ordering","-rating")
@@ -54,7 +63,7 @@ public class RawgApiService {
         var response = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/games")
-                        .queryParam("key",API_KEY)
+                        .queryParam("key",apiKey)
                         .queryParam("page",page)
                         .queryParam("tags", slug)
                         .queryParam("page_size",40)
@@ -62,6 +71,8 @@ public class RawgApiService {
                         .build())
                 .retrieve()
                 .bodyToMono(RawgGameResponse.class)
+                .timeout(Duration.ofSeconds(120)) 
+                .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(2)))
                 .block();
                 if (response != null && response.getResults() != null) {
                 return response.getResults();
@@ -73,7 +84,7 @@ public class RawgApiService {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/games")
-                        .queryParam("key",API_KEY)
+                        .queryParam("key",apiKey)
                         .queryParam("search",search)
                         .queryParam("page_size",20)
                         .build())
@@ -89,7 +100,7 @@ public class RawgApiService {
                         .path("/tags")
                         .queryParam("page",page)
                         .queryParam("page_size",40)
-                        .queryParam("key",API_KEY)
+                        .queryParam("key",apiKey)
                         .build())
                 .retrieve()
                 .bodyToMono(RawgTagResponse.class)

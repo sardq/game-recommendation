@@ -45,3 +45,5 @@ minio:
     bucket: journal-logs
 gigachat:
     authorization-key: ${GIGACHAT_KEY}
+rawg:
+    key: ${RAWG_API_KEY}

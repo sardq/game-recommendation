@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.dtos;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -12,7 +13,7 @@ public class UserDto {
     private String email;
     private LocalDate registrationDate;
     private LocalDate lastLogin;
-    private Integer age;
+    private Date birthDate;
     @JsonProperty(access = Access.READ_ONLY)
     private String token;
 
@@ -49,12 +50,12 @@ public class UserDto {
         this.token = token;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public LocalDate getLastLogin() {

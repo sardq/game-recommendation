@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.models;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,17 +26,16 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate registrationDate;
     private LocalDate lastLogin;
-    @Column(nullable = false)
-    private Integer age;
+    private Date birthDate;
     public UserEntity() {
     }
-    public UserEntity(String username, String email, String password, LocalDate registrationDate, LocalDate lastLogin, Integer age)
+    public UserEntity(String username, String email, String password, LocalDate registrationDate, LocalDate lastLogin, Date birthDate)
     {
         this.username = username;
         this.email = email;
         this.passwordHash = password;
         this.registrationDate = registrationDate;
         this.lastLogin = lastLogin;
-        this.age = age;
+        this.birthDate = birthDate;
     }
 }

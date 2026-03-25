@@ -28,7 +28,7 @@ public class GameEntity extends BaseEntity {
     private Set<PlatformEnum> platforms;
     private String posterUrl;
     private Double metacriticRate;
-    private Integer playtime ;
+    private Integer playtime;
     private Double rating;
     public GameEntity(){
     }

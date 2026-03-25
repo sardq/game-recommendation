@@ -38,6 +38,8 @@ public class GigachatService {
     public String ask(String prompt) {
         Map<String, Object> requestBody = Map.of(
             "model", "GigaChat",
+            "temperature", 0.2,
+            "top_p", 0.9,
             "messages", List.of(
                 Map.of("role", "user", "content", prompt)
             )

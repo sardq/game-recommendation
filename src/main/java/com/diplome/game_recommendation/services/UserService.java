@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.CharBuffer;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +86,7 @@ public class UserService {
     public UserDto login(CredentialsDto credentialsDto) {
         logger.info("Попытка входа: {}", credentialsDto);
         UserEntity user = repository.findByEmail(credentialsDto.getEmail())
-                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Неизвестный пользователь", HttpStatus.NOT_FOUND));
         boolean passwordMatches = passwordEncoder.matches(
                 CharBuffer.wrap(credentialsDto.getPassword()),
                 user.getPasswordHash());
@@ -113,7 +114,7 @@ public class UserService {
         }
         UserEntity user = userMapper.signUpToUser(UserEntity);
         user.setPasswordHash(passwordEncoder.encode(CharBuffer.wrap(UserEntity.getPassword())));
-
+        user.setRegistrationDate(LocalDate.now());
         UserEntity savedUser = repository.save(user);
         logger.info("Пользователь зарегистрирован: {}", savedUser);
 
