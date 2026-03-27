@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.diplome.game_recommendation.core.configuration.*;
+
+import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.services.InteractionService;
 @RestController
 @RequestMapping(Constants.API_URL + "/interactions")

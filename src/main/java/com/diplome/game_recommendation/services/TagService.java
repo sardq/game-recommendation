@@ -21,7 +21,7 @@ public class TagService {
     @Transactional(readOnly = true)
     public Page<TagEntity> getAll(int page, int size) {
         logger.info("Получение тегов: {}, {}", page, size);
-        var result = tagRepository.findAll(PageRequest.of(page, size));
+        var result = tagRepository.findByKeep(true, PageRequest.of(page, size));
         logger.info(LOG_RESPONSE, result);
         return result;
     }

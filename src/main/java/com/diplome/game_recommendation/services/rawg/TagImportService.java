@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.diplome.game_recommendation.dtos.rawg.RawgTagDto;
 import com.diplome.game_recommendation.dtos.rawg.RawgTagResponse;
+import com.diplome.game_recommendation.integration.RawgApiService;
 import com.diplome.game_recommendation.models.TagEntity;
 import com.diplome.game_recommendation.repositories.TagRepository;
 

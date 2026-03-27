@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.diplome.game_recommendation.core.configuration.*;
+
 import com.diplome.game_recommendation.dtos.RecommendationDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDetailsDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDto;
+import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.services.RecomendationService;;
 @RestController
 @RequestMapping(Constants.API_URL + "/recommendations")

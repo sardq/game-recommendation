@@ -1,12 +1,12 @@
 package com.diplome.game_recommendation.services;
 
-import com.diplome.game_recommendation.core.configuration.UserAuthenticationProvider;
-import com.diplome.game_recommendation.core.configuration.UserMapper;
-import com.diplome.game_recommendation.core.exceptions.NotFoundException;
 import com.diplome.game_recommendation.dtos.CredentialsDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.dtos.UserSignupDto;
-import com.diplome.game_recommendation.core.exceptions.AppException;
+import com.diplome.game_recommendation.helpers.configuration.UserAuthenticationProvider;
+import com.diplome.game_recommendation.helpers.configuration.UserMapper;
+import com.diplome.game_recommendation.helpers.exceptions.AppException;
+import com.diplome.game_recommendation.helpers.exceptions.NotFoundException;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.repositories.UserGameRepository;

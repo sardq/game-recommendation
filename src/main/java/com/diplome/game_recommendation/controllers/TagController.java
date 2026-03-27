@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.diplome.game_recommendation.core.configuration.*;
+
+import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.models.TagEntity;
 import com.diplome.game_recommendation.services.TagService;
 

@@ -1,5 +1,6 @@
 package com.diplome.game_recommendation.services.gigachat;
 
+import com.diplome.game_recommendation.integration.GigachatService;
 import com.diplome.game_recommendation.models.TagEntity;
 import com.diplome.game_recommendation.repositories.TagRepository;
 import com.fasterxml.jackson.core.type.TypeReference;

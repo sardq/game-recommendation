@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDto;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameResponse;
+import com.diplome.game_recommendation.integration.RawgApiService;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.GameTag;
 import com.diplome.game_recommendation.models.PlatformEnum;

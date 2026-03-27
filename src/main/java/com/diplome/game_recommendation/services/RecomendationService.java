@@ -29,6 +29,7 @@ import com.diplome.game_recommendation.repositories.RecommendationSessionReposit
 import com.diplome.game_recommendation.repositories.UserGameRepository;
 import com.diplome.game_recommendation.repositories.UserPreferenceRepository;
 import com.diplome.game_recommendation.repositories.UserRepository;
+import com.diplome.game_recommendation.services.librec.LibrecEngineService;
 
 import jakarta.transaction.Transactional;
 
@@ -42,6 +43,7 @@ public class RecomendationService {
     private final RecommendationSessionRepository sessionRepository;
     private final RecommendationItemsRepository recommendationItemsRepository;
     private final GameTagRepository gameTagRepository;
+    private final LibrecEngineService librecEngineService;
 
     public RecomendationService(
             UserPreferenceRepository userPreferenceRepository,
@@ -50,7 +52,8 @@ public class RecomendationService {
             UserGameRepository userGameRepository,
             UserRepository userRepository,
             RecommendationItemsRepository recommendationItemsRepository,
-            GameTagRepository gameTagRepository
+            GameTagRepository gameTagRepository,
+            LibrecEngineService librecEngineService
     ) {
         this.userPreferenceRepository = userPreferenceRepository;
         this.gameRepository = gameRepository;
@@ -59,6 +62,7 @@ public class RecomendationService {
         this.userRepository = userRepository;
         this.recommendationItemsRepository = recommendationItemsRepository;
         this.gameTagRepository = gameTagRepository;
+        this.librecEngineService = librecEngineService;
     }
 
     public List<RecommendationDto> getRecommendationsForUser(Long userId) {
@@ -68,14 +72,7 @@ public class RecomendationService {
         return getColdStartRecommendations();
     }
 
-    List<RecommendationDto> collaborative =
-            getCollaborativeRecommendations(userId);
-
-    if(!collaborative.isEmpty()){
-        return collaborative;
-    }
-
-    return getContentBasedRecommendations(userId);
+    return librecEngineService.recommend(userId);
 }
     public List<RecommendationDto> getContentBasedRecommendations(Long userId){
 

@@ -1,5 +1,5 @@
 package com.diplome.game_recommendation.controllers;
-import com.diplome.game_recommendation.core.configuration.*;
+import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.models.UserPreference;
 import com.diplome.game_recommendation.services.UserPreferenceService;
 

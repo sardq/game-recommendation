@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diplome.game_recommendation.core.configuration.UserAuthenticationProvider;
 import com.diplome.game_recommendation.dtos.CredentialsDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.dtos.UserSignupDto;
+import com.diplome.game_recommendation.helpers.configuration.UserAuthenticationProvider;
 import com.diplome.game_recommendation.services.UserService;
 
 import jakarta.validation.Valid;

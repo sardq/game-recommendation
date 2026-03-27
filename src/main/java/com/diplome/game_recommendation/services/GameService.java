@@ -68,6 +68,6 @@ public class GameService {
     }
     public Page<GameEntity> getPopularGames(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        return gameRepository.findTop20ByOrderByReleaseDateDesc(pageable);
+        return gameRepository.findTop5ByOrderByReleaseDateDesc(pageable);
     }
 }

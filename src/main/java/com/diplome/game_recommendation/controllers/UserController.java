@@ -5,8 +5,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import com.diplome.game_recommendation.core.configuration.*;
+
 import com.diplome.game_recommendation.dtos.UserDto;
+import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.services.*;

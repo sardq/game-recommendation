@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diplome.game_recommendation.core.configuration.Constants;
 import com.diplome.game_recommendation.dtos.GameDto;
+import com.diplome.game_recommendation.helpers.configuration.Constants;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.services.GameService;
 

@@ -1,6 +1,6 @@
 package com.diplome.game_recommendation.models;
 
-import com.diplome.game_recommendation.core.configuration.Constants;
+import com.diplome.game_recommendation.helpers.configuration.Constants;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
