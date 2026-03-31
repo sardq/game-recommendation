@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.diplome.game_recommendation.dtos.TagPreferenceDto;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.GameTag;
 import com.diplome.game_recommendation.models.TagEntity;
@@ -90,6 +92,28 @@ public class UserPreferenceService {
             preference.setTag(tag);
             preference.setPreferenceWeight(BigDecimal.valueOf(1.0));
             userPreferenceRepository.save(preference);
+        }
+    }
+    public void initializeColdStartPreferencesWithRating(
+        Authentication authentication,
+        List<TagPreferenceDto> tags
+    ) {
+        String name = authentication.getName();
+        UserEntity user = userRepository.findByEmail(name).orElseThrow();
+
+        userPreferenceRepository.deleteByUserId(user.getId());
+
+        for (TagPreferenceDto dto : tags) {
+            TagEntity tag = tagRepository.findById(dto.tagId).orElseThrow();
+
+            double weight = dto.rating / 5.0; 
+
+            UserPreference pref = new UserPreference();
+            pref.setUser(user);
+            pref.setTag(tag);
+            pref.setPreferenceWeight(BigDecimal.valueOf(weight));
+
+            userPreferenceRepository.save(pref);
         }
     }
 }

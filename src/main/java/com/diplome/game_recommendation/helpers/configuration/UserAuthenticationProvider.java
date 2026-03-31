@@ -56,19 +56,11 @@ public class UserAuthenticationProvider {
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decoded = verifier.verify(token);
 
-            String login = decoded.getSubject();
-            String role = decoded.getClaim("role").asString();
+            String email = decoded.getSubject();
 
-            UserEntity user = userService.getByLogin(login);
+            UserEntity user = userService.getByEmail(email);
 
-            List<GrantedAuthority> authorities;
-            if (role != null) {
-                authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
-            } else {
-                authorities = Collections.emptyList();
-            }
-
-            return new UsernamePasswordAuthenticationToken(user, token, authorities);
+            return new UsernamePasswordAuthenticationToken(user.getEmail(), token, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
         } catch (JWTVerificationException e) {
             throw new InvalidJwtTokenException("Invalid JWT token", e);

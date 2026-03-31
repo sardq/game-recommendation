@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.TagEntity;
 
 public interface TagRepository extends JpaRepository<TagEntity, Long> {
@@ -30,5 +31,11 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     List<TagEntity> findTagsByGameId(Long gameId);
     List<TagEntity> findByKeep(Boolean keep);
     Page<TagEntity> findByKeep(Boolean keep, Pageable pageable);
-    
+    @Query("""
+    SELECT t
+    FROM TagEntity t
+    WHERE t.keep = true
+      AND LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%'))
+    """)
+    Page<TagEntity> filterBySearch(String search, Pageable pageable);
 }

@@ -32,13 +32,12 @@ public class ApiKeyAuthentication extends AbstractAuthenticationToken {
             return false;
         }
         return Objects.equals(getPrincipal(), other.getPrincipal())
-            && Objects.equals(getCredentials(), other.getCredentials())
-            && Objects.equals(getAuthorities(), other.getAuthorities());
+            && Objects.equals(getCredentials(), other.getCredentials());
 }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPrincipal(), getCredentials(), getAuthorities());
+        return Objects.hash(getPrincipal(), getCredentials());
     }
 
 }
