@@ -17,5 +17,6 @@ public interface UserGameRepository extends JpaRepository<UserGames, Long> {
     List<UserGames> findByUserIdAndGameId(Long userId, Long gameId);
     List<UserGames> findByUserIdOrderByTimeDesc(Long userId);
     List<UserGames> findByUserIdAndInteraction(Long userId, InteractionEnum interaction);
+    List<UserGames> findByGameIdAndReviewIsNotNullOrderByTimeDesc(Long gameId);
     Optional<UserGames> findByUserIdAndGameIdAndInteraction(Long userId,Long gameid, InteractionEnum interaction);
 }

@@ -4,4 +4,5 @@ public enum InteractionEnum {
     Viewed,
     Favorite,
     Rated,
+    Review,
 }

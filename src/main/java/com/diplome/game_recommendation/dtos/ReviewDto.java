@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class InteractionDto {
-    private Long gameId;
-    private String interactionType;
-    private Integer rating;
+public class ReviewDto {
+    private Long id;
+    private String login;
     private String review;
 }
