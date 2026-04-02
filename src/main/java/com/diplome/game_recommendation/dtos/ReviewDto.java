@@ -7,5 +7,7 @@ import lombok.Setter;
 public class ReviewDto {
     private Long id;
     private String login;
+    private String gameTitile;
     private String review;
+    private Integer rating;
 }

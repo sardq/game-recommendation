@@ -1,7 +1,7 @@
 package com.diplome.game_recommendation.controllers;
 import com.diplome.game_recommendation.dtos.TagPreferenceDto;
+import com.diplome.game_recommendation.dtos.UserPreferenceDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
-import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.models.UserPreference;
 import com.diplome.game_recommendation.services.UserPreferenceService;
 
@@ -20,14 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserPreferenceController {
 
     private final UserPreferenceService service;
-
     public UserPreferenceController(UserPreferenceService service) {
         this.service = service;
     }
+    private UserPreferenceDto toDto(UserPreference entity) {
+           UserPreferenceDto dto = new UserPreferenceDto();
+            dto.setPreferenceWeight(entity.getPreferenceWeight().doubleValue());
+            dto.setTagId(entity.getTag().getId());      
+            dto.setTagName(entity.getTag().getName());
+            return dto;
+        }
 
-    @GetMapping("/{userId}")
-    public List<UserPreference> get(@PathVariable Long userId) {
-        return service.getUserPreferences(userId);
+    @GetMapping("/user")
+    public List<UserPreferenceDto> get(Authentication authentication) {
+        return service.getUserPreferences(authentication).stream().map(this::toDto).toList();
     }
 
     @PostMapping("/refresh/{userId}")

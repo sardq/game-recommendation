@@ -21,6 +21,8 @@ import com.diplome.game_recommendation.repositories.UserGameRepository;
 import com.diplome.game_recommendation.repositories.UserPreferenceRepository;
 import com.diplome.game_recommendation.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserPreferenceService {
 
@@ -37,8 +39,9 @@ public class UserPreferenceService {
             this.userRepository = userRepository;
             this.tagRepository = tagRepository;
         }
-    public List<UserPreference> getUserPreferences(Long userId) {
-        return userPreferenceRepository.findByUserId(userId);
+    public List<UserPreference> getUserPreferences(Authentication authentication) {
+        UserEntity user = userRepository.findByEmail(authentication.getName()).orElse(null);
+        return userPreferenceRepository.findByUserId(user.getId());
     }
     public void updateUserPreferences(Long userId) {
         UserEntity user = userRepository.findById(userId).orElseThrow();
@@ -94,6 +97,7 @@ public class UserPreferenceService {
             userPreferenceRepository.save(preference);
         }
     }
+    @Transactional
     public void initializeColdStartPreferencesWithRating(
         Authentication authentication,
         List<TagPreferenceDto> tags

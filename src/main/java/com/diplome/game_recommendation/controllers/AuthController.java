@@ -14,17 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diplome.game_recommendation.dtos.CredentialsDto;
-import com.diplome.game_recommendation.dtos.TagDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.dtos.UserSignupDto;
 import com.diplome.game_recommendation.helpers.configuration.UserAuthenticationProvider;
-import com.diplome.game_recommendation.models.TagEntity;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.services.UserService;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.InteractionDto;
 import com.diplome.game_recommendation.dtos.ReviewDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
-import com.diplome.game_recommendation.models.InteractionEnum;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.services.InteractionService;
 @RestController
@@ -74,8 +74,12 @@ public class InteractionController {
     }
 
     @GetMapping("/reviews/game/{gameId}")
-    public List<ReviewDto> getReviews(@PathVariable Long gameId) {
-        return interactionService.getReviewsByGame(gameId);
+    public List<ReviewDto> getReviews(@PathVariable Long gameId, @RequestParam int page, @RequestParam int size) {
+        return interactionService.getReviewsByGame(gameId, page, size);
+    }
+    @GetMapping("/review/user/{gameId}")
+    public ReviewDto getUserReview(@PathVariable Long gameId, Authentication authentication) {
+        return interactionService.getUserReview(gameId,authentication);
     }
     @PostMapping("/review")
     public void review(Authentication authentication,
@@ -100,5 +104,16 @@ public class InteractionController {
 
         return toDto(ug);
     }
-    
+    @GetMapping("/favorites")
+    public List<GameDto> getUserFavorites(Authentication authentication) {
+        return interactionService.getUserFavorites(authentication);
+    }
+    @GetMapping("/reviews/my")
+    public List<ReviewDto> getMyReviews(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        return interactionService.getUserReviews(authentication, page, size);
+    }
 }

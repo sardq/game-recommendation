@@ -8,6 +8,7 @@ import lombok.Setter;
 public class GameDto {
 
     private Long id;
+    private Long rawgId;
 
     private String name;
 

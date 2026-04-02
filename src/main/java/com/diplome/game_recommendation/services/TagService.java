@@ -35,7 +35,6 @@ public class TagService {
     }
     public Page<TagEntity> searchTagsByName(String search, int page, int size) {
     logger.info("Получение тегов по поиску: {}, {}", page, size);
-    var result = tagRepository.findByKeep(true, PageRequest.of(page, size));
     return tagRepository.filterBySearch(search, PageRequest.of(page, size));
 }
 }
