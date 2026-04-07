@@ -27,12 +27,15 @@ public class LibrecDataBuilder {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (UserGames ug : all) {
-                writer.write(
-                    ug.getUser().getId() + " " +
-                    ug.getGame().getId() + " " +
-                    ug.getRating()
-                );
-                writer.newLine();
+                // КРИТИЧЕСКИ ВАЖНО: берем только те взаимодействия, где есть оценка
+                if (ug.getRating() != null) {
+                    writer.write(
+                        ug.getUser().getId() + " " +
+                        ug.getGame().getId() + " " +
+                        ug.getRating()
+                    );
+                    writer.newLine();
+                }
             }
         }
 

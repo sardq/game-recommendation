@@ -7,6 +7,7 @@ import com.diplome.game_recommendation.services.UserPreferenceService;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,4 +48,9 @@ public class UserPreferenceController {
     ) {
         service.initializeColdStartPreferencesWithRating(authentication, tags);
 }
+    @GetMapping("/user/has-preferences")
+    public ResponseEntity<Boolean> hasPreferences(Authentication authentication) {
+        long count = service.countByUserId(authentication);
+        return ResponseEntity.ok(count > 0);
+    }
 }

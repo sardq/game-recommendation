@@ -23,9 +23,9 @@ public class UserPreference extends BaseEntity{
     private TagEntity tag;
 
     @Column(nullable = false)
-    private BigDecimal preferenceWeight;
+    private Double preferenceWeight;
     public UserPreference(){}
-    public UserPreference(UserEntity user, TagEntity tag, BigDecimal preferenceWeight){
+    public UserPreference(UserEntity user, TagEntity tag, Double preferenceWeight){
         this.user =user;
         this.tag = tag;
         this.preferenceWeight = preferenceWeight;

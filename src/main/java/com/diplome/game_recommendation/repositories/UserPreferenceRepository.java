@@ -13,4 +13,5 @@ public interface UserPreferenceRepository extends JpaRepository<UserPreference, 
     void deleteByUserId(Long userId);
     List<UserPreference> findByUserIdOrderByPreferenceWeightDesc(Long userId);
     Optional<UserPreference> findByUserIdAndTagId(Long userId, Long tagId);
+    Long countByUserId(Long userId);
 }

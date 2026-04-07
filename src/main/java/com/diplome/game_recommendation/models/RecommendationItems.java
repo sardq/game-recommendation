@@ -25,4 +25,6 @@ public class RecommendationItems extends BaseEntity{
         this.rank = rank;
         this.score = score;
     }
+    public RecommendationItems() {
+    }
 }

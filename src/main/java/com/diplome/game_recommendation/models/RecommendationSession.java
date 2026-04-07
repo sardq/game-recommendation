@@ -25,4 +25,6 @@ public class RecommendationSession extends BaseEntity {
         this.generatedAt = generatedAt;
         this.user = userEntity;
     }
+    public RecommendationSession() {
+    }
 }

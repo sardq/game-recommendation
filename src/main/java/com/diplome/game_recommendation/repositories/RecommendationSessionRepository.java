@@ -10,5 +10,6 @@ public interface RecommendationSessionRepository
         extends JpaRepository<RecommendationSession, Long> {
     
     List<RecommendationSession> findByUserIdOrderByGeneratedAtDesc(Long userId);
+    
 
 }

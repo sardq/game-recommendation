@@ -1,12 +1,14 @@
 package com.diplome.game_recommendation.services;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diplome.game_recommendation.dtos.TagPreferenceDto;
 import com.diplome.game_recommendation.models.GameEntity;
@@ -81,7 +83,7 @@ public class UserPreferenceService {
             preference.setUser(user);
             preference.setTag(tag);
             preference.setPreferenceWeight(
-                    BigDecimal.valueOf(entry.getValue())
+                    Double.valueOf(entry.getValue())
             );
             userPreferenceRepository.save(preference);
         }
@@ -93,7 +95,7 @@ public class UserPreferenceService {
             UserPreference preference = new UserPreference();
             preference.setUser(user);
             preference.setTag(tag);
-            preference.setPreferenceWeight(BigDecimal.valueOf(1.0));
+            preference.setPreferenceWeight(Double.valueOf(1.0));
             userPreferenceRepository.save(preference);
         }
     }
@@ -115,9 +117,14 @@ public class UserPreferenceService {
             UserPreference pref = new UserPreference();
             pref.setUser(user);
             pref.setTag(tag);
-            pref.setPreferenceWeight(BigDecimal.valueOf(weight));
+            pref.setPreferenceWeight(Double.valueOf(weight));
 
             userPreferenceRepository.save(pref);
         }
+    }
+    @Transactional
+public Long countByUserId( Authentication authentication) {
+    UserEntity user = userRepository.findByEmail(authentication.getName()).orElseThrow();
+    return userPreferenceRepository.countByUserId(user.getId());
     }
 }

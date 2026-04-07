@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,33 +28,33 @@ public class RecomendationController {
         this.service = service;
     }
 
-    @GetMapping("/{userId}")
-    public List<RecommendationDto> get(@PathVariable Long userId) {
-        logger.info("Получение рекомендаций userId={}", userId);
-        return service.getRecommendationsForUser(userId);
+        @GetMapping("/{userId}")
+        public List<RecommendationDto> get(@PathVariable Long userId) {
+            logger.info("Получение рекомендаций userId={}", userId);
+            return service.getRecommendationsForUser(userId);
+        }
+        @GetMapping("/user")
+        public List<RecommendationDto> get(Authentication authentication) {
+            logger.info("Получение рекомендаций");
+            return service.getFastRecommendations(authentication);
+        }
+        @PostMapping("/recalculate/{userId}")
+    public void recalculatePreferences(@PathVariable Long userId) {
+        logger.info("Ручной пересчет предпочтений для userId={}", userId);
+        service.recalculateUserPreferences(userId);
     }
-
-    @PostMapping("/generate/{userId}")
-    public void generate(@PathVariable Long userId) {
-        logger.info("Генерация рекомендаций userId={}", userId);
-        service.generateRecommendationSession(userId);
+    @PostMapping("/recalculate")
+    public void recalculatePreferencesAuth(Authentication authentication) {
+        logger.info("Ручной пересчет предпочтений");
+        service.generateAndSaveRecommendations(authentication);
     }
-
-    @GetMapping("/sessions/{userId}")
-    public List<RecommendationSessionDto> sessions(@PathVariable Long userId) {
-        logger.info("Сессии рекомендаций userId={}", userId);
-        return service.getUserSessions(userId);
+    @GetMapping("/sessions/user")
+    public List<RecommendationSessionDto> getSessions(Authentication authentication) {
+        return service.getUserSessions(authentication);
     }
 
     @GetMapping("/session/{sessionId}")
-    public RecommendationSessionDetailsDto session(@PathVariable Long sessionId) {
-        logger.info("Детали сессии sessionId={}", sessionId);
-        return service.getSession(sessionId);
-    }
-
-    @GetMapping("/similar/{gameId}")
-    public List<RecommendationDto> similar(@PathVariable Long gameId) {
-        logger.info("Похожие игры gameId={}", gameId);
-        return service.getSimilarGames(gameId);
+    public RecommendationSessionDetailsDto getSession(@PathVariable Long sessionId) {
+        return service.getSessionDetails(sessionId);
     }
 }

@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "/reset-password",
                                 "/api/otp/**")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/games/**", "/api/tags/**")
+                        .requestMatchers(HttpMethod.GET, "/api/games/**", "/api/tags/**","/api/interactions/reviews/game/**")
                         .permitAll()
                         .anyRequest().authenticated());
         return http.build();
