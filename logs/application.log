@@ -3122,3 +3122,1154 @@ This generated password is for development use only. Your security configuration
 2026-04-08T21:39:39.089+04:00  INFO 17048 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
 2026-04-08T21:39:39.092+04:00  INFO 17048 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
 2026-04-08T21:39:39.104+04:00  INFO 17048 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T21:58:39.238+04:00  INFO 4124 --- [main] .d.g.GameRecommendationSystemApplication : Starting GameRecommendationSystemApplication using Java 17.0.12 with PID 4124 (D:\diplome\code\game-recommendation\target\classes started by User in D:\diplome\code\game-recommendation)
+2026-04-08T21:58:39.259+04:00 DEBUG 4124 --- [main] .d.g.GameRecommendationSystemApplication : Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-08T21:58:39.262+04:00  INFO 4124 --- [main] .d.g.GameRecommendationSystemApplication : No active profile set, falling back to 1 default profile: "default"
+2026-04-08T21:58:42.263+04:00  INFO 4124 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-08T21:58:42.737+04:00  INFO 4124 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 450 ms. Found 8 JPA repository interfaces.
+2026-04-08T21:58:45.665+04:00  INFO 4124 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-08T21:58:45.715+04:00  INFO 4124 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-08T21:58:45.715+04:00  INFO 4124 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-04-08T21:58:45.934+04:00  INFO 4124 --- [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 6337 ms
+2026-04-08T21:58:46.314+04:00  INFO 4124 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-08T21:58:46.461+04:00  INFO 4124 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-04-08T21:58:47.639+04:00  INFO 4124 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-08T21:58:47.728+04:00  INFO 4124 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-08T21:58:48.203+04:00  INFO 4124 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5badeda0
+2026-04-08T21:58:48.209+04:00  INFO 4124 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-08T21:58:48.405+04:00  INFO 4124 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5432/game_recommendation]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.4
+	Default catalog/schema: game_recommendation/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-08T21:58:49.612+04:00  WARN 4124 --- [main] org.hibernate.orm.core                   : HHH000038: Composite id class does not override equals(): com.diplome.game_recommendation.models.GameTagId
+2026-04-08T21:58:50.862+04:00  INFO 4124 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-08T21:58:51.247+04:00  WARN 4124 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:81) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:566) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:506) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:324) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:220) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:96) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:269) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$1(SchemaManagementToolCoordinator.java:101) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:100) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:35) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:33) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:323) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryRegistry.instantiateSessionFactory(SessionFactoryRegistry.java:64) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:437) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1456) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:433) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:416) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:409) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:976) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.2.jar:4.0.2]
+	at com.diplome.game_recommendation.GameRecommendationSystemApplication.main(GameRecommendationSystemApplication.java:10) ~[classes/:na]
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: значение не умещается в тип character varying(255)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2846) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2531) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:429) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:526) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:436) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:358) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:343) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:319) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:314) ~[postgresql-42.7.9.jar:42.7.9]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:76) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	... 38 common frames omitted
+
+2026-04-08T21:58:51.311+04:00  INFO 4124 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-08T21:58:51.463+04:00  INFO 4124 --- [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-08T21:58:54.629+04:00  WARN 4124 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-08T21:58:54.674+04:00  WARN 4124 --- [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 284ac2bc-2bf8-4408-8e33-79dc4a0c0db1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-08T21:58:54.697+04:00  INFO 4124 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-04-08T21:58:55.589+04:00  INFO 4124 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Using default implementation for ThreadExecutor
+2026-04-08T21:58:55.608+04:00  INFO 4124 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2026-04-08T21:58:55.608+04:00  INFO 4124 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v2.5.2 created.
+2026-04-08T21:58:55.622+04:00  INFO 4124 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2026-04-08T21:58:55.629+04:00  INFO 4124 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.5.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2026-04-08T21:58:55.629+04:00  INFO 4124 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2026-04-08T21:58:55.630+04:00  INFO 4124 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler version: 2.5.2
+2026-04-08T21:58:55.631+04:00  INFO 4124 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@3171c5e6
+2026-04-08T21:58:55.772+04:00  INFO 4124 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-08T21:58:55.772+04:00  INFO 4124 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2026-04-08T21:58:55.777+04:00  INFO 4124 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2026-04-08T21:58:55.794+04:00  INFO 4124 --- [main] .d.g.GameRecommendationSystemApplication : Started GameRecommendationSystemApplication in 17.606 seconds (process running for 18.533)
+2026-04-08T22:07:20.823+04:00  INFO 4124 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-08T22:07:20.846+04:00  INFO 4124 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-08T22:07:21.000+04:00  INFO 4124 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 152 ms
+2026-04-08T22:07:21.690+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:07:21.690+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:07:21.722+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:07:21.798+04:00 ERROR 4124 --- [http-nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "org.springframework.security.core.Authentication.getName()" because "authentication" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "org.springframework.security.core.Authentication.getName()" because "authentication" is null
+	at com.diplome.game_recommendation.services.TagService.getTagsSortedByPreference(TagService.java:51) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.3.jar:7.0.3]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190) ~[spring-aop-7.0.3.jar:7.0.3]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158) ~[spring-aop-7.0.3.jar:7.0.3]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.3.jar:7.0.3]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.3.jar:7.0.3]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.3.jar:7.0.3]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.3.jar:7.0.3]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.3.jar:7.0.3]
+	at com.diplome.game_recommendation.services.TagService$$SpringCGLIB$$0.getTagsSortedByPreference(<generated>) ~[classes/:na]
+	at com.diplome.game_recommendation.controllers.TagController.getRecommendedTags(TagController.java:79) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.3.jar:7.0.3]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:371) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at com.diplome.game_recommendation.helpers.configuration.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:46) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.3.jar:7.0.3]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+
+2026-04-08T22:07:22.312+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:07:37.584+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:07:37.584+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:07:37.584+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:07:37.586+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение тегов: 0, 5
+2026-04-08T22:07:37.587+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:07:37.594+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 68 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:07:37.605+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:07:37.621+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:07:37.626+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=9
+2026-04-08T22:07:37.627+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:07:37.638+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Игры по тегу tagId=7
+2026-04-08T22:07:37.637+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:07:37.639+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:07:37.647+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.controllers.GameController         : Игры по тегу tagId=10
+2026-04-08T22:07:37.651+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:07:37.651+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:07:37.651+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:07:37.765+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:07:37.765+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:07:37.765+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:07:37.765+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:07:37.765+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:08:32.988+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:08:32.989+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:08:32.989+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:08:32.990+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Получение тегов: 0, 5
+2026-04-08T22:08:32.992+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:08:32.998+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Ответ: Page 1 of 68 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:08:33.008+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:08:33.021+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=7
+2026-04-08T22:08:33.021+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Игры по тегу tagId=9
+2026-04-08T22:08:33.032+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:08:33.023+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:08:33.033+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=10
+2026-04-08T22:08:33.035+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:08:33.034+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:08:33.034+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:08:33.034+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:08:33.033+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:08:33.060+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:08:33.063+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:08:33.063+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:08:33.069+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:08:33.073+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:10:10.627+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:10:10.628+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:10:10.628+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:10:10.630+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение тегов: 0, 5
+2026-04-08T22:10:10.637+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:10:10.640+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 68 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:10:10.659+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:10:10.670+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:10:10.677+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:10:10.670+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:10:10.695+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:10:10.687+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.controllers.GameController         : Игры по тегу tagId=7
+2026-04-08T22:10:10.700+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:10:10.691+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.controllers.GameController         : Игры по тегу tagId=9
+2026-04-08T22:10:10.701+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=10
+2026-04-08T22:10:10.707+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:10:10.706+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:10:10.726+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:10:10.710+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:10:10.726+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:10:10.740+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:10:10.786+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:18:47.306+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.controllers.AuthController         : Запрос на вход пользователя: dreod@mail.ru
+2026-04-08T22:18:47.318+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Попытка входа: CredentialsDto(email=dreod@mail.ru, password=[1, 2, 3, 4, 5])
+2026-04-08T22:18:47.567+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Успешный вход пользователя: dreod@mail.ru 
+2026-04-08T22:18:47.632+04:00 DEBUG 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Создан токен для пользователя: dreod@mail.ru
+2026-04-08T22:18:47.723+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.723+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.724+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.724+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.727+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.785+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1ca47b2
+2026-04-08T22:18:47.794+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@61efccc0
+2026-04-08T22:18:47.796+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7f7a7b44
+2026-04-08T22:18:47.801+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@46b2589f
+2026-04-08T22:18:47.801+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2d44131d
+2026-04-08T22:18:47.824+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:18:47.826+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:18:47.828+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:18:47.835+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:18:47.876+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:18:47.938+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.940+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.943+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.946+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.951+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5f1376a7
+2026-04-08T22:18:47.952+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:18:47.954+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4865d594
+2026-04-08T22:18:47.954+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@257b9ab0
+2026-04-08T22:18:47.961+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:18:47.963+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:18:47.966+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:18:47.973+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:18:47.974+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7d80b0f9
+2026-04-08T22:18:47.969+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:18:47.973+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:18:47.990+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6003a1fc
+2026-04-08T22:18:47.993+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:18:48.001+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:18:48.005+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.controllers.GameController         : Игры по тегу tagId=31
+2026-04-08T22:18:48.008+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:18:48.019+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:18:48.047+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:18:48.046+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:18:48.055+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:18:48.084+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:19:10.688+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:19:10.690+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:19:10.699+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:19:10.719+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:19:10.720+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Получение игр по тегу: 0, 10
+2026-04-08T22:19:10.745+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Ответ: Page 1 of 20 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:19:16.401+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.controllers.GameController         : Игры по тегу tagId=7
+2026-04-08T22:19:16.402+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение игр по тегу: 0, 10
+2026-04-08T22:19:16.423+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 20 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:19:18.196+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=14
+2026-04-08T22:19:18.197+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 10
+2026-04-08T22:19:18.211+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 20 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:19:23.507+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:23.509+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:23.511+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:23.515+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@66fd6e52
+2026-04-08T22:19:23.516+04:00  INFO 4124 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@ee23af0
+2026-04-08T22:19:23.517+04:00  INFO 4124 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@79c9e804
+2026-04-08T22:19:23.518+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:23.525+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7d1d51c6
+2026-04-08T22:19:24.569+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:24.573+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:19:24.575+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@440bd7c8
+2026-04-08T22:19:24.579+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6b5f98f5
+2026-04-08T22:19:24.633+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:19:24.642+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:37:25.363+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:25.363+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:26.549+04:00  INFO 4124 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@11aa7dbd
+2026-04-08T22:37:26.549+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@36345613
+2026-04-08T22:37:26.614+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:37:26.637+04:00  INFO 4124 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:37:38.567+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:38.569+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:38.577+04:00  INFO 4124 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@45f6ec05
+2026-04-08T22:37:38.577+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7ee3d0b5
+2026-04-08T22:37:38.585+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:37:38.599+04:00  INFO 4124 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:37:46.525+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:46.526+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:37:46.531+04:00  INFO 4124 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@47964663
+2026-04-08T22:37:46.532+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@513cbd72
+2026-04-08T22:37:46.535+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:37:46.542+04:00  INFO 4124 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:38:42.837+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:38:42.838+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:38:42.841+04:00  INFO 4124 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@56a094e2
+2026-04-08T22:38:42.842+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2bee190b
+2026-04-08T22:38:42.845+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:38:42.853+04:00  INFO 4124 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:40:58.646+04:00  INFO 24988 --- [main] .d.g.GameRecommendationSystemApplication : Starting GameRecommendationSystemApplication using Java 17.0.12 with PID 24988 (D:\diplome\code\game-recommendation\target\classes started by User in D:\diplome\code\game-recommendation)
+2026-04-08T22:40:58.657+04:00 DEBUG 24988 --- [main] .d.g.GameRecommendationSystemApplication : Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-08T22:40:58.659+04:00  INFO 24988 --- [main] .d.g.GameRecommendationSystemApplication : No active profile set, falling back to 1 default profile: "default"
+2026-04-08T22:41:02.252+04:00  INFO 24988 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-08T22:41:02.920+04:00  INFO 24988 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 633 ms. Found 8 JPA repository interfaces.
+2026-04-08T22:41:07.411+04:00  INFO 24988 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-08T22:41:07.465+04:00  INFO 24988 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-08T22:41:07.466+04:00  INFO 24988 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-04-08T22:41:07.814+04:00  INFO 24988 --- [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 8918 ms
+2026-04-08T22:41:08.489+04:00  INFO 24988 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-08T22:41:08.776+04:00  INFO 24988 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-04-08T22:41:10.247+04:00  INFO 24988 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-08T22:41:10.324+04:00  INFO 24988 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-08T22:41:10.843+04:00  INFO 24988 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6aae82cc
+2026-04-08T22:41:10.847+04:00  INFO 24988 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-08T22:41:11.027+04:00  INFO 24988 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5432/game_recommendation]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.4
+	Default catalog/schema: game_recommendation/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-08T22:41:12.324+04:00  WARN 24988 --- [main] org.hibernate.orm.core                   : HHH000038: Composite id class does not override equals(): com.diplome.game_recommendation.models.GameTagId
+2026-04-08T22:41:13.787+04:00  INFO 24988 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-08T22:41:14.215+04:00  WARN 24988 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:81) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:566) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:506) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:324) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:220) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:96) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:269) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$1(SchemaManagementToolCoordinator.java:101) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:100) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:35) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:33) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:323) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryRegistry.instantiateSessionFactory(SessionFactoryRegistry.java:64) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:437) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1456) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:433) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:416) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:409) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:976) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.2.jar:4.0.2]
+	at com.diplome.game_recommendation.GameRecommendationSystemApplication.main(GameRecommendationSystemApplication.java:10) ~[classes/:na]
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: значение не умещается в тип character varying(255)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2846) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2531) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:429) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:526) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:436) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:358) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:343) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:319) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:314) ~[postgresql-42.7.9.jar:42.7.9]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:76) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	... 38 common frames omitted
+
+2026-04-08T22:41:14.310+04:00  INFO 24988 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-08T22:41:14.508+04:00  INFO 24988 --- [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-08T22:41:18.502+04:00  WARN 24988 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-08T22:41:18.570+04:00  WARN 24988 --- [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: a44f2515-4113-4b7d-ade4-dd5eae5faad0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-08T22:41:18.635+04:00  INFO 24988 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-04-08T22:41:19.983+04:00  INFO 24988 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Using default implementation for ThreadExecutor
+2026-04-08T22:41:20.016+04:00  INFO 24988 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2026-04-08T22:41:20.017+04:00  INFO 24988 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v2.5.2 created.
+2026-04-08T22:41:20.019+04:00  INFO 24988 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2026-04-08T22:41:20.021+04:00  INFO 24988 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.5.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2026-04-08T22:41:20.021+04:00  INFO 24988 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2026-04-08T22:41:20.022+04:00  INFO 24988 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler version: 2.5.2
+2026-04-08T22:41:20.023+04:00  INFO 24988 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@424ddcb0
+2026-04-08T22:41:20.165+04:00  INFO 24988 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-08T22:41:20.168+04:00  INFO 24988 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2026-04-08T22:41:20.169+04:00  INFO 24988 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2026-04-08T22:41:20.187+04:00  INFO 24988 --- [main] .d.g.GameRecommendationSystemApplication : Started GameRecommendationSystemApplication in 23.078 seconds (process running for 24.096)
+2026-04-08T22:41:28.900+04:00  INFO 24988 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-08T22:41:28.901+04:00  INFO 24988 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-08T22:41:28.906+04:00  INFO 24988 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-04-08T22:41:29.042+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:29.042+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:29.199+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@721bf0af
+2026-04-08T22:41:29.199+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@f27223
+2026-04-08T22:41:29.305+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:41:29.334+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:41:35.593+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:35.594+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:35.601+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2a24c818
+2026-04-08T22:41:35.601+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5c2cb6db
+2026-04-08T22:41:35.606+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:41:35.617+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:41:38.591+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.597+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@61868464
+2026-04-08T22:41:38.602+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:41:38.604+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.614+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.616+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.621+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.624+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3deee51d
+2026-04-08T22:41:38.629+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6e820b21
+2026-04-08T22:41:38.635+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@75447cd8
+2026-04-08T22:41:38.635+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1cd9b28b
+2026-04-08T22:41:38.641+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:41:38.642+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:41:38.644+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:41:38.667+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:41:38.758+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.758+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.763+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.771+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6c3a9561
+2026-04-08T22:41:38.771+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1f2b6251
+2026-04-08T22:41:38.776+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.778+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:41:38.779+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:41:38.781+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:41:38.782+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@78184932
+2026-04-08T22:41:38.782+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:41:38.774+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:38.788+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:41:38.791+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@73af12f5
+2026-04-08T22:41:38.807+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:41:38.809+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@50c4bd02
+2026-04-08T22:41:38.814+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=31
+2026-04-08T22:41:38.817+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:41:38.822+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:41:38.825+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:41:38.884+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:41:38.894+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:41:38.896+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:41:38.900+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:41:38.902+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:41:40.367+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:40.371+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6a502bdf
+2026-04-08T22:41:40.374+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.c.RecomendationController          : Ручной пересчет предпочтений
+2026-04-08T22:41:43.645+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.data.convertor.TextDataConvertor     : Dataset: .../librec-data4727298873467326185.txt
+2026-04-08T22:41:43.676+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.data.convertor.TextDataConvertor     : All dataset files [C:\Users\User\AppData\Local\Temp\librec-data4727298873467326185.txt]
+2026-04-08T22:41:43.677+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.data.convertor.TextDataConvertor     : All dataset files size 70
+2026-04-08T22:41:43.677+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.data.convertor.TextDataConvertor     : Now loading dataset file librec-data4727298873467326185
+2026-04-08T22:41:43.715+04:00  INFO 24988 --- [http-nio-8080-exec-8] net.librec.data.model.TextDataModel      : Transform data to Convertor successfully!
+2026-04-08T22:41:43.729+04:00  INFO 24988 --- [http-nio-8080-exec-8] net.librec.data.model.TextDataModel      : Split data to train Set and test Set successfully!
+2026-04-08T22:41:43.730+04:00  INFO 24988 --- [http-nio-8080-exec-8] net.librec.data.model.TextDataModel      : Data size of training is 3
+2026-04-08T22:41:43.730+04:00  INFO 24988 --- [http-nio-8080-exec-8] net.librec.data.model.TextDataModel      : Data size of testing is 2
+2026-04-08T22:41:43.739+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : Job Setup completed.
+2026-04-08T22:41:43.740+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 1: loss = 2.6993016752215753, delta_loss = -2.6993017
+2026-04-08T22:41:43.741+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 2: loss = 2.5748890539121674, delta_loss = 0.12441262
+2026-04-08T22:41:43.743+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 3: loss = 2.4564686677171386, delta_loss = 0.118420385
+2026-04-08T22:41:43.743+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 4: loss = 2.3437243677183215, delta_loss = 0.1127443
+2026-04-08T22:41:43.744+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 5: loss = 2.2363595898765247, delta_loss = 0.10736478
+2026-04-08T22:41:43.745+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 6: loss = 2.1340958524792, delta_loss = 0.102263734
+2026-04-08T22:41:43.745+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 7: loss = 2.0366713977333055, delta_loss = 0.097424455
+2026-04-08T22:41:43.746+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 8: loss = 1.9438399606748893, delta_loss = 0.09283144
+2026-04-08T22:41:43.747+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 9: loss = 1.8553696508596762, delta_loss = 0.08847031
+2026-04-08T22:41:43.748+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 10: loss = 1.7710419342410768, delta_loss = 0.08432772
+2026-04-08T22:41:43.748+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 11: loss = 1.6906507042921555, delta_loss = 0.08039123
+2026-04-08T22:41:43.749+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 12: loss = 1.6140014328342276, delta_loss = 0.07664927
+2026-04-08T22:41:43.749+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 13: loss = 1.540910392236542, delta_loss = 0.07309104
+2026-04-08T22:41:43.749+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 14: loss = 1.471203941681474, delta_loss = 0.06970645
+2026-04-08T22:41:43.750+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 15: loss = 1.4047178710748265, delta_loss = 0.06648607
+2026-04-08T22:41:43.750+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 16: loss = 1.3412967969436944, delta_loss = 0.06342107
+2026-04-08T22:41:43.750+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 17: loss = 1.2807936053234688, delta_loss = 0.060503192
+2026-04-08T22:41:43.751+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 18: loss = 1.2230689372065973, delta_loss = 0.05772467
+2026-04-08T22:41:43.751+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 19: loss = 1.1679907126217188, delta_loss = 0.055078223
+2026-04-08T22:41:43.752+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 20: loss = 1.115433689843634, delta_loss = 0.05255702
+2026-04-08T22:41:43.752+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 21: loss = 1.065279056611692, delta_loss = 0.050154634
+2026-04-08T22:41:43.753+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 22: loss = 1.0174140505640126, delta_loss = 0.047865007
+2026-04-08T22:41:43.753+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 23: loss = 0.9717316063845214, delta_loss = 0.045682445
+2026-04-08T22:41:43.754+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 24: loss = 0.9281300274142298, delta_loss = 0.04360158
+2026-04-08T22:41:43.754+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 25: loss = 0.8865126797026059, delta_loss = 0.04161735
+2026-04-08T22:41:43.754+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 26: loss = 0.8467877066731004, delta_loss = 0.039724972
+2026-04-08T22:41:43.755+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 27: loss = 0.8088677627524646, delta_loss = 0.037919942
+2026-04-08T22:41:43.755+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 28: loss = 0.7726697644692853, delta_loss = 0.036197998
+2026-04-08T22:41:43.756+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 29: loss = 0.7381146576658255, delta_loss = 0.034555107
+2026-04-08T22:41:43.757+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 30: loss = 0.7051271995908186, delta_loss = 0.032987457
+2026-04-08T22:41:43.757+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 31: loss = 0.6736357547512907, delta_loss = 0.031491444
+2026-04-08T22:41:43.758+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 32: loss = 0.6435721035003603, delta_loss = 0.030063652
+2026-04-08T22:41:43.758+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 33: loss = 0.6148712624266772, delta_loss = 0.028700842
+2026-04-08T22:41:43.758+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 34: loss = 0.5874713156909066, delta_loss = 0.027399946
+2026-04-08T22:41:43.759+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 35: loss = 0.5613132565265162, delta_loss = 0.026158059
+2026-04-08T22:41:43.759+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 36: loss = 0.5363408381869584, delta_loss = 0.024972418
+2026-04-08T22:41:43.760+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 37: loss = 0.5125004336799753, delta_loss = 0.023840405
+2026-04-08T22:41:43.760+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 38: loss = 0.489740903682855, delta_loss = 0.02275953
+2026-04-08T22:41:43.760+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 39: loss = 0.4680134720806558, delta_loss = 0.021727432
+2026-04-08T22:41:43.761+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 40: loss = 0.447271608613223, delta_loss = 0.020741863
+2026-04-08T22:41:43.761+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 41: loss = 0.4274709181566697, delta_loss = 0.019800691
+2026-04-08T22:41:43.761+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 42: loss = 0.4085690362013643, delta_loss = 0.018901883
+2026-04-08T22:41:43.762+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 43: loss = 0.3905255301216334, delta_loss = 0.018043507
+2026-04-08T22:41:43.762+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 44: loss = 0.3733018058627435, delta_loss = 0.017223725
+2026-04-08T22:41:43.763+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 45: loss = 0.35686101969848777, delta_loss = 0.016440786
+2026-04-08T22:41:43.763+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 46: loss = 0.3411679947381656, delta_loss = 0.015693026
+2026-04-08T22:41:43.763+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 47: loss = 0.32618914188510134, delta_loss = 0.014978853
+2026-04-08T22:41:43.764+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 48: loss = 0.3118923849703091, delta_loss = 0.014296757
+2026-04-08T22:41:43.764+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 49: loss = 0.29824708980463327, delta_loss = 0.013645295
+2026-04-08T22:41:43.764+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 50: loss = 0.2852239969108674, delta_loss = 0.013023093
+2026-04-08T22:41:43.765+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : Job Train completed.
+2026-04-08T22:41:43.772+04:00  INFO 24988 --- [http-nio-8080-exec-8] n.l.r.cf.rating.BiasedMFRecommender      : Job End.
+2026-04-08T22:41:44.727+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:44.727+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:44.731+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@749e3849
+2026-04-08T22:41:44.731+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2716b0e0
+2026-04-08T22:41:44.734+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:41:47.663+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:47.664+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:47.664+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:47.667+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@48160d80
+2026-04-08T22:41:47.668+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4774f2a0
+2026-04-08T22:41:47.672+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2411f84c
+2026-04-08T22:41:47.672+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:47.679+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1f4b0160
+2026-04-08T22:41:49.055+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:49.055+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:41:49.059+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4fd4c4d6
+2026-04-08T22:41:49.058+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@34ad968e
+2026-04-08T22:41:49.062+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:41:49.068+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:43:54.733+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:43:54.733+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:43:54.742+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2512a987
+2026-04-08T22:43:54.743+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6e8e9468
+2026-04-08T22:43:54.746+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:43:54.764+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:44:14.853+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:14.858+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3c346cf3
+2026-04-08T22:44:15.207+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.207+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.218+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.218+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.220+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.220+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@617459ab
+2026-04-08T22:44:15.228+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4bdb7eed
+2026-04-08T22:44:15.231+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@78c80de6
+2026-04-08T22:44:15.235+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2ae2324d
+2026-04-08T22:44:15.237+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3fe29e
+2026-04-08T22:44:15.240+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:44:15.243+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:44:15.244+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:44:15.243+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:44:15.256+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:44:15.338+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.347+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.350+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.351+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.428+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@14f2f977
+2026-04-08T22:44:15.441+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5ccafdd9
+2026-04-08T22:44:15.444+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:15.451+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@24a9d35
+2026-04-08T22:44:15.476+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:44:15.480+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:44:15.453+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7f3b91dd
+2026-04-08T22:44:15.475+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:44:15.478+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3a3486d5
+2026-04-08T22:44:15.480+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:44:15.491+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:44:15.496+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:44:15.499+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:44:15.503+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:44:15.510+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:44:15.605+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:44:15.512+04:00  INFO 24988 --- [http-nio-8080-exec-4] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:44:15.529+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:44:15.553+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:44:15.558+04:00  INFO 24988 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:44:15.674+04:00  INFO 24988 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:44:18.745+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:18.748+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:18.748+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:18.753+04:00  INFO 24988 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5590c4a0
+2026-04-08T22:44:18.754+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@9e572a9
+2026-04-08T22:44:18.755+04:00  INFO 24988 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@49ff5955
+2026-04-08T22:44:18.760+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:18.766+04:00  INFO 24988 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@769a373d
+2026-04-08T22:44:19.608+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:19.610+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:19.613+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@693f465e
+2026-04-08T22:44:19.616+04:00  INFO 24988 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@106ce87a
+2026-04-08T22:44:19.619+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:44:19.625+04:00  INFO 24988 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:44:28.866+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:28.865+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:44:28.872+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6c563690
+2026-04-08T22:44:28.873+04:00  INFO 24988 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@429fc80
+2026-04-08T22:44:28.875+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:44:28.882+04:00  INFO 24988 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:46:26.846+04:00  INFO 18172 --- [main] .d.g.GameRecommendationSystemApplication : Starting GameRecommendationSystemApplication using Java 17.0.12 with PID 18172 (D:\diplome\code\game-recommendation\target\classes started by User in D:\diplome\code\game-recommendation)
+2026-04-08T22:46:26.853+04:00 DEBUG 18172 --- [main] .d.g.GameRecommendationSystemApplication : Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-08T22:46:26.856+04:00  INFO 18172 --- [main] .d.g.GameRecommendationSystemApplication : No active profile set, falling back to 1 default profile: "default"
+2026-04-08T22:46:28.711+04:00  INFO 18172 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-08T22:46:29.221+04:00  INFO 18172 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 486 ms. Found 8 JPA repository interfaces.
+2026-04-08T22:46:30.552+04:00  INFO 18172 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-08T22:46:30.584+04:00  INFO 18172 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-08T22:46:30.585+04:00  INFO 18172 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-04-08T22:46:30.738+04:00  INFO 18172 --- [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3768 ms
+2026-04-08T22:46:31.164+04:00  INFO 18172 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-08T22:46:31.326+04:00  INFO 18172 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-04-08T22:46:32.288+04:00  INFO 18172 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-08T22:46:32.383+04:00  INFO 18172 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-08T22:46:32.795+04:00  INFO 18172 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@338270ea
+2026-04-08T22:46:32.800+04:00  INFO 18172 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-08T22:46:32.980+04:00  INFO 18172 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5432/game_recommendation]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.4
+	Default catalog/schema: game_recommendation/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-08T22:46:34.282+04:00  WARN 18172 --- [main] org.hibernate.orm.core                   : HHH000038: Composite id class does not override equals(): com.diplome.game_recommendation.models.GameTagId
+2026-04-08T22:46:35.540+04:00  INFO 18172 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-08T22:46:35.971+04:00  WARN 18172 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists games alter column description set data type varchar(255)" via JDBC [ОШИБКА: значение не умещается в тип character varying(255)]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:81) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:566) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:506) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:324) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:220) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:96) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:269) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$1(SchemaManagementToolCoordinator.java:101) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:100) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:35) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:33) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:323) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.internal.SessionFactoryRegistry.instantiateSessionFactory(SessionFactoryRegistry.java:64) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:437) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1456) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:433) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:416) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:409) ~[spring-orm-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:976) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620) ~[spring-context-7.0.3.jar:7.0.3]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.2.jar:4.0.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.2.jar:4.0.2]
+	at com.diplome.game_recommendation.GameRecommendationSystemApplication.main(GameRecommendationSystemApplication.java:10) ~[classes/:na]
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: значение не умещается в тип character varying(255)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2846) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2531) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:429) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:526) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:436) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:358) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:343) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:319) ~[postgresql-42.7.9.jar:42.7.9]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:314) ~[postgresql-42.7.9.jar:42.7.9]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:76) ~[hibernate-core-7.2.1.Final.jar:7.2.1.Final]
+	... 38 common frames omitted
+
+2026-04-08T22:46:36.033+04:00  INFO 18172 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-08T22:46:36.194+04:00  INFO 18172 --- [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-08T22:46:39.780+04:00  WARN 18172 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-08T22:46:39.823+04:00  WARN 18172 --- [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 77a2e8d6-28b2-46f4-b251-0c5d2dba2036
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-08T22:46:39.837+04:00  INFO 18172 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-04-08T22:46:40.821+04:00  INFO 18172 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Using default implementation for ThreadExecutor
+2026-04-08T22:46:40.847+04:00  INFO 18172 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2026-04-08T22:46:40.848+04:00  INFO 18172 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v2.5.2 created.
+2026-04-08T22:46:40.850+04:00  INFO 18172 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2026-04-08T22:46:40.852+04:00  INFO 18172 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.5.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2026-04-08T22:46:40.853+04:00  INFO 18172 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2026-04-08T22:46:40.853+04:00  INFO 18172 --- [main] hedulerFactoryBean$LocalSchedulerFactory : Quartz scheduler version: 2.5.2
+2026-04-08T22:46:40.854+04:00  INFO 18172 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@3035b9e6
+2026-04-08T22:46:40.979+04:00  INFO 18172 --- [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-08T22:46:40.981+04:00  INFO 18172 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2026-04-08T22:46:40.982+04:00  INFO 18172 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2026-04-08T22:46:40.995+04:00  INFO 18172 --- [main] .d.g.GameRecommendationSystemApplication : Started GameRecommendationSystemApplication in 15.234 seconds (process running for 16.194)
+2026-04-08T22:46:45.604+04:00  INFO 18172 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-08T22:46:45.605+04:00  INFO 18172 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-08T22:46:45.609+04:00  INFO 18172 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-04-08T22:46:45.753+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:45.753+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:45.753+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:45.917+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1fe474fa
+2026-04-08T22:46:45.917+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2ed44cc1
+2026-04-08T22:46:45.917+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@15ee0246
+2026-04-08T22:46:45.997+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:46.007+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2ae1085
+2026-04-08T22:46:47.315+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.318+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.316+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.319+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.321+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.323+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5c2cb6db
+2026-04-08T22:46:47.329+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3deee51d
+2026-04-08T22:46:47.333+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@68f85717
+2026-04-08T22:46:47.336+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:46:47.343+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:46:47.344+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1cd9b28b
+2026-04-08T22:46:47.351+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:46:47.354+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:46:47.362+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2a24c818
+2026-04-08T22:46:47.399+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:46:47.481+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.486+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.483+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.485+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.494+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@374ab2d6
+2026-04-08T22:46:47.497+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6e820b21
+2026-04-08T22:46:47.498+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@389e4bfb
+2026-04-08T22:46:47.499+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:47.504+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:46:47.504+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:46:47.506+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1d8b99d9
+2026-04-08T22:46:47.509+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:47.509+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:46:47.509+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:47.512+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:47.515+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:46:47.524+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@440d6b1b
+2026-04-08T22:46:47.527+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:47.533+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=44
+2026-04-08T22:46:47.538+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:47.606+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:47.606+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:47.607+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:47.607+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:47.608+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:48.581+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:48.587+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@8f6cba0
+2026-04-08T22:46:48.591+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.c.RecomendationController          : Ручной пересчет предпочтений
+2026-04-08T22:46:52.473+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.data.convertor.TextDataConvertor     : Dataset: ...librec-data11025970038441089218.txt
+2026-04-08T22:46:52.504+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.data.convertor.TextDataConvertor     : All dataset files [C:\Users\User\AppData\Local\Temp\librec-data11025970038441089218.txt]
+2026-04-08T22:46:52.505+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.data.convertor.TextDataConvertor     : All dataset files size 70
+2026-04-08T22:46:52.506+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.data.convertor.TextDataConvertor     : Now loading dataset file librec-data11025970038441089218
+2026-04-08T22:46:52.547+04:00  INFO 18172 --- [http-nio-8080-exec-4] net.librec.data.model.TextDataModel      : Transform data to Convertor successfully!
+2026-04-08T22:46:52.562+04:00  INFO 18172 --- [http-nio-8080-exec-4] net.librec.data.model.TextDataModel      : Split data to train Set and test Set successfully!
+2026-04-08T22:46:52.563+04:00  INFO 18172 --- [http-nio-8080-exec-4] net.librec.data.model.TextDataModel      : Data size of training is 4
+2026-04-08T22:46:52.564+04:00  INFO 18172 --- [http-nio-8080-exec-4] net.librec.data.model.TextDataModel      : Data size of testing is 1
+2026-04-08T22:46:52.574+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : Job Setup completed.
+2026-04-08T22:46:52.575+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 1: loss = 2.765223083582252, delta_loss = -2.765223
+2026-04-08T22:46:52.575+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 2: loss = 2.620009937987159, delta_loss = 0.14521314
+2026-04-08T22:46:52.576+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 3: loss = 2.4828655128073955, delta_loss = 0.13714443
+2026-04-08T22:46:52.577+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 4: loss = 2.3533047712474824, delta_loss = 0.12956074
+2026-04-08T22:46:52.577+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 5: loss = 2.2308754899922953, delta_loss = 0.12242928
+2026-04-08T22:46:52.578+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 6: loss = 2.115155685865869, delta_loss = 0.1157198
+2026-04-08T22:46:52.578+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 7: loss = 2.0057512789963563, delta_loss = 0.10940441
+2026-04-08T22:46:52.578+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 8: loss = 1.9022939670372365, delta_loss = 0.10345731
+2026-04-08T22:46:52.579+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 9: loss = 1.8044392881785, delta_loss = 0.09785468
+2026-04-08T22:46:52.580+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 10: loss = 1.7118648534091812, delta_loss = 0.09257443
+2026-04-08T22:46:52.580+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 11: loss = 1.6242687308376622, delta_loss = 0.087596126
+2026-04-08T22:46:52.581+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 12: loss = 1.5413679668986604, delta_loss = 0.08290076
+2026-04-08T22:46:52.582+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 13: loss = 1.462897231025651, delta_loss = 0.07847074
+2026-04-08T22:46:52.583+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 14: loss = 1.3886075718859685, delta_loss = 0.07428966
+2026-04-08T22:46:52.584+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 15: loss = 1.3182652745974872, delta_loss = 0.070342295
+2026-04-08T22:46:52.585+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 16: loss = 1.251650809499337, delta_loss = 0.066614464
+2026-04-08T22:46:52.586+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 17: loss = 1.1885578640586936, delta_loss = 0.06309295
+2026-04-08T22:46:52.586+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 18: loss = 1.1287924503816547, delta_loss = 0.059765413
+2026-04-08T22:46:52.587+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 19: loss = 1.0721720815756468, delta_loss = 0.05662037
+2026-04-08T22:46:52.588+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 20: loss = 1.0185250108982074, delta_loss = 0.05364707
+2026-04-08T22:46:52.588+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 21: loss = 0.9676895282346668, delta_loss = 0.050835483
+2026-04-08T22:46:52.589+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 22: loss = 0.9195133089856928, delta_loss = 0.048176218
+2026-04-08T22:46:52.589+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 23: loss = 0.8738528109237398, delta_loss = 0.0456605
+2026-04-08T22:46:52.590+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 24: loss = 0.8305727150029315, delta_loss = 0.043280095
+2026-04-08T22:46:52.590+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 25: loss = 0.7895454064862165, delta_loss = 0.041027308
+2026-04-08T22:46:52.591+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 26: loss = 0.7506504930925391, delta_loss = 0.038894914
+2026-04-08T22:46:52.591+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 27: loss = 0.7137743571701146, delta_loss = 0.036876135
+2026-04-08T22:46:52.591+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 28: loss = 0.6788097391738431, delta_loss = 0.034964617
+2026-04-08T22:46:52.592+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 29: loss = 0.6456553499691737, delta_loss = 0.03315439
+2026-04-08T22:46:52.593+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 30: loss = 0.6142155097044858, delta_loss = 0.03143984
+2026-04-08T22:46:52.593+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 31: loss = 0.5843998111920357, delta_loss = 0.029815698
+2026-04-08T22:46:52.594+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 32: loss = 0.5561228059161877, delta_loss = 0.028277006
+2026-04-08T22:46:52.594+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 33: loss = 0.5293037109490786, delta_loss = 0.026819095
+2026-04-08T22:46:52.595+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 34: loss = 0.5038661351999367, delta_loss = 0.025437575
+2026-04-08T22:46:52.595+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 35: loss = 0.4797378235566233, delta_loss = 0.024128312
+2026-04-08T22:46:52.595+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 36: loss = 0.45685041759800277, delta_loss = 0.022887407
+2026-04-08T22:46:52.596+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 37: loss = 0.43513923166475255, delta_loss = 0.021711186
+2026-04-08T22:46:52.596+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 38: loss = 0.4145430431753538, delta_loss = 0.020596188
+2026-04-08T22:46:52.596+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 39: loss = 0.3950038961641721, delta_loss = 0.019539148
+2026-04-08T22:46:52.597+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 40: loss = 0.3764669171007186, delta_loss = 0.01853698
+2026-04-08T22:46:52.597+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 41: loss = 0.3588801421240967, delta_loss = 0.017586775
+2026-04-08T22:46:52.598+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 42: loss = 0.3421943548950121, delta_loss = 0.016685788
+2026-04-08T22:46:52.598+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 43: loss = 0.3263629343301775, delta_loss = 0.01583142
+2026-04-08T22:46:52.599+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 44: loss = 0.31134171154104, delta_loss = 0.015021223
+2026-04-08T22:46:52.599+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 45: loss = 0.2970888353509808, delta_loss = 0.014252876
+2026-04-08T22:46:52.601+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 46: loss = 0.2835646458129677, delta_loss = 0.01352419
+2026-04-08T22:46:52.602+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 47: loss = 0.2707315551934367, delta_loss = 0.0128330905
+2026-04-08T22:46:52.602+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 48: loss = 0.2585539359283555, delta_loss = 0.012177619
+2026-04-08T22:46:52.602+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 49: loss = 0.24699801509426234, delta_loss = 0.011555921
+2026-04-08T22:46:52.602+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 50: loss = 0.23603177497089325, delta_loss = 0.01096624
+2026-04-08T22:46:52.603+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : Job Train completed.
+2026-04-08T22:46:52.609+04:00  INFO 18172 --- [http-nio-8080-exec-4] n.l.r.cf.rating.BiasedMFRecommender      : Job End.
+2026-04-08T22:46:53.533+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:53.535+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:53.539+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6d08c838
+2026-04-08T22:46:53.540+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5a4fe3a4
+2026-04-08T22:46:53.542+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:46:55.525+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:55.530+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@745e25ed
+2026-04-08T22:46:55.535+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:55.537+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:55.541+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4d6f2293
+2026-04-08T22:46:55.541+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:55.546+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7f55367b
+2026-04-08T22:46:55.550+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5a3aa4d6
+2026-04-08T22:46:56.349+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:56.349+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:56.353+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4f78e4a6
+2026-04-08T22:46:56.353+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5420cee2
+2026-04-08T22:46:56.366+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:46:56.373+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:46:59.012+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.016+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@61f26ca9
+2026-04-08T22:46:59.310+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.315+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.317+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.317+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.320+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.328+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@14e16a29
+2026-04-08T22:46:59.328+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@571f5302
+2026-04-08T22:46:59.329+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5cbe2612
+2026-04-08T22:46:59.329+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@599fe982
+2026-04-08T22:46:59.332+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@b890146
+2026-04-08T22:46:59.334+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:46:59.335+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:46:59.338+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:46:59.350+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:46:59.361+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:46:59.372+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.373+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.373+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.379+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.387+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@34ad968e
+2026-04-08T22:46:59.387+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1632d0eb
+2026-04-08T22:46:59.389+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2c285308
+2026-04-08T22:46:59.397+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.400+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2ca2fa33
+2026-04-08T22:46:59.403+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:46:59.404+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:46:59.406+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:46:59.412+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:46:59.416+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:59.418+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:59.420+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@43d84f67
+2026-04-08T22:46:59.421+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:59.422+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:59.436+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.controllers.GameController         : Игры по тегу tagId=31
+2026-04-08T22:46:59.445+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:59.448+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:59.449+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:46:59.471+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:59.478+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:59.504+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:46:59.904+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.906+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.908+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.911+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@58d3325c
+2026-04-08T22:46:59.913+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@29980b04
+2026-04-08T22:46:59.915+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@4b7fd8e1
+2026-04-08T22:46:59.916+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:46:59.922+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@2761dfa3
+2026-04-08T22:47:00.826+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:00.830+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:00.831+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3b8e9c6
+2026-04-08T22:47:00.833+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:47:00.833+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@379177d2
+2026-04-08T22:47:00.844+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:47:11.373+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:11.373+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:11.376+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:11.377+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3ff8c0d2
+2026-04-08T22:47:11.378+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@f1c585d
+2026-04-08T22:47:11.381+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:11.382+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@57faf5d3
+2026-04-08T22:47:11.386+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1cb2669a
+2026-04-08T22:47:12.980+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:12.980+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:12.984+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@39bd6bc0
+2026-04-08T22:47:12.984+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@777f0079
+2026-04-08T22:47:12.986+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:47:12.989+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:12.990+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:12.993+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.000+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1c1ab31
+2026-04-08T22:47:13.000+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6b52ff85
+2026-04-08T22:47:13.002+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5decd3ca
+2026-04-08T22:47:13.004+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.controllers.TagController          : Получение тегов
+2026-04-08T22:47:13.005+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Получение тегов: 0, 40
+2026-04-08T22:47:13.007+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.controllers.GameController         : Популярные игры
+2026-04-08T22:47:13.013+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.TagService                : Ответ: Page 1 of 9 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:47:13.030+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.030+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.032+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.036+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.038+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@14af4788
+2026-04-08T22:47:13.039+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3d96d48c
+2026-04-08T22:47:13.040+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@1617a474
+2026-04-08T22:47:13.043+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.controllers.GameController         : Игры по тегу tagId=6
+2026-04-08T22:47:13.043+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.controllers.GameController         : Игры по тегу tagId=39
+2026-04-08T22:47:13.042+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6f67eb01
+2026-04-08T22:47:13.044+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:47:13.043+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:47:13.048+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.controllers.GameController         : Игры по тегу tagId=36
+2026-04-08T22:47:13.043+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.controllers.GameController         : Игры по тегу tagId=3
+2026-04-08T22:47:13.050+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:47:13.055+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:13.056+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:47:13.071+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:47:13.071+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:47:13.074+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:47:13.075+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7bfb5a18
+2026-04-08T22:47:13.085+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.controllers.GameController         : Игры по тегу tagId=31
+2026-04-08T22:47:13.089+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Получение игр по тегу: 0, 5
+2026-04-08T22:47:13.100+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:47:13.107+04:00  INFO 18172 --- [http-nio-8080-exec-2] c.d.g.services.TagService                : Ответ: Page 1 of 40 containing com.diplome.game_recommendation.models.GameEntity instances
+2026-04-08T22:47:14.873+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:14.877+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@659092e5
+2026-04-08T22:47:14.879+04:00  INFO 18172 --- [http-nio-8080-exec-1] c.d.g.c.RecomendationController          : Ручной пересчет предпочтений
+2026-04-08T22:47:16.353+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.data.convertor.TextDataConvertor     : Dataset: ...librec-data17355725454703786075.txt
+2026-04-08T22:47:16.356+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.data.convertor.TextDataConvertor     : All dataset files [C:\Users\User\AppData\Local\Temp\librec-data17355725454703786075.txt]
+2026-04-08T22:47:16.356+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.data.convertor.TextDataConvertor     : All dataset files size 70
+2026-04-08T22:47:16.357+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.data.convertor.TextDataConvertor     : Now loading dataset file librec-data17355725454703786075
+2026-04-08T22:47:16.361+04:00  INFO 18172 --- [http-nio-8080-exec-1] net.librec.data.model.TextDataModel      : Transform data to Convertor successfully!
+2026-04-08T22:47:16.362+04:00  INFO 18172 --- [http-nio-8080-exec-1] net.librec.data.model.TextDataModel      : Split data to train Set and test Set successfully!
+2026-04-08T22:47:16.363+04:00  INFO 18172 --- [http-nio-8080-exec-1] net.librec.data.model.TextDataModel      : Data size of training is 3
+2026-04-08T22:47:16.363+04:00  INFO 18172 --- [http-nio-8080-exec-1] net.librec.data.model.TextDataModel      : Data size of testing is 2
+2026-04-08T22:47:16.363+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : Job Setup completed.
+2026-04-08T22:47:16.364+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 1: loss = 3.416182430605366, delta_loss = -3.4161825
+2026-04-08T22:47:16.364+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 2: loss = 3.2441184913814163, delta_loss = 0.17206393
+2026-04-08T22:47:16.365+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 3: loss = 3.081139279627775, delta_loss = 0.16297922
+2026-04-08T22:47:16.365+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 4: loss = 2.9267229728051785, delta_loss = 0.15441631
+2026-04-08T22:47:16.366+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 5: loss = 2.780382160059394, delta_loss = 0.14634082
+2026-04-08T22:47:16.366+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 6: loss = 2.6416611076427827, delta_loss = 0.13872105
+2026-04-08T22:47:16.367+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 7: loss = 2.5101332918511363, delta_loss = 0.13152781
+2026-04-08T22:47:16.367+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 8: loss = 2.3853991677484356, delta_loss = 0.124734126
+2026-04-08T22:47:16.368+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 9: loss = 2.2670841463408644, delta_loss = 0.11831502
+2026-04-08T22:47:16.369+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 10: loss = 2.154836756568486, delta_loss = 0.11224739
+2026-04-08T22:47:16.369+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 11: loss = 2.048326971624511, delta_loss = 0.10650978
+2026-04-08T22:47:16.369+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 12: loss = 1.9472446817825513, delta_loss = 0.10108229
+2026-04-08T22:47:16.370+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 13: loss = 1.8512982981893165, delta_loss = 0.09594639
+2026-04-08T22:47:16.370+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 14: loss = 1.760213474027354, delta_loss = 0.09108482
+2026-04-08T22:47:16.370+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 15: loss = 1.673731931122418, delta_loss = 0.08648154
+2026-04-08T22:47:16.371+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 16: loss = 1.5916103815062987, delta_loss = 0.08212155
+2026-04-08T22:47:16.371+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 17: loss = 1.513619534684446, delta_loss = 0.077990845
+2026-04-08T22:47:16.371+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 18: loss = 1.4395431824287188, delta_loss = 0.074076355
+2026-04-08T22:47:16.371+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 19: loss = 1.369177353844099, delta_loss = 0.07036583
+2026-04-08T22:47:16.372+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 20: loss = 1.302329534265189, delta_loss = 0.066847816
+2026-04-08T22:47:16.372+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 21: loss = 1.2388179422416277, delta_loss = 0.063511595
+2026-04-08T22:47:16.372+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 22: loss = 1.1784708594858024, delta_loss = 0.060347084
+2026-04-08T22:47:16.372+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 23: loss = 1.1211260091942896, delta_loss = 0.05734485
+2026-04-08T22:47:16.373+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 24: loss = 1.0666299786266178, delta_loss = 0.05449603
+2026-04-08T22:47:16.373+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 25: loss = 1.0148376822405272, delta_loss = 0.051792298
+2026-04-08T22:47:16.374+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 26: loss = 0.9656118620493636, delta_loss = 0.04922582
+2026-04-08T22:47:16.375+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 27: loss = 0.9188226221912273, delta_loss = 0.04678924
+2026-04-08T22:47:16.376+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 28: loss = 0.8743469949865977, delta_loss = 0.044475626
+2026-04-08T22:47:16.377+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 29: loss = 0.8320685360160475, delta_loss = 0.042278457
+2026-04-08T22:47:16.377+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 30: loss = 0.7918769459766211, delta_loss = 0.04019159
+2026-04-08T22:47:16.378+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 31: loss = 0.7536677172778049, delta_loss = 0.03820923
+2026-04-08T22:47:16.378+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 32: loss = 0.7173418035189971, delta_loss = 0.036325913
+2026-04-08T22:47:16.378+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 33: loss = 0.682805310152457, delta_loss = 0.034536492
+2026-04-08T22:47:16.378+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 34: loss = 0.6499692047812362, delta_loss = 0.032836106
+2026-04-08T22:47:16.378+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 35: loss = 0.618749045672499, delta_loss = 0.031220159
+2026-04-08T22:47:16.379+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 36: loss = 0.5890647271846243, delta_loss = 0.029684318
+2026-04-08T22:47:16.379+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 37: loss = 0.5608402409130564, delta_loss = 0.028224487
+2026-04-08T22:47:16.380+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 38: loss = 0.534003451456283, delta_loss = 0.02683679
+2026-04-08T22:47:16.380+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 39: loss = 0.508485885790739, delta_loss = 0.025517566
+2026-04-08T22:47:16.381+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 40: loss = 0.48422253532280096, delta_loss = 0.02426335
+2026-04-08T22:47:16.381+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 41: loss = 0.46115166975827454, delta_loss = 0.023070866
+2026-04-08T22:47:16.382+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 42: loss = 0.4392146619955417, delta_loss = 0.021937007
+2026-04-08T22:47:16.382+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 43: loss = 0.4183558233086232, delta_loss = 0.02085884
+2026-04-08T22:47:16.383+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 44: loss = 0.3985222481412668, delta_loss = 0.019833576
+2026-04-08T22:47:16.383+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 45: loss = 0.3796636678834408, delta_loss = 0.01885858
+2026-04-08T22:47:16.383+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 46: loss = 0.3617323130476388, delta_loss = 0.017931355
+2026-04-08T22:47:16.383+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 47: loss = 0.34468278330467983, delta_loss = 0.01704953
+2026-04-08T22:47:16.383+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 48: loss = 0.32847192487751536, delta_loss = 0.016210858
+2026-04-08T22:47:16.384+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 49: loss = 0.31305871482728037, delta_loss = 0.01541321
+2026-04-08T22:47:16.385+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : BiasedMFRecommender iter 50: loss = 0.2984041517987192, delta_loss = 0.014654563
+2026-04-08T22:47:16.385+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : Job Train completed.
+2026-04-08T22:47:16.385+04:00  INFO 18172 --- [http-nio-8080-exec-1] n.l.r.cf.rating.BiasedMFRecommender      : Job End.
+2026-04-08T22:47:17.054+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:17.055+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:17.058+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7f6dba2d
+2026-04-08T22:47:17.059+04:00  INFO 18172 --- [http-nio-8080-exec-6] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@249fa50c
+2026-04-08T22:47:17.061+04:00  INFO 18172 --- [http-nio-8080-exec-4] c.d.g.c.RecomendationController          : Получение рекомендаций
+2026-04-08T22:47:18.198+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:18.199+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:18.200+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:18.201+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@7befc4a1
+2026-04-08T22:47:18.203+04:00  INFO 18172 --- [http-nio-8080-exec-5] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3b14d90a
+2026-04-08T22:47:18.203+04:00  INFO 18172 --- [http-nio-8080-exec-9] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@5fe7e8c0
+2026-04-08T22:47:18.204+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:18.209+04:00  INFO 18172 --- [http-nio-8080-exec-8] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@6dc8ea10
+2026-04-08T22:47:19.183+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:19.184+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:19.187+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@41ce516f
+2026-04-08T22:47:19.187+04:00  INFO 18172 --- [http-nio-8080-exec-7] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@3ef88396
+2026-04-08T22:47:19.191+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Получение тегов: 0, 6
+2026-04-08T22:47:19.195+04:00  INFO 18172 --- [http-nio-8080-exec-10] c.d.g.services.TagService                : Ответ: Page 1 of 57 containing com.diplome.game_recommendation.models.TagEntity instances
+2026-04-08T22:47:20.816+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Получение пользователя с помощью почты :dreod@mail.ru
+2026-04-08T22:47:20.819+04:00  INFO 18172 --- [http-nio-8080-exec-3] c.d.g.services.UserService               : Ответ: com.diplome.game_recommendation.models.UserEntity@74fd5d88

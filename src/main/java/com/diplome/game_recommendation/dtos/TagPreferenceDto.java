@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter @Setter
 public class TagPreferenceDto {
     public Long tagId;
-    public Integer rating;
+    public Double rating;
 }

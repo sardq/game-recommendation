@@ -83,12 +83,14 @@ public class RecomendationService {
         userPreferenceRepository.deleteByUserId(userId); 
         UserEntity user = userRepository.findById(userId).orElseThrow();
 
+        double maxWeight = tagScores.values().stream().mapToDouble(Double::doubleValue).max().orElse(1.0);
         for (Map.Entry<TagEntity, Double> entry : tagScores.entrySet()) {
-            if (entry.getValue() > 0) { 
+            double normalized = entry.getValue() / maxWeight;
+            if (normalized > 0) {
                 UserPreference pref = new UserPreference();
                 pref.setUser(user);
                 pref.setTag(entry.getKey());
-                pref.setPreferenceWeight(entry.getValue().doubleValue());
+                pref.setPreferenceWeight(normalized);
                 userPreferenceRepository.save(pref);
             }
         }
