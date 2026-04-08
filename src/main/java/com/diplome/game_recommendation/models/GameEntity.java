@@ -9,7 +9,9 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +32,8 @@ public class GameEntity extends BaseEntity {
     private Double metacriticRate;
     private Integer playtime;
     private Double rating;
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    private Set<GameTag> gameTags;
     public GameEntity(){
     }
      public GameEntity(String name, String description, Date releaseDate, 

@@ -58,9 +58,8 @@ public class InteractionService {
         UserGames review= userGamesRepository.findByUserIdAndGameIdAndInteraction(user.getId(), gameId, InteractionEnum.Review).orElse(null);
         UserGames rate= userGamesRepository.findByUserIdAndGameIdAndInteraction(user.getId(), gameId, InteractionEnum.Rated).orElse(null);
         ReviewDto dto = new ReviewDto();
-        dto.setLogin(user.getUsername());
-        dto.setRating(rate.getRating());
-        dto.setReview(review.getReview());
+        dto.setRating(rate != null ? rate.getRating() : null);
+        dto.setReview(review != null ? review.getReview() : null);
         return dto;
     }
     @Transactional

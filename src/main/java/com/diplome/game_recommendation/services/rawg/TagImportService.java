@@ -53,7 +53,6 @@ public class TagImportService {
                 rawgApiService.getTags(page);
 
         for(RawgTagDto dto : response.getResults()){
-
             if(tagRepository.findByName(dto.getName()).isPresent()){
                 continue;
             }

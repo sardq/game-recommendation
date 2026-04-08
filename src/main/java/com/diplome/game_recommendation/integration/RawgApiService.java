@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.diplome.game_recommendation.dtos.rawg.RawgGameDetailsResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDto;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgTagResponse;
@@ -58,6 +59,16 @@ public class RawgApiService {
                 .bodyToMono(RawgGameResponse.class)
                 .block();
     }
+    public RawgGameDetailsResponse getGameDetails(Long id) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/games/{id}")
+                        .queryParam("key", apiKey)
+                        .build(id))
+                .retrieve()
+                .bodyToMono(RawgGameDetailsResponse.class)
+                .block();
+        }
     public List<RawgGameDto> getGamesByTag(String slug, int page){
 
         var response = webClient.get()
