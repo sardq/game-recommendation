@@ -1,6 +1,6 @@
 server:
   port: 8080
-
+  forward-headers-strategy: framework
 logging:
   file:
     name: logs/application.log
@@ -16,14 +16,14 @@ spring:
       enabled: always
 
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/game_recommendation
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://db:5432/game_recommendation
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update  
+      ddl-auto: validate  
       dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 

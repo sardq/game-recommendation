@@ -14,7 +14,7 @@ public class RawgGameDetailsResponse {
     private Long id;
     private String name;
     private String description;
-    private String released; // "2020-09-17"
+    private String released; 
     private Double rating;
     private Integer metacritic;
     private Integer playtime;

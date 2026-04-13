@@ -49,7 +49,6 @@ public class GameController {
         dto.setName(game.getName());
         dto.setDescription(game.getDescription());
 
-        // Date → LocalDate
         if (game.getReleaseDate() != null) {
             dto.setReleaseDate(
                 game.getReleaseDate().toInstant()
@@ -58,7 +57,6 @@ public class GameController {
             );
         }
 
-        // PlatformEnum → String
         if (game.getPlatforms() != null) {
             dto.setPlatforms(
                 game.getPlatforms()
@@ -70,7 +68,6 @@ public class GameController {
 
         dto.setPosterUrl(game.getPosterUrl());
 
-        // Double → BigDecimal
         if (game.getRating() != null) {
             dto.setRating(BigDecimal.valueOf(game.getRating()));
         }
@@ -81,7 +78,6 @@ public class GameController {
 
         dto.setPlaytime(game.getPlaytime());
 
-        // ❗ ТЕГИ (самое важное)
         if (game.getGameTags() != null) {
             dto.setTags(
                 game.getGameTags()

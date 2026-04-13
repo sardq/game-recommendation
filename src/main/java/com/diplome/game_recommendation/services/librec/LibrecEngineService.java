@@ -33,40 +33,32 @@ public class LibrecEngineService {
     public List<RecommendationDto> recommend(Long userId) {
         File dataFile = null;
         try {
-            // 1. Создаем временный файл с данными
             dataFile = dataBuilder.buildFile();
 
-            // 2. Настраиваем конфигурацию LibRec
             Configuration conf = new Configuration();
             conf.set("dfs.data.dir", dataFile.getParentFile().getAbsolutePath()); 
             conf.set("data.input.path", dataFile.getName());
             conf.set("data.model.format", "text");
             conf.set("data.column.format", "UIR");
             
-            // Настройки нейросети (без них выдаст мусор)
-            conf.set("rec.iterator.maximum", "50"); // Количество эпох обучения
-            conf.set("rec.factor.number", "10");    // Скрытые факторы
+            conf.set("rec.iterator.maximum", "50"); 
+            conf.set("rec.factor.number", "10");    
             conf.set("rec.learnrate.bolddriver", "false");
             conf.set("rec.learnrate.value", "0.01");
             
             conf.set("rec.recommender.isranking", "true"); 
             conf.set("rec.recommender.ranking.topn", "20");
 
-            // 3. Собираем модель данных
             TextDataModel dataModel = new TextDataModel(conf);
             dataModel.buildDataModel();
 
-            // 4. Подготавливаем контекст
             RecommenderContext context = new RecommenderContext(conf, dataModel);
 
-            // 5. ЗАПУСК АЛГОРИТМА (Ваш изначальный правильный синтаксис!)
             Recommender recommender = new BiasedMFRecommender();
-            recommender.recommend(context); // Запускает весь процесс
+            recommender.recommend(context); 
 
-            // 6. Получаем результаты
             List<RecommendedItem> allRecs = recommender.getRecommendedList();
             
-            // 7. Фильтруем рекомендации для текущего пользователя
             List<RecommendedItem> userRecs = new ArrayList<>();
             String targetUserId = userId.toString();
             for (RecommendedItem item : allRecs) {
@@ -75,14 +67,12 @@ public class LibrecEngineService {
                 }
             }
 
-            // Сортируем от лучшего скора к худшему
             userRecs.sort(Comparator.comparingDouble(RecommendedItem::getValue).reversed());
 
-            // 8. Конвертируем в наши DTO
             List<RecommendationDto> result = new ArrayList<>();
             for (RecommendedItem item : userRecs) {
                 Long gameId = Long.parseLong(item.getItemId());
-                double score = item.getValue(); // Предсказанный рейтинг LibRec
+                double score = item.getValue();
 
                 GameEntity game = gameRepository.findById(gameId).orElse(null);
                 if (game == null) continue;
@@ -102,7 +92,6 @@ public class LibrecEngineService {
         } catch (Exception e) {
             throw new RuntimeException("Ошибка работы LibRec: " + e.getMessage(), e);
         } finally {
-            // КРИТИЧЕСКИ ВАЖНО: Удаляем временный файл, чтобы не забить жесткий диск сервера
             if (dataFile != null && dataFile.exists()) {
                 dataFile.delete();
             }

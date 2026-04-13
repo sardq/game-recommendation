@@ -28,7 +28,6 @@ public class RecomendationService {
     private final RecommendationItemsRepository recommendationItemsRepository;
     private final GameTagRepository gameTagRepository;
     
-    // ВЕРНУЛИ LIBREC
     private final LibrecEngineService librecEngineService; 
 
     public RecomendationService(
@@ -51,9 +50,6 @@ public class RecomendationService {
         this.librecEngineService = librecEngineService;
     }
 
-    // =========================================================================
-    // 1. ПЕРЕСЧЕТ ПРЕДПОЧТЕНИЙ (Вызывается по кнопке или расписанию)
-    // =========================================================================
      @Transactional
     public void recalculateUserPreferences(Long userId) {
         List<UserGames> history = userGameRepository.findByUserId(userId);
@@ -95,30 +91,23 @@ public class RecomendationService {
             }
         }
     }
-    // =========================================================================
-    // 2. ГЛАВНЫЙ МЕТОД: МНОГОСТУПЕНЧАТАЯ СИСТЕМА (Ансамбль CB + LibRec)
-    // =========================================================================
     public List<RecommendationDto> getRecommendationsForUser(Authentication authentication) {
         UserEntity user = userRepository.findByEmail(authentication.getName()).orElse(new UserEntity());
         int interactions = userGameRepository.countByUserId(user.getId());
-
-        // СТУПЕНЬ 1: Холодный старт
-        if (interactions < 3) {
+        boolean hasPrefs = userPreferenceRepository.existsByUserId(user.getId());
+        if (interactions < 1 && !hasPrefs) {
             return getColdStartRecommendations();
         }
 
-        // СТУПЕНЬ 2: Контентная фильтрация (Скор 0.0 - 1.0)
         Map<Long, Double> contentScores = getContentBasedScores(user.getId());
 
-        // СТУПЕНЬ 3: Коллаборативная фильтрация через LibRec
         List<RecommendationDto> librecRecs = librecEngineService.recommend(user.getId());
         Map<Long, Double> collabScores = new HashMap<>();
         for (RecommendationDto rec : librecRecs) {
-            collabScores.put(rec.getGameId(), rec.getRecommendationScore() / 10.0);
+            collabScores.put(rec.getGameId(), rec.getRecommendationScore() / 3.0);
         }
 
 
-        // СТУПЕНЬ 4: Смешивание оценок (Blending/Ensemble)
         Map<Long, Double> finalScores = new HashMap<>();
         List<GameEntity> allGames = gameRepository.findAll();
 
@@ -128,8 +117,6 @@ public class RecomendationService {
             double cScore = contentScores.getOrDefault(gameId, 0.0);
             double cfScore = collabScores.getOrDefault(gameId, 0.0);
 
-            // Веса алгоритмов (Например: 60% контент, 40% LibRec). 
-            // Это можно вынести в настройки.
             double hybridScore = (cScore * 0.6) + (cfScore * 0.4);
             
             if (hybridScore > 0) {
@@ -137,7 +124,6 @@ public class RecomendationService {
             }
         }
 
-        // СТУПЕНЬ 5: Ранжирование и маппинг
         return finalScores.entrySet().stream()
                 .sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
                 .limit(20)
@@ -147,29 +133,22 @@ public class RecomendationService {
     public List<RecommendationDto> getRecommendationsForUser(Long userId) {
         int interactions = userGameRepository.countByUserId(userId);
 
-        // СТУПЕНЬ 1: Холодный старт
         if (interactions < 3) {
             return getColdStartRecommendations();
         }
 
-        // СТУПЕНЬ 2: Контентная фильтрация (Скор 0.0 - 1.0)
         Map<Long, Double> contentScores = getContentBasedScores(userId);
 
-        // СТУПЕНЬ 3: Коллаборативная фильтрация через LibRec
         List<RecommendationDto> librecRecs = librecEngineService.recommend(userId);
         Map<Long, Double> collabScores = new HashMap<>();
         for (RecommendationDto rec : librecRecs) {
-            // Если LibRec выдает оценку от 1 до 10, делим на 10 для нормализации (0..1)
-            // Если он уже выдает вероятности от 0 до 1, деление не нужно.
-            collabScores.put(rec.getGameId(), rec.getRecommendationScore() / 10.0);
+            collabScores.put(rec.getGameId(), rec.getRecommendationScore() / 3.0);
         }
 
-        // Получаем список сыгранных игр, чтобы исключить их из выдачи
         Set<Long> playedGames = userGameRepository.findByUserId(userId).stream()
                 .map(ug -> ug.getGame().getId())
                 .collect(Collectors.toSet());
 
-        // СТУПЕНЬ 4: Смешивание оценок (Blending/Ensemble)
         Map<Long, Double> finalScores = new HashMap<>();
         List<GameEntity> allGames = gameRepository.findAll();
 
@@ -180,8 +159,6 @@ public class RecomendationService {
             double cScore = contentScores.getOrDefault(gameId, 0.0);
             double cfScore = collabScores.getOrDefault(gameId, 0.0);
 
-            // Веса алгоритмов (Например: 60% контент, 40% LibRec). 
-            // Это можно вынести в настройки.
             double hybridScore = (cScore * 0.6) + (cfScore * 0.4);
             
             if (hybridScore > 0) {
@@ -189,16 +166,12 @@ public class RecomendationService {
             }
         }
 
-        // СТУПЕНЬ 5: Ранжирование и маппинг
         return finalScores.entrySet().stream()
                 .sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
                 .limit(20)
                 .map(e -> mapToRecommendation(e.getKey(), e.getValue()))
                 .toList();
     }
-    // =========================================================================
-    // 3. КОНТЕНТНАЯ ФИЛЬТРАЦИЯ (Векторная модель)
-    // =========================================================================
     private Map<Long, Double> getContentBasedScores(Long userId) {
     List<UserPreference> prefs = userPreferenceRepository.findByUserId(userId);
     Map<Long, Double> userVector = prefs.stream().collect(Collectors.toMap(
@@ -211,17 +184,14 @@ public class RecomendationService {
 
     List<GameEntity> games = gameRepository.findAll();
     
-    // РЕШЕНИЕ ПРОБЛЕМЫ N+1: Достаем все связи тегов ОДНИМ запросом
     List<GameTag> allGameTags = gameTagRepository.findAll();
     
-    // Группируем их в памяти: Map<GameId, List<GameTag>>
     Map<Long, List<GameTag>> tagsByGameId = allGameTags.stream()
             .collect(Collectors.groupingBy(gt -> gt.getGame().getId()));
 
     Map<Long, Double> scores = new HashMap<>();
 
     for (GameEntity game : games) {
-        // Берем теги из памяти (Map), а не из базы данных!
         List<GameTag> tags = tagsByGameId.getOrDefault(game.getId(), Collections.emptyList());
         
         double dotProduct = 0;
@@ -239,13 +209,10 @@ public class RecomendationService {
     return scores;
 }
 
-    // =========================================================================
-    // 4. УТИЛИТЫ И ПРОЧЕЕ
-    // =========================================================================
     public List<RecommendationDto> getColdStartRecommendations() {
-        Page<GameEntity> games = gameRepository.findByRatingGreaterThanEqual(8.0, PageRequest.of(0, 20));
+        Page<GameEntity> games = gameRepository.findByRatingGreaterThanEqual(4.0, PageRequest.of(0, 20));
         return games.stream()
-                .map(g -> mapToRecommendation(g.getId(), g.getRating() / 10.0)) // переводим в 0-1
+                .map(g -> mapToRecommendation(g.getId(), g.getRating() / 3.0))
                 .toList();
     }
 
@@ -256,7 +223,6 @@ public class RecomendationService {
 
     List<GameEntity> allGames = gameRepository.findAll();
     
-    // РЕШЕНИЕ ПРОБЛЕМЫ N+1
     List<GameTag> allGameTags = gameTagRepository.findAll();
     Map<Long, List<GameTag>> tagsByGameId = allGameTags.stream()
             .collect(Collectors.groupingBy(gt -> gt.getGame().getId()));
@@ -265,7 +231,6 @@ public class RecomendationService {
     for (GameEntity g : allGames) {
         if (g.getId().equals(gameId)) continue;
         
-        // Достаем из памяти
         List<GameTag> gameTags = tagsByGameId.getOrDefault(g.getId(), Collections.emptyList());
         double common = 0;
         for (GameTag gt : gameTags) {
@@ -293,7 +258,6 @@ public class RecomendationService {
         double rawScore = score.doubleValue(); 
         dto.setRecommendationScore(rawScore);
         
-        // Вычисляем % близости
         int percentage = (int) Math.round(rawScore * 100);
         percentage = Math.max(0, Math.min(100, percentage)); 
         
@@ -302,9 +266,6 @@ public class RecomendationService {
         return dto;
     }
 
-    // =========================================================================
-    // 5. РАБОТА С СЕССИЯМИ БД
-    // =========================================================================
    public List<RecommendationSessionDto> getUserSessions(Authentication authentication) {
     Long userId = userRepository.findByEmail(authentication.getName()).orElseThrow().getId();
     return sessionRepository.findByUserIdOrderByGeneratedAtDesc(userId).stream()
@@ -312,7 +273,6 @@ public class RecomendationService {
                 RecommendationSessionDto dto = new RecommendationSessionDto();
                 dto.setId(s.getId());
                 dto.setGeneratedAt(s.getGeneratedAt());
-                // Считаем количество игр в этой сессии
                 dto.setItemsCount(s.getItems().size()); 
                 return dto;
             }).toList();
@@ -327,7 +287,6 @@ public class RecomendationService {
         dto.setId(session.getId());
         dto.setGeneratedAt(session.getGeneratedAt());
         
-        // Маппим сохраненные айтемы в список игр для отображения
         dto.setItems(items.stream()
                 .map(i -> mapToRecommendation(i.getGame().getId(), i.getScore()))
                 .toList()
@@ -361,24 +320,20 @@ public class RecomendationService {
     }
     public List<RecommendationDto> getFastRecommendations(Authentication authentication) {
         Long userId = userRepository.findByEmail(authentication.getName()).orElseThrow().getId();
-        // Ищем самую свежую сессию пользователя
         Optional<RecommendationSession> latestSessionOpt = sessionRepository
                 .findByUserIdOrderByGeneratedAtDesc(userId)
                 .stream()
                 .findFirst();
 
         if (latestSessionOpt.isEmpty()) {
-            // Если сессий еще нет, возвращаем холодный старт
             return getColdStartRecommendations();
         }
 
         RecommendationSession session = latestSessionOpt.get();
         
-        // Достаем сохраненные игры из БД
         List<RecommendationItems> items = recommendationItemsRepository
                 .findBySessionIdOrderByRank(session.getId());
 
-        // Переводим в DTO и отдаем на фронтенд
         return items.stream()
                 .map(item -> mapToRecommendation(item.getGame().getId(), item.getScore()))
                 .toList();
@@ -386,14 +341,10 @@ public class RecomendationService {
     @Transactional
     public void generateAndSaveRecommendations(Authentication authentication) {
         Long userId = userRepository.findByEmail(authentication.getName()).orElseThrow().getId();
-        // 1. Сначала пересчитываем профиль (любимые теги)
         recalculateUserPreferences(userId);
 
-        // 2. Запускаем ТЯЖЕЛЫЙ алгоритм (Ансамбль LibRec + Content-based)
-        // (Это тот самый метод, который мы писали в прошлом ответе)
         List<RecommendationDto> calculatedRecs = getRecommendationsForUser(userId);
 
-        // 3. Сохраняем результаты в базу данных (создаем сессию)
         UserEntity user = userRepository.findById(userId).orElseThrow();
         RecommendationSession session = new RecommendationSession(user, LocalDateTime.now());
         sessionRepository.save(session);

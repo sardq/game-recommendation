@@ -7,9 +7,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.diplome.game_recommendation.helpers.exceptions.InvalidJwtTokenException;
 import com.diplome.game_recommendation.models.UserEntity;
+import com.diplome.game_recommendation.repositories.UserRepository;
 import com.diplome.game_recommendation.services.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,9 +29,9 @@ public class UserAuthenticationProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    private final UserService userService;
+    private final UserRepository userService;
 
-    public UserAuthenticationProvider(UserService userService) {
+    public UserAuthenticationProvider(@Lazy UserRepository userService) {
         this.userService = userService;
     }
 
@@ -58,7 +60,7 @@ public class UserAuthenticationProvider {
 
             String email = decoded.getSubject();
 
-            UserEntity user = userService.getByEmail(email);
+            UserEntity user = userService.findByEmail(email).get();
 
             return new UsernamePasswordAuthenticationToken(user.getEmail(), token, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 

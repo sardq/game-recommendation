@@ -26,7 +26,7 @@ public class TagImportService {
         int page = 1;
         int minGamesCount = 1000; 
 
-        while (true) {
+        for( int i = 0; i<=500; i++) {
             RawgTagResponse response = rawgApiService.getTags(page);
 
             if (response.getResults() == null || response.getResults().isEmpty()) break;

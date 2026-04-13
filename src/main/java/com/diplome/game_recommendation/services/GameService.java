@@ -83,7 +83,7 @@ public class GameService {
     public GameEntity loadGameIfNeeded(Long rawgId) {
 
         GameEntity existing = gameRepository.findById(rawgId).orElse(null);
-        if (existing.getPosterUrl() != null) {
+        if (existing.getDescription() != null) {
             return existing;
         }
 
@@ -138,7 +138,7 @@ public class GameService {
         case "nintendo switch" ->
                 PlatformEnum.NINTENDO;
 
-        default -> null; // игнорим неизвестные
+        default -> null; 
     };
 }
 }

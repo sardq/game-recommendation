@@ -27,7 +27,6 @@ public class LibrecDataBuilder {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (UserGames ug : all) {
-                // КРИТИЧЕСКИ ВАЖНО: берем только те взаимодействия, где есть оценка
                 if (ug.getRating() != null) {
                     writer.write(
                         ug.getUser().getId() + " " +

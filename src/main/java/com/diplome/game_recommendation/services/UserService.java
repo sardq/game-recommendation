@@ -37,7 +37,7 @@ public class UserService {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private static final String LOG_RESPONSE = "Ответ: {}";
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    @Value("${DEFAULT_PASSWORD}")
+    @Value("${DEFAULT_PASSWORD:123456}")
     private String defaultPassword;
 
     public UserService(UserRepository repository,UserGameRepository userGameRepository, PasswordEncoder passwordEncoder, UserMapper userMapper,
