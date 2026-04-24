@@ -43,4 +43,5 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
     Page<GameEntity> filterBySearch(String search, Pageable pageable);
     Page<GameEntity> findByOrderByReleaseDateDesc(Pageable pageable);
     Page<GameEntity> findTop20ByOrderByRatingDesc(Pageable pageable);
+    
 }

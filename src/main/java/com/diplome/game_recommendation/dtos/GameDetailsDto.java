@@ -28,5 +28,7 @@ public class GameDetailsDto {
     private Integer playtime;
 
     private List<String> tags;
+    private Double localRating;
+    private Integer localRatingCount;
 
 }

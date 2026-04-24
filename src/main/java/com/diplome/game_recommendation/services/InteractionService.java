@@ -31,13 +31,16 @@ public class InteractionService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final UserGameRepository userGamesRepository;
+    private final GameService gameService;
     public InteractionService(
             UserRepository userRepository,
             GameRepository gameRepository,
-            UserGameRepository userGamesRepository    ) {
+            UserGameRepository userGamesRepository,
+            GameService gameService) {
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.userGamesRepository = userGamesRepository;
+        this.gameService = gameService;
     }
     @Transactional
     public void recordView(Authentication authentication, Long gameId) {
@@ -75,7 +78,7 @@ public class InteractionService {
         interaction.setInteraction(InteractionEnum.Rated);
         interaction.setRating(rating);
         interaction.setTime(LocalDateTime.now());
-
+        gameService.updateLocalRating(gameId);
         userGamesRepository.save(interaction);
     }
     @Transactional

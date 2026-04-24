@@ -141,4 +141,19 @@ public class GameService {
         default -> null; 
     };
 }
+    @Transactional
+    public void updateLocalRating(Long gameId) {
+        Double average = userGameRepository.getAverageRatingForGame(gameId);
+        Integer count = userGameRepository.getCountOfRatingsForGame(gameId);
+        
+        GameEntity game = gameRepository.findById(gameId)
+                .orElseThrow(() -> new RuntimeException("Игра не найдена"));
+                
+        game.setLocalRating(average != null ? average : 0.0);
+        game.setLocalRatingCount(count != null ? count : 0);
+        
+        gameRepository.save(game);
+        logger.info("Обновлен локальный рейтинг для игры {}: {} (голосов: {})", 
+                    game.getName(), game.getLocalRating(), game.getLocalRatingCount());
+    }
 }

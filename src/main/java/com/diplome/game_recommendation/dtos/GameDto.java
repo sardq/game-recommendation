@@ -19,5 +19,5 @@ public class GameDto {
     private Integer metacriticRate;
 
     private LocalDate releaseDate;
-
+    private Double localRating;
 }
