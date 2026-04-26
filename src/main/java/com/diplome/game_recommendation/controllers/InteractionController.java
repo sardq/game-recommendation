@@ -5,6 +5,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.InteractionDto;
 import com.diplome.game_recommendation.dtos.ReviewDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
+import com.diplome.game_recommendation.models.ReactionType;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.services.InteractionService;
 @RestController
@@ -74,8 +76,8 @@ public class InteractionController {
     }
 
     @GetMapping("/reviews/game/{gameId}")
-    public List<ReviewDto> getReviews(@PathVariable Long gameId, @RequestParam int page, @RequestParam int size) {
-        return interactionService.getReviewsByGame(gameId, page, size);
+    public List<ReviewDto> getReviews(@PathVariable Long gameId, @RequestParam int page, @RequestParam int size, Authentication authentication) {
+        return interactionService.getReviewsByGame(gameId, page, size, authentication );
     }
     @GetMapping("/review/user/{gameId}")
     public ReviewDto getUserReview(@PathVariable Long gameId, Authentication authentication) {
@@ -115,5 +117,15 @@ public class InteractionController {
             @RequestParam(defaultValue = "5") int size) {
 
         return interactionService.getUserReviews(authentication, page, size);
+    }
+    @PostMapping("/reviews/{reviewId}/react")
+    public ResponseEntity<?> reactToReview(
+            @PathVariable Long reviewId,
+            @RequestParam String typeString,
+            Authentication authentication) {
+        
+        interactionService.reactToReview(authentication, reviewId, typeString);
+        
+        return ResponseEntity.ok().build();
     }
 }

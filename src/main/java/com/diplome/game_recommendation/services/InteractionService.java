@@ -17,9 +17,12 @@ import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.ReviewDto;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.InteractionEnum;
+import com.diplome.game_recommendation.models.ReactionType;
+import com.diplome.game_recommendation.models.ReviewReaction;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.repositories.GameRepository;
+import com.diplome.game_recommendation.repositories.ReviewReactionRepository;
 import com.diplome.game_recommendation.repositories.UserGameRepository;
 import com.diplome.game_recommendation.repositories.UserRepository;
 
@@ -31,15 +34,18 @@ public class InteractionService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final UserGameRepository userGamesRepository;
+    private final ReviewReactionRepository reactionRepository;
     private final GameService gameService;
     public InteractionService(
             UserRepository userRepository,
             GameRepository gameRepository,
             UserGameRepository userGamesRepository,
+            ReviewReactionRepository reactionRepository,
             GameService gameService) {
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.userGamesRepository = userGamesRepository;
+        this.reactionRepository = reactionRepository;
         this.gameService = gameService;
     }
     @Transactional
@@ -112,48 +118,50 @@ public class InteractionService {
                 .isPresent();
     }
     @Transactional
-    public List<ReviewDto> getReviewsByGame(Long gameId, int page, int size) {
+    public List<ReviewDto> getReviewsByGame(Long gameId, int page, int size, Authentication authentication) {
         Pageable pageable = PageRequest.of(page, size);
-        List<UserGames> ratedGames = userGamesRepository
-            .findByGameIdAndRatingIsNotNullOrderByTimeDesc(gameId, pageable).getContent();
+        
+        UserEntity currentUser = null;
+        if (authentication != null) {
+            currentUser = userRepository.findByEmail(authentication.getName()).orElse(null);
+        }
+        final UserEntity finalUser = currentUser;
 
         List<UserGames> reviewedGames = userGamesRepository
                 .findByGameIdAndReviewIsNotNullOrderByTimeDesc(gameId, pageable).getContent();
 
+        List<UserGames> ratedGames = userGamesRepository
+                .findByGameIdAndRatingIsNotNullOrderByTimeDesc(gameId, pageable).getContent();
+
         Map<Long, UserGames> ratingMap = ratedGames.stream()
-            .collect(Collectors.toMap(
-                g -> g.getUser().getId(),
-                g -> g
-            ));
+                .collect(Collectors.toMap(g -> g.getUser().getId(), g -> g, (existing, replacement) -> existing));
 
-        List<ReviewDto> reviewDtos = reviewedGames.stream()
-            .map(review -> {
-                UserGames rating = ratingMap.get(review.getUser().getId());
-                Integer userRating = rating != null ? rating.getRating() : null;
+        return reviewedGames.stream()
+                .map(review -> {
+                    UserGames rating = ratingMap.get(review.getUser().getId());
+                    ReviewDto dto = new ReviewDto();
+                    
+                    dto.setId(review.getId()); 
+                    dto.setLogin(review.getUser().getUsername());
+                    dto.setReview(review.getReview());
+                    dto.setRating(rating != null ? rating.getRating() : null);
 
-                ReviewDto dto = new ReviewDto();
-                dto.setId(review.getUser().getId());
-                dto.setLogin(review.getUser().getUsername());
-                dto.setReview(review.getReview());
-                dto.setRating(userRating);
-                return dto;
-            })
-            .toList();
+                    List<ReviewReaction> reactions = reactionRepository.findByReviewId(review.getId());
+                    
+                    dto.setLikesCount(reactions.stream().filter(r -> r.getType() == ReactionType.LIKE).count());
+                    dto.setDislikesCount(reactions.stream().filter(r -> r.getType() == ReactionType.DISLIKE).count());
+                    dto.setFunnyCount(reactions.stream().filter(r -> r.getType() == ReactionType.FUNNY).count());
 
-        List<ReviewDto> ratingOnly = ratedGames.stream()
-            .filter(r -> reviewedGames.stream().noneMatch(rev -> rev.getUser().getId().equals(r.getUser().getId())))
-            .map(r -> {
-                ReviewDto dto = new ReviewDto();
-                dto.setId(r.getUser().getId());
-                dto.setLogin(r.getUser().getUsername());
-                dto.setReview(null);
-                dto.setRating(r.getRating());
-                return dto;
-            })
-            .toList();
-        List<ReviewDto> reviews = new ArrayList<>(reviewDtos);
-        reviews.addAll(ratingOnly);
-        return reviews;
+                    if (finalUser != null) {
+                        reactions.stream()
+                            .filter(r -> r.getUser().getId().equals(finalUser.getId()))
+                            .findFirst()
+                            .ifPresent(r -> dto.setCurrentUserReaction(r.getType().name()));
+                    }
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     public void addReview(Authentication authentication, Long gameId, String reviewText) {
         UserEntity user = userRepository.findByEmail(authentication.getName()).orElseThrow();
@@ -228,5 +236,26 @@ public class InteractionService {
                 })
                 .collect(Collectors.toList());
     }
-
+    @Transactional
+    public void reactToReview(Authentication authentication, Long reviewId, String typeString) {
+        ReactionType type = ReactionType.valueOf(typeString);
+        Long userId = userRepository.findByEmail(authentication.getName()).get().getId();
+        Optional<ReviewReaction> existing = reactionRepository.findByUserIdAndReviewId(userId, reviewId);
+        
+        if (existing.isPresent()) {
+            ReviewReaction reaction = existing.get();
+            if (reaction.getType() == type) {
+                reactionRepository.delete(reaction); 
+            } else {
+                reaction.setType(type); 
+                reactionRepository.save(reaction);
+            }
+        } else {
+            ReviewReaction newReaction = new ReviewReaction();
+            newReaction.setUser(userRepository.getReferenceById(userId));
+            newReaction.setReview(userGamesRepository.getReferenceById(reviewId));
+            newReaction.setType(type);
+            reactionRepository.save(newReaction);
+        }
+    }
 }

@@ -32,6 +32,10 @@ public class GameEntity extends BaseEntity {
     private Double metacriticRate;
     private Integer playtime;
     private Double rating;
+    @Column(name = "local_rating")
+    private Double localRating = 0.0;
+    @Column(name = "local_rating_count")
+    private Integer localRatingCount = 0;
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Set<GameTag> gameTags;
     public GameEntity(){
