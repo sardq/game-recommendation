@@ -30,5 +30,6 @@ public class GameDetailsDto {
     private List<String> tags;
     private Double localRating;
     private Integer localRatingCount;
-
+    private List<String> screenshotUrls;
+    private String trailerUrl;
 }

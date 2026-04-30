@@ -1,6 +1,7 @@
 server:
   port: 8080
   forward-headers-strategy: framework
+
 logging:
   file:
     name: logs/application.log
@@ -8,42 +9,55 @@ logging:
     root: INFO
     '[com.diplome.game_recommendation]': DEBUG
 
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username: ${SPRING_MAIL_USERNAME}
+  password: ${SPRING_MAIL_PASSWORD}
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+minio:
+  url: ${MINIO_URL:http://localhost:9000}
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:minioadmin}
+  bucket: journal-logs
+
+gigachat:
+  authorization-key: ${GIGACHAT_KEY}
+
+rawg:
+  key: ${RAWG_API_KEY}
+
+spring:
+  application:
+    name: game-recommendation
+  profiles:
+    active: dev
+
+---
 spring:
   config:
-      import: optional:file:.env[.properties]
-  output:
-    ansi:
-      enabled: always
-
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:postgresql://db:5432/game_recommendation
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
-
+    url: jdbc:postgresql://localhost:5432/game_recommendation
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
-      ddl-auto: validate  
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+      ddl-auto: update 
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-minio:
-    url: http://localhost:9000
-    access-key: ${MINIO_ACCESS_KEY}
-    secret-key: ${MINIO_SECRET_KEY}
-    bucket: journal-logs
-gigachat:
-    authorization-key: ${GIGACHAT_KEY}
-rawg:
-    key: ${RAWG_API_KEY}
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://postgres_db:5432/game_recommendation
+    username: postgres
+    password: postgres

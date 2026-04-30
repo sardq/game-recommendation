@@ -38,7 +38,13 @@ public class GameController {
     }
 
     private GameDto toDto(GameEntity entity) {
-        return mapper.map(entity, GameDto.class);
+        GameDto dto = mapper.map(entity, GameDto.class);
+        
+        if (dto.getLocalRating() == null) {
+            dto.setLocalRating(entity.getLocalRating());
+        }
+        
+        return dto;
     }
     private GameDetailsDto toDetailsDto(GameEntity game) {
         if (game == null) return null;
@@ -67,7 +73,10 @@ public class GameController {
         }
 
         dto.setPosterUrl(game.getPosterUrl());
-
+        dto.setTrailerUrl(game.getTrailerUrl());
+        dto.setScreenshotUrls(game.getScreenshotUrls());
+        dto.setLocalRating(game.getLocalRating());
+        dto.setLocalRatingCount(game.getLocalRatingCount());
         if (game.getRating() != null) {
             dto.setRating(BigDecimal.valueOf(game.getRating()));
         }

@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.models;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CollectionTable;
@@ -21,6 +22,7 @@ import lombok.Setter;
 public class GameEntity extends BaseEntity {
     private String name;
     private Long rawgId;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Date releaseDate;
     @ElementCollection
@@ -36,6 +38,12 @@ public class GameEntity extends BaseEntity {
     private Double localRating = 0.0;
     @Column(name = "local_rating_count")
     private Integer localRatingCount = 0;
+    @ElementCollection
+    @CollectionTable(name = "game_screenshots", joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "screenshot_url")
+    private List<String> screenshotUrls;
+    @Column(columnDefinition = "TEXT")
+    private String trailerUrl;
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Set<GameTag> gameTags;
     public GameEntity(){

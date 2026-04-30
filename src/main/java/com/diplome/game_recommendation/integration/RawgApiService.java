@@ -13,6 +13,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDetailsResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDto;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameResponse;
+import com.diplome.game_recommendation.dtos.rawg.RawgMovieResponse;
+import com.diplome.game_recommendation.dtos.rawg.RawgScreenshotsResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgTagResponse;
 
 import io.netty.channel.ChannelOption;
@@ -118,5 +120,44 @@ public class RawgApiService {
                 .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(2)))
                 .block();
     }
+    public List<String> getGameScreenshots(Long id) {
+        RawgScreenshotsResponse res = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/games/{id}/screenshots")
+                        .queryParam("key", apiKey)
+                        .build(id))
+                .retrieve()
+                .bodyToMono(RawgScreenshotsResponse.class)
+                .block();
+        
+        if (res != null && res.getResults() != null) {
+                return res.getResults().stream().map(s -> s.getImage()).toList();
+        }
+        return Collections.emptyList();
+        }
 
+        public String getGameTrailer(Long id) {
+    try {
+        RawgMovieResponse res = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/games/{id}/movies")
+                        .queryParam("key", apiKey)
+                        .build(id))
+                .retrieve()
+                .bodyToMono(RawgMovieResponse.class)
+                .block();
+
+        if (res != null && res.getResults() != null && !res.getResults().isEmpty()) {
+            // Берем 'max' качество первого трейлера из списка
+            String videoUrl = res.getResults().get(0).getData().getMax();
+            System.out.println("Найден трейлер для игры " + id + ": " + videoUrl);
+            return videoUrl;
+        } else {
+            System.out.println("У игры " + id + " нет доступных трейлеров в RAWG API");
+        }
+    } catch (Exception e) {
+        System.err.println("Ошибка при получении трейлера: " + e.getMessage());
+    }
+    return null;
+}
 }

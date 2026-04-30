@@ -81,16 +81,23 @@ public class GameService {
     }
     @Transactional
     public GameEntity loadGameIfNeeded(Long rawgId) {
-
         GameEntity existing = gameRepository.findById(rawgId).orElse(null);
-        if (existing.getDescription() != null) {
+        
+        if (existing != null && existing.getDescription() != null && existing.getScreenshotUrls() != null) {
             return existing;
         }
 
         RawgGameDetailsResponse response = rawgApiService.getGameDetails(existing.getRawgId());
+        
+        List<String> screenshots = rawgApiService.getGameScreenshots(existing.getRawgId());
+        
+        String trailer = rawgApiService.getGameTrailer(existing.getRawgId());
 
         GameEntity game = mapToEntity(response);
         game.setId(rawgId);
+        game.setScreenshotUrls(screenshots); 
+        game.setTrailerUrl(trailer);        
+        
         return gameRepository.save(game);
     }
     private GameEntity mapToEntity(RawgGameDetailsResponse r) {
@@ -120,7 +127,7 @@ public class GameService {
 
             game.setPlatforms(platforms);
         }
-
+        
         return game;
     }
     private PlatformEnum mapPlatform(String name) {

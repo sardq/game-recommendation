@@ -11,4 +11,5 @@ public class RecommendationDto {
     private Integer matchPercentage;
     private Double rating;
     private Double recommendationScore;
+    private Double localRating;
 }

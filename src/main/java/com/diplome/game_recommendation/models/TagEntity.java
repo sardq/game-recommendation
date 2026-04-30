@@ -10,17 +10,19 @@ import lombok.Setter;
 @Getter @Setter
 public class TagEntity extends BaseEntity{
     private String name;
+    private String name_ru;
     private String slug;
     private Boolean keep;
     private String description;
     private String imageUrl;
     public TagEntity(){}
-    public TagEntity(String name, String description, String imageUrl, Boolean keep, String slug)
+    public TagEntity(String name,String name_ru, String description, String imageUrl, Boolean keep, String slug)
     {
         this.slug = slug;
         this.keep = keep;
         this.description = description;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.name_ru = name_ru;
     }
 }

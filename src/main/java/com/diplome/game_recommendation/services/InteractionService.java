@@ -84,8 +84,8 @@ public class InteractionService {
         interaction.setInteraction(InteractionEnum.Rated);
         interaction.setRating(rating);
         interaction.setTime(LocalDateTime.now());
+        userGamesRepository.saveAndFlush(interaction); 
         gameService.updateLocalRating(gameId);
-        userGamesRepository.save(interaction);
     }
     @Transactional
     public void addToFavorites(Authentication authentication, Long gameId) {

@@ -83,7 +83,7 @@ public class LibrecEngineService {
                 dto.setPosterUrl(game.getPosterUrl());
                 dto.setRating(game.getRating());
                 dto.setRecommendationScore(score);
-
+                dto.setLocalRating(game.getLocalRating());
                 result.add(dto);
             }
 
