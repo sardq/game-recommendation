@@ -257,7 +257,7 @@ public class RecomendationService {
         
         double rawScore = score.doubleValue(); 
         dto.setRecommendationScore(rawScore);
-        
+        dto.setLocalRating(game.getLocalRating()); 
         int percentage = (int) Math.round(rawScore * 100);
         percentage = Math.max(0, Math.min(100, percentage)); 
         

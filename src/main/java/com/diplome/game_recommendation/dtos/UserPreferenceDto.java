@@ -7,5 +7,6 @@ import lombok.Setter;
 public class UserPreferenceDto {
     private Long tagId;
     private String tagName;
+    private String tagNameRu;
     private Double preferenceWeight;
 }

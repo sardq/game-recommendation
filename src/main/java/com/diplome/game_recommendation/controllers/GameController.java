@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diplome.game_recommendation.dtos.GameDetailsDto;
 import com.diplome.game_recommendation.dtos.GameDto;
+import com.diplome.game_recommendation.dtos.TagDto;
 import com.diplome.game_recommendation.helpers.configuration.Constants;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.services.GameService;
@@ -88,12 +89,15 @@ public class GameController {
         dto.setPlaytime(game.getPlaytime());
 
         if (game.getGameTags() != null) {
-            dto.setTags(
-                game.getGameTags()
-                    .stream()
-                    .map(gt -> gt.getTag().getName())
-                    .toList()
-            );
+            dto.setTags(game.getGameTags().stream()
+                .map(gt -> {
+                    TagDto t = new TagDto();
+                    t.setId(gt.getTag().getId());
+                    t.setName(gt.getTag().getName());
+                    t.setNameRu(gt.getTag().getNameRu());
+                    t.setSlug(gt.getTag().getSlug());
+                    return t;
+                }).toList());
         }
 
         return dto;

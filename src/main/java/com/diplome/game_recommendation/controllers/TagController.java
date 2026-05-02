@@ -33,12 +33,16 @@ public class TagController {
     }
 
     @GetMapping
-    public Page<TagEntity> getAll(
+    public List<TagDto> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
         logger.info("Получение тегов");
-        return tagService.getAll(page, size);
+        List<TagDto> result = tagService.getAll(page, size).getContent()
+                .stream()
+                .map(this::toDto)
+                .toList();
+        return result;
     }
 
     @GetMapping("/{id}")
@@ -67,7 +71,9 @@ public class TagController {
                 .toList();
     }
     private TagDto toDto(TagEntity entity) {
-        return mapper.map(entity, TagDto.class);
+        TagDto dto =  mapper.map(entity, TagDto.class);
+        dto.setNameRu(entity.getNameRu()); 
+        return dto;
     }
     @GetMapping("/recommended")
     public ResponseEntity<Page<TagEntity>> getRecommendedTags(

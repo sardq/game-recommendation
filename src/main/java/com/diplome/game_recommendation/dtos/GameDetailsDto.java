@@ -27,7 +27,7 @@ public class GameDetailsDto {
 
     private Integer playtime;
 
-    private List<String> tags;
+    private List<TagDto> tags;
     private Double localRating;
     private Integer localRatingCount;
     private List<String> screenshotUrls;

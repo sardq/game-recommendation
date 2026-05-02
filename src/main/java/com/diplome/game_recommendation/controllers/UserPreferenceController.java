@@ -29,6 +29,7 @@ public class UserPreferenceController {
             dto.setPreferenceWeight(entity.getPreferenceWeight().doubleValue());
             dto.setTagId(entity.getTag().getId());      
             dto.setTagName(entity.getTag().getName());
+            dto.setTagNameRu(entity.getTag().getNameRu());
             return dto;
         }
 

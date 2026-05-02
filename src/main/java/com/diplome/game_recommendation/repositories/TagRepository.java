@@ -36,7 +36,8 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     SELECT t
     FROM TagEntity t
     WHERE t.keep = true
-      AND LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%'))
+      AND (LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%'))
+      OR LOWER(t.nameRu) LIKE LOWER(CONCAT('%', :search, '%')))
     """)
     Page<TagEntity> filterBySearch(String search, Pageable pageable);
     @Query("""
