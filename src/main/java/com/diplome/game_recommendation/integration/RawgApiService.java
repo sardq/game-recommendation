@@ -3,6 +3,7 @@ package com.diplome.game_recommendation.integration;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -15,7 +16,9 @@ import com.diplome.game_recommendation.dtos.rawg.RawgGameDto;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgMovieResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgScreenshotsResponse;
+import com.diplome.game_recommendation.dtos.rawg.RawgStoreResponse;
 import com.diplome.game_recommendation.dtos.rawg.RawgTagResponse;
+import com.diplome.game_recommendation.dtos.rawg.SteamStoreResponse;
 
 import io.netty.channel.ChannelOption;
 import reactor.netty.http.client.HttpClient;
@@ -137,27 +140,74 @@ public class RawgApiService {
         }
 
         public String getGameTrailer(Long id) {
-    try {
-        RawgMovieResponse res = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/games/{id}/movies")
-                        .queryParam("key", apiKey)
-                        .build(id))
-                .retrieve()
-                .bodyToMono(RawgMovieResponse.class)
-                .block();
+                try {
+                        RawgMovieResponse res = webClient.get()
+                                .uri(uriBuilder -> uriBuilder
+                                        .path("/games/{id}/movies")
+                                        .queryParam("key", apiKey)
+                                        .build(id))
+                                .retrieve()
+                                .bodyToMono(RawgMovieResponse.class)
+                                .block();
 
-        if (res != null && res.getResults() != null && !res.getResults().isEmpty()) {
-            // Берем 'max' качество первого трейлера из списка
-            String videoUrl = res.getResults().get(0).getData().getMax();
-            System.out.println("Найден трейлер для игры " + id + ": " + videoUrl);
-            return videoUrl;
-        } else {
-            System.out.println("У игры " + id + " нет доступных трейлеров в RAWG API");
+                        if (res != null && res.getResults() != null && !res.getResults().isEmpty()) {
+                        // Берем 'max' качество первого трейлера из списка
+                        String videoUrl = res.getResults().get(0).getData().getMax();
+                        System.out.println("Найден трейлер для игры " + id + ": " + videoUrl);
+                        return videoUrl;
+                        } else {
+                        System.out.println("У игры " + id + " нет доступных трейлеров в RAWG API");
+                        }
+                } catch (Exception e) {
+                        System.err.println("Ошибка при получении трейлера: " + e.getMessage());
+                }
+        return null;
         }
-    } catch (Exception e) {
-        System.err.println("Ошибка при получении трейлера: " + e.getMessage());
-    }
-    return null;
-}
+        public List<String> getSteamTrailers(String steamAppId) {
+                if (steamAppId == null) return Collections.emptyList();
+                try {
+                        SteamStoreResponse response = webClient.get()
+                                .uri("https://store.steampowered.com/api/appdetails?appids=" + steamAppId)
+                                .retrieve()
+                                .bodyToMono(SteamStoreResponse.class)
+                                .block();
+
+                        if (response != null && response.getData().containsKey(steamAppId)) {
+                        var movieData = response.getData().get(steamAppId);
+                        if (movieData.isSuccess() && movieData.getData() != null && movieData.getData().getMovies() != null) {
+                                
+                                return movieData.getData().getMovies().stream()
+                                .map(m -> {
+                                        // 1. Пробуем старый добрый MP4
+                                        if (m.getMp4() != null) return m.getMp4().getMax();
+                                        
+                                        // 2. Если его нет, берем HLS (он лучше поддерживается браузерами, чем DASH)
+                                        if (m.getHls_h264() != null) return m.getHls_h264();
+                                        
+                                        // 3. Или DASH
+                                        if (m.getDash_h264() != null) return m.getDash_h264();
+                                        
+                                        return null;
+                                })
+                                .filter(Objects::nonNull)
+                                .toList();
+                        }
+                        }
+                } catch (Exception e) {
+                        System.err.println("Steam API Error: " + e.getMessage());
+                }
+                return Collections.emptyList();
+                }
+        public List<RawgStoreResponse.StoreResult> getGameStores(Long gameId) {
+                RawgStoreResponse res = webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                                .path("/games/{id}/stores")
+                                .queryParam("key", apiKey)
+                                .build(gameId))
+                        .retrieve()
+                        .bodyToMono(RawgStoreResponse.class)
+                        .block();
+
+                return res != null ? res.getResults() : Collections.emptyList();
+                }
 }

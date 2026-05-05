@@ -145,7 +145,7 @@ public class InteractionService {
                     dto.setLogin(review.getUser().getUsername());
                     dto.setReview(review.getReview());
                     dto.setRating(rating != null ? rating.getRating() : null);
-
+                    dto.setAuthorId(review.getUser().getId());
                     List<ReviewReaction> reactions = reactionRepository.findByReviewId(review.getId());
                     
                     dto.setLikesCount(reactions.stream().filter(r -> r.getType() == ReactionType.LIKE).count());

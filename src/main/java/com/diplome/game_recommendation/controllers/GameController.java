@@ -74,7 +74,8 @@ public class GameController {
         }
 
         dto.setPosterUrl(game.getPosterUrl());
-        dto.setTrailerUrl(game.getTrailerUrl());
+        dto.setTrailerUrls(game.getTrailerUrls());
+        dto.setWalkthroughUrls(game.getWalkthroughUrls());
         dto.setScreenshotUrls(game.getScreenshotUrls());
         dto.setLocalRating(game.getLocalRating());
         dto.setLocalRatingCount(game.getLocalRatingCount());
@@ -116,9 +117,9 @@ public class GameController {
                 .toList();
     }
 
-    @PostMapping("/load/{rawgId}")
-    public ResponseEntity<Long> loadGame(@PathVariable Long rawgId) {
-        GameEntity game = service.loadGameIfNeeded(rawgId);
+    @PostMapping("/load/{dbId}")
+    public ResponseEntity<Long> loadGame(@PathVariable Long dbId) {
+        GameEntity game = service.loadGameIfNeeded(dbId);
         return ResponseEntity.ok(game.getId());
     }
     @GetMapping("/{id}")

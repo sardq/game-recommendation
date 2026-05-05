@@ -1,5 +1,6 @@
 package com.diplome.game_recommendation.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.diplome.game_recommendation.dtos.rawg.PlatformWrapper;
 import com.diplome.game_recommendation.dtos.rawg.RawgGameDetailsResponse;
+import com.diplome.game_recommendation.dtos.rawg.RawgStoreResponse;
 import com.diplome.game_recommendation.integration.RawgApiService;
+import com.diplome.game_recommendation.integration.VideoApiService;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.InteractionEnum;
 import com.diplome.game_recommendation.models.PlatformEnum;
@@ -28,11 +31,13 @@ public class GameService {
     private static final String LOG_RESPONSE = "Ответ: {}";
     private final GameRepository gameRepository;
     private final RawgApiService rawgApiService;
+    private final VideoApiService videoApiService;
     private final UserGameRepository userGameRepository;
-    public GameService(GameRepository gameRepository, UserGameRepository userGameRepository, RawgApiService rawgApiService){
+    public GameService(GameRepository gameRepository, UserGameRepository userGameRepository, RawgApiService rawgApiService, VideoApiService videoApiService){
         this.gameRepository = gameRepository;
         this.userGameRepository = userGameRepository;
         this.rawgApiService = rawgApiService;
+        this.videoApiService = videoApiService;
     }
     public Page<GameEntity> getGames(int page, int size){
         logger.info("Получение игр: {}, {}", page, size);
@@ -80,24 +85,27 @@ public class GameService {
         return gameRepository.findByOrderByReleaseDateDesc(pageable);
     }
     @Transactional
-    public GameEntity loadGameIfNeeded(Long rawgId) {
-        GameEntity existing = gameRepository.findById(rawgId).orElse(null);
+    public GameEntity loadGameIfNeeded(Long dbId) {
+        GameEntity existing = gameRepository.findById(dbId).orElse(null);
         
-        if (existing != null && existing.getDescription() != null && existing.getScreenshotUrls() != null) {
-            return existing;
-        }
+        // if (existing != null && existing.getTrailerUrls().size() > 0 && existing.getScreenshotUrls() != null) {
+        //     return existing;
+        // }
 
         RawgGameDetailsResponse response = rawgApiService.getGameDetails(existing.getRawgId());
-        
+
+        List<RawgStoreResponse.StoreResult> stores = rawgApiService.getGameStores(existing.getRawgId());
+
         List<String> screenshots = rawgApiService.getGameScreenshots(existing.getRawgId());
         
-        String trailer = rawgApiService.getGameTrailer(existing.getRawgId());
-
+        List<String> trailers = videoApiService.searchVideos(existing.getName(), "gameplay trailer", 3);
+        List<String> walkthroughs = videoApiService.searchVideos(existing.getName(), "Прохождение", 3);
         GameEntity game = mapToEntity(response);
-        game.setId(rawgId);
+        game.setId(dbId);
         game.setScreenshotUrls(screenshots); 
-        game.setTrailerUrl(trailer);        
-        
+        game.setTrailerUrls(trailers != null ? trailers : new ArrayList<>());
+        game.setWalkthroughUrls(walkthroughs != null ? walkthroughs : new ArrayList<>());
+        game.setStoreLinks(stores.stream().map(s -> s.getUrl()).toList());
         return gameRepository.save(game);
     }
     private GameEntity mapToEntity(RawgGameDetailsResponse r) {

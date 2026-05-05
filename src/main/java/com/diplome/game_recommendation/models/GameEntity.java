@@ -1,5 +1,6 @@
 package com.diplome.game_recommendation.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -42,8 +43,18 @@ public class GameEntity extends BaseEntity {
     @CollectionTable(name = "game_screenshots", joinColumns = @JoinColumn(name = "game_id"))
     @Column(name = "screenshot_url")
     private List<String> screenshotUrls;
-    @Column(columnDefinition = "TEXT")
-    private String trailerUrl;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "game_trailers", joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "url")
+    private List<String> trailerUrls = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "game_store_links", joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "url")
+    private List<String> storeLinks;
+    @ElementCollection
+    @CollectionTable(name = "game_walkthroughs", joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "url")
+    private List<String> walkthroughUrls;
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Set<GameTag> gameTags;
     public GameEntity(){

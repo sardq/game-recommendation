@@ -10,6 +10,7 @@ public class ReviewDto {
     private Long id;
     private String login;
     private String gameTitile;
+    private Long authorId;
     private String review;
     private Integer rating;
     private Long likesCount;

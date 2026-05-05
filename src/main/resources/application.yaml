@@ -33,6 +33,9 @@ gigachat:
 rawg:
   key: ${RAWG_API_KEY}
 
+video:
+  key: ${VIDEO_API_KEY}
+  
 spring:
   application:
     name: game-recommendation
