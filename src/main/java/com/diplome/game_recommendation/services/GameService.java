@@ -88,9 +88,9 @@ public class GameService {
     public GameEntity loadGameIfNeeded(Long dbId) {
         GameEntity existing = gameRepository.findById(dbId).orElse(null);
         
-        // if (existing != null && existing.getTrailerUrls().size() > 0 && existing.getScreenshotUrls() != null) {
-        //     return existing;
-        // }
+        if (existing != null && existing.getTrailerUrls().size() > 0 && existing.getScreenshotUrls() != null) {
+            return existing;
+        }
 
         RawgGameDetailsResponse response = rawgApiService.getGameDetails(existing.getRawgId());
 

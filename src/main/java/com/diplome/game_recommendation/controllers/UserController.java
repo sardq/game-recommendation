@@ -4,6 +4,8 @@ package com.diplome.game_recommendation.controllers;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.diplome.game_recommendation.dtos.UserDto;
@@ -56,5 +58,15 @@ public class UserController {
     public List<UserGames> history(@PathVariable Long userId) {
         logger.info("История пользователя userId={}", userId);
         return userService.getUserHistory(userId);
+    }
+    @PutMapping("/update-birthdate")
+    public ResponseEntity<UserDto> updateProfile(
+            @RequestBody UserDto userDto, 
+            Authentication authentication) {
+        
+        String email = authentication.getName();
+        UserDto updated = userService.updateProfile(email, userDto);
+        
+        return ResponseEntity.ok(updated);
     }
 }

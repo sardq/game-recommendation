@@ -19,9 +19,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.nio.CharBuffer;
 import java.time.LocalDate;
@@ -130,5 +133,16 @@ public class UserService {
         UserEntity user = repository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Пользователь с таким email не найден"));
         repository.save(user);
+    }
+    @Transactional
+    public UserDto updateProfile(String email, UserDto userDto) {
+        UserEntity user = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        if (userDto.getBirthDate() != null) {
+            user.setBirthDate(userDto.getBirthDate());
+        }
+        // if (userDto.getUsername() != null) user.setUsername(userDto.getUsername());
+        UserEntity updatedUser = repository.save(user);
+        return userMapper.toUserDto(updatedUser);
     }
 }
