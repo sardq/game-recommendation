@@ -12,6 +12,7 @@ public class UserDto {
     private String username;
     private String email;
     private LocalDate registrationDate;
+    private String avatarUrl;
     private LocalDate lastLogin;
     private Date birthDate;
     @JsonProperty(access = Access.READ_ONLY)
@@ -29,11 +30,17 @@ public class UserDto {
     public String getUsername() {
         return username;
     }
-
+    
     public void setUsername(String username) {
         this.username = username;
     }
-
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+    
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
     public String getEmail() {
         return email;
     }

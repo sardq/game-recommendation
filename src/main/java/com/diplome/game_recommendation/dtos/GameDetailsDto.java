@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.diplome.game_recommendation.integration.NewsService;
+import com.diplome.game_recommendation.integration.PriceService;
+
 import lombok.Getter;
 import lombok.Setter;
 @Getter @Setter
@@ -16,7 +19,7 @@ public class GameDetailsDto {
     private String description;
 
     private LocalDate releaseDate;
-
+    
     private List<String> platforms;
 
     private String posterUrl;
@@ -26,11 +29,13 @@ public class GameDetailsDto {
     private BigDecimal metacriticRate;
 
     private Integer playtime;
-
+    private List<PriceService.GameDeal> deals;
+    private List<NewsService.Article> news;
     private List<TagDto> tags;
     private Double localRating;
     private Integer localRatingCount;
     private List<String> screenshotUrls;
     private List<String> trailerUrls;
     private List<String> walkthroughUrls;
+    private List<String> storeLinks;
 }

@@ -4,9 +4,11 @@ package com.diplome.game_recommendation.controllers;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
@@ -68,5 +70,13 @@ public class UserController {
         UserDto updated = userService.updateProfile(email, userDto);
         
         return ResponseEntity.ok(updated);
+    }
+     @PostMapping(value = "/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAvatar(
+            @RequestParam("file") MultipartFile file,
+            Authentication authentication) {
+        
+        String url = userService.updateAvatar(authentication.getName(), file);
+        return ResponseEntity.ok(url);
     }
 }

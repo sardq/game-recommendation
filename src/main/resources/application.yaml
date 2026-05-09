@@ -41,7 +41,13 @@ spring:
     name: game-recommendation
   profiles:
     active: dev
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+news:
+  key: ${NEWS_API_KEY}
 ---
 spring:
   config:

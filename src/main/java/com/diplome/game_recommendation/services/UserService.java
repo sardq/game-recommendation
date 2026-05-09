@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.CharBuffer;
 import java.time.LocalDate;
@@ -39,17 +40,23 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserAuthenticationProvider userAuthenticationProvider;
     private static final String LOG_RESPONSE = "Ответ: {}";
+    private final FileService fileService;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Value("${DEFAULT_PASSWORD:123456}")
     private String defaultPassword;
+    @Value("${minio.url}")
+    private String minioExternalUrl;
+    @Value("${minio.bucket}")
+    private String bucket;
 
     public UserService(UserRepository repository,UserGameRepository userGameRepository, PasswordEncoder passwordEncoder, UserMapper userMapper,
-            @Lazy UserAuthenticationProvider userAuthenticationProvider) {
+            @Lazy UserAuthenticationProvider userAuthenticationProvider, FileService fileService) {
         this.passwordEncoder = passwordEncoder;
         this.userGameRepository = userGameRepository;
         this.userMapper = userMapper;
         this.repository = repository;
         this.userAuthenticationProvider = userAuthenticationProvider;
+        this.fileService = fileService;
     }
     @Transactional(readOnly = true)
     public Page<UserEntity> getAll(int page, int size) {
@@ -144,5 +151,14 @@ public class UserService {
         // if (userDto.getUsername() != null) user.setUsername(userDto.getUsername());
         UserEntity updatedUser = repository.save(user);
         return userMapper.toUserDto(updatedUser);
+    }
+    @Transactional
+    public String updateAvatar(String email, MultipartFile file) {
+        UserEntity user = repository.findByEmail(email).orElseThrow();
+        String fileName = fileService.uploadAvatar(file, user.getId());
+        String fullUrl = minioExternalUrl + "/" + bucket + "/" + fileName;
+        user.setAvatarUrl(fullUrl);
+        repository.save(user);
+        return fullUrl;
     }
 }

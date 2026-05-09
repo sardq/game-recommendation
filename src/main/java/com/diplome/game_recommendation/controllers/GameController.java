@@ -19,6 +19,8 @@ import com.diplome.game_recommendation.dtos.GameDetailsDto;
 import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.TagDto;
 import com.diplome.game_recommendation.helpers.configuration.Constants;
+import com.diplome.game_recommendation.integration.NewsService;
+import com.diplome.game_recommendation.integration.PriceService;
 import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.services.GameService;
 
@@ -29,12 +31,16 @@ public class GameController {
     public static final String URL = Constants.API_URL + "/games";
 
     private final GameService service;
+    private final PriceService priceService;
+    private final NewsService newsService;
     private final ModelMapper mapper;
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    public GameController(GameService service, ModelMapper mapper) {
+    public GameController(GameService service, PriceService priceService, NewsService newsService, ModelMapper mapper) {
         this.service = service;
+        this.priceService = priceService;
+        this.newsService = newsService;
         this.mapper = mapper;
     }
 
@@ -76,6 +82,7 @@ public class GameController {
         dto.setPosterUrl(game.getPosterUrl());
         dto.setTrailerUrls(game.getTrailerUrls());
         dto.setWalkthroughUrls(game.getWalkthroughUrls());
+        dto.setStoreLinks(game.getStoreLinks());
         dto.setScreenshotUrls(game.getScreenshotUrls());
         dto.setLocalRating(game.getLocalRating());
         dto.setLocalRatingCount(game.getLocalRatingCount());
@@ -120,12 +127,16 @@ public class GameController {
     @PostMapping("/load/{dbId}")
     public ResponseEntity<Long> loadGame(@PathVariable Long dbId) {
         GameEntity game = service.loadGameIfNeeded(dbId);
+        
         return ResponseEntity.ok(game.getId());
     }
     @GetMapping("/{id}")
     public ResponseEntity<GameDetailsDto> get(@PathVariable Long id) {
         GameEntity game = service.getGame(id);
-        return ResponseEntity.ok(toDetailsDto(game));
+        GameDetailsDto dto = toDetailsDto(game);
+        dto.setDeals(priceService.getBestDeals(game.getName()));
+        dto.setNews(newsService.getLatestNews(game.getName()));
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/filter")

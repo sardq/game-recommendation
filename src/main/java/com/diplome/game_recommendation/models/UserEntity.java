@@ -26,6 +26,7 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private LocalDate registrationDate;
     private LocalDate lastLogin;
+    private String avatarUrl;
     private Date birthDate;
     public UserEntity() {
     }

@@ -8,15 +8,9 @@ import io.minio.MinioClient;
 
 @Configuration
 public class MinioConfig {
-
-    @Value("${minio.url}")
-    public String url;
-
-    @Value("${minio.access-key}")
-    public String accessKey;
-
-    @Value("${minio.secret-key}")
-    public String secretKey;
+    @Value("${minio.url}") private String url;
+    @Value("${minio.access-key}") private String accessKey;
+    @Value("${minio.secret-key}") private String secretKey;
 
     @Bean
     public MinioClient minioClient() {
