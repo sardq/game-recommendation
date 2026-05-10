@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.services;
 
 import com.diplome.game_recommendation.dtos.CredentialsDto;
+import com.diplome.game_recommendation.dtos.PublicUserDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.dtos.UserSignupDto;
 import com.diplome.game_recommendation.helpers.configuration.UserAuthenticationProvider;
@@ -35,6 +36,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     public final UserRepository repository;
+    public final InteractionService interactionService;
     public final UserGameRepository userGameRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
@@ -50,10 +52,11 @@ public class UserService {
     private String bucket;
 
     public UserService(UserRepository repository,UserGameRepository userGameRepository, PasswordEncoder passwordEncoder, UserMapper userMapper,
-            @Lazy UserAuthenticationProvider userAuthenticationProvider, FileService fileService) {
+            @Lazy UserAuthenticationProvider userAuthenticationProvider, InteractionService interactionService, FileService fileService) {
         this.passwordEncoder = passwordEncoder;
         this.userGameRepository = userGameRepository;
         this.userMapper = userMapper;
+        this.interactionService = interactionService;
         this.repository = repository;
         this.userAuthenticationProvider = userAuthenticationProvider;
         this.fileService = fileService;
@@ -160,5 +163,21 @@ public class UserService {
         user.setAvatarUrl(fullUrl);
         repository.save(user);
         return fullUrl;
+    }
+    @Transactional(readOnly = true)
+    public PublicUserDto getPublicProfile(Long userId) {
+        // 1. Ищем пользователя
+        UserEntity user = repository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        // 2. Создаем и наполняем DTO
+        PublicUserDto dto = new PublicUserDto();
+        dto.setUsername(user.getUsername());
+        dto.setAvatarUrl(user.getAvatarUrl());
+
+        // 3. Получаем отзывы через InteractionService
+        dto.setReviews(interactionService.getReviewsByUserId(userId));
+
+        return dto;
     }
 }

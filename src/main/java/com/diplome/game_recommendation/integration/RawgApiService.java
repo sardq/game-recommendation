@@ -69,6 +69,7 @@ public class RawgApiService {
                 .uri(uriBuilder -> uriBuilder
                         .path("/games/{id}")
                         .queryParam("key", apiKey)
+                        .queryParam("lang", "ru")
                         .build(id))
                 .retrieve()
                 .bodyToMono(RawgGameDetailsResponse.class)

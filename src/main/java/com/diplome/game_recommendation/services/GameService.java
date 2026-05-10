@@ -86,57 +86,55 @@ public class GameService {
     }
     @Transactional
     public GameEntity loadGameIfNeeded(Long dbId) {
-        GameEntity existing = gameRepository.findById(dbId).orElse(null);
+        GameEntity existing = gameRepository.findById(dbId)
+                .orElseThrow(() -> new RuntimeException("Игра не найдена"));
         
-        if (existing != null && existing.getTrailerUrls().size() > 0 && existing.getScreenshotUrls() != null) {
+        if (existing.getDescription() != null) {
             return existing;
         }
 
         RawgGameDetailsResponse response = rawgApiService.getGameDetails(existing.getRawgId());
-
         List<RawgStoreResponse.StoreResult> stores = rawgApiService.getGameStores(existing.getRawgId());
-
         List<String> screenshots = rawgApiService.getGameScreenshots(existing.getRawgId());
-        
         List<String> trailers = videoApiService.searchVideos(existing.getName(), "gameplay trailer", 3);
         List<String> walkthroughs = videoApiService.searchVideos(existing.getName(), "Прохождение", 3);
-        GameEntity game = mapToEntity(response);
-        game.setId(dbId);
-        game.setScreenshotUrls(screenshots); 
-        game.setTrailerUrls(trailers != null ? trailers : new ArrayList<>());
-        game.setWalkthroughUrls(walkthroughs != null ? walkthroughs : new ArrayList<>());
-        game.setStoreLinks(stores.stream().map(s -> s.getUrl()).toList());
-        return gameRepository.save(game);
-    }
-    private GameEntity mapToEntity(RawgGameDetailsResponse r) {
-        GameEntity game = new GameEntity();
 
-        game.setName(r.getName());
-        game.setRawgId(r.getId());
-        game.setDescription(r.getDescription());
+        updateEntityWithExternalData(existing, response);
+
+        existing.setScreenshotUrls(screenshots != null ? screenshots : new ArrayList<>()); 
+        existing.setTrailerUrls(trailers != null ? trailers : new ArrayList<>());
+        existing.setWalkthroughUrls(walkthroughs != null ? walkthroughs : new ArrayList<>());
+        existing.setStoreLinks(stores.stream().map(s -> s.getUrl()).toList());
+
+        // 6. Сохраняем тот же объект. Теперь localRating не затрется!
+        return gameRepository.save(existing);
+    }
+    private void updateEntityWithExternalData(GameEntity existing, RawgGameDetailsResponse r) {
+        // rawgId и name уже есть в базе, их можно не менять или обновить для точности
+        existing.setDescription(r.getDescription());
 
         if (r.getReleased() != null) {
-            game.setReleaseDate(java.sql.Date.valueOf(r.getReleased()));
+            existing.setReleaseDate(java.sql.Date.valueOf(r.getReleased()));
         }
 
-        game.setRating(r.getRating());
+        // Сохраняем рейтинг RAWG (не путать с нашим localRating!)
+        existing.setRating(r.getRating());
 
         if (r.getMetacritic() != null) {
-            game.setMetacriticRate(r.getMetacritic().doubleValue());
+            existing.setMetacriticRate(r.getMetacritic().doubleValue());
         }
-        game.setPosterUrl(r.getBackground_image());
-        game.setPlaytime(r.getPlaytime());
+        
+        existing.setPosterUrl(r.getBackground_image());
+        existing.setPlaytime(r.getPlaytime());
 
         if (r.getPlatforms() != null) {
             Set<PlatformEnum> platforms = r.getPlatforms().stream()
-                .map((PlatformWrapper p) -> mapPlatform(p.getPlatform().getName()))
+                .map(p -> mapPlatform(p.getPlatform().getName()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-            game.setPlatforms(platforms);
+            existing.setPlatforms(platforms);
         }
-        
-        return game;
     }
     private PlatformEnum mapPlatform(String name) {
     if (name == null) return null;

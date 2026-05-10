@@ -1,6 +1,7 @@
 package com.diplome.game_recommendation.repositories;
 
 import com.diplome.game_recommendation.models.UserGames;
+import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.InteractionEnum;
 
 import org.springframework.data.domain.Page;
@@ -30,4 +31,20 @@ public interface UserGameRepository extends JpaRepository<UserGames, Long> {
 
     @Query("SELECT COUNT(ug) FROM UserGames ug WHERE ug.game.id = :gameId AND ug.interaction = 'Rated'")
     Integer getCountOfRatingsForGame(@Param("gameId") Long gameId);
+    @Query("""
+      SELECT DISTINCT ug.game FROM UserGames ug 
+      LEFT JOIN ug.game.gameTags gt 
+      WHERE ug.user.id = :userId 
+        AND ug.interaction = 'Favorite'
+        AND (
+            CAST(:search AS string) IS NULL 
+            OR LOWER(ug.game.name) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
+        )
+        AND (:tagId IS NULL OR gt.tag.id = :tagId)
+      """)
+  Page<GameEntity> findFavoritesFiltered(
+      @Param("userId") Long userId, 
+      @Param("search") String search, 
+      @Param("tagId") Long tagId, 
+      Pageable pageable);
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diplome.game_recommendation.dtos.PublicUserDto;
 import com.diplome.game_recommendation.dtos.UserDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.models.UserEntity;
@@ -78,5 +79,11 @@ public class UserController {
         
         String url = userService.updateAvatar(authentication.getName(), file);
         return ResponseEntity.ok(url);
+    }
+    @GetMapping("/public/{userId}")
+    public ResponseEntity<PublicUserDto> getPublicProfile(@PathVariable Long userId) {
+        // Просто вызываем сервис
+        PublicUserDto profile = userService.getPublicProfile(userId);
+        return ResponseEntity.ok(profile);
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.InteractionDto;
 import com.diplome.game_recommendation.dtos.ReviewDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
+import com.diplome.game_recommendation.models.GameEntity;
 import com.diplome.game_recommendation.models.ReactionType;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.services.InteractionService;
@@ -79,6 +82,14 @@ public class InteractionController {
     public List<ReviewDto> getReviews(@PathVariable Long gameId, @RequestParam int page, @RequestParam int size, Authentication authentication) {
         return interactionService.getReviewsByGame(gameId, page, size, authentication );
     }
+    @GetMapping("/reviews/users/{userId}")
+    public List<ReviewDto> getReviewsByUser(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        
+        return interactionService.getReviewsByUserIdPaginated(userId, page, size);
+    }
     @GetMapping("/review/user/{gameId}")
     public ReviewDto getUserReview(@PathVariable Long gameId, Authentication authentication) {
         return interactionService.getUserReview(gameId,authentication);
@@ -92,6 +103,9 @@ public class InteractionController {
     }
     private InteractionDto toDto(UserGames entity) {
         return modelMapper.map(entity, InteractionDto.class);
+    }
+    private GameDto toGamesDto(GameEntity entity) {
+        return modelMapper.map(entity, GameDto.class);
     }
     @GetMapping("/user/game/{gameId}")
     public InteractionDto getUserInteraction(
@@ -109,6 +123,15 @@ public class InteractionController {
     @GetMapping("/favorites")
     public List<GameDto> getUserFavorites(Authentication authentication) {
         return interactionService.getUserFavorites(authentication);
+    }
+    @GetMapping("/favorites/filter")
+    public Page<GameDto> getFilteredFavorites(
+            Authentication authentication,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long tagId,
+            @RequestParam(defaultValue = "0") int page) {
+        
+        return interactionService.getFavoritesFiltered(authentication, search, tagId, PageRequest.of(page, 10)).map(this::toGamesDto);
     }
     @GetMapping("/reviews/my")
     public List<ReviewDto> getMyReviews(
@@ -128,4 +151,5 @@ public class InteractionController {
         
         return ResponseEntity.ok().build();
     }
+    
 }

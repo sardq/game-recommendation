@@ -1,6 +1,9 @@
 package com.diplome.game_recommendation.integration;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Collections;
@@ -32,6 +35,8 @@ public class PriceService {
     }
 
     @Data
+    @AllArgsConstructor 
+    @NoArgsConstructor
     public static class GameDeal {
         private String storeID;
         private String salePrice;

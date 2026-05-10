@@ -1,6 +1,5 @@
 package com.diplome.game_recommendation.dtos;
 
-import com.diplome.game_recommendation.models.ReactionType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +10,7 @@ public class ReviewDto {
     private String login;
     private String gameTitile;
     private Long authorId;
+    private String authorAvatar;
     private String review;
     private Integer rating;
     private Long likesCount;

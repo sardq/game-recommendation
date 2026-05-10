@@ -17,7 +17,8 @@ public class GameDetailsDto {
     private String name;
 
     private String description;
-
+    private String descriptionRu;
+    private Double usdRate;
     private LocalDate releaseDate;
     
     private List<String> platforms;

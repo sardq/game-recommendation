@@ -25,6 +25,7 @@ public class GameEntity extends BaseEntity {
     private Long rawgId;
     @Column(columnDefinition = "TEXT")
     private String description;
+    private String descriptionRu;
     private Date releaseDate;
     @ElementCollection
     @Enumerated(EnumType.STRING)

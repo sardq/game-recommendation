@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,6 +36,7 @@ public class InteractionService {
     private final GameRepository gameRepository;
     private final UserGameRepository userGamesRepository;
     private final ReviewReactionRepository reactionRepository;
+    
     private final GameService gameService;
     public InteractionService(
             UserRepository userRepository,
@@ -70,6 +72,41 @@ public class InteractionService {
         dto.setRating(rate != null ? rate.getRating() : null);
         dto.setReview(review != null ? review.getReview() : null);
         return dto;
+    }
+    @Transactional
+    public List<ReviewDto> getReviewsByUserIdPaginated(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time"));
+
+        Page<UserGames> reviewEntitiesPage = userGamesRepository
+                .findByUserIdAndInteraction(userId, InteractionEnum.Review, pageable);
+        
+        List<UserGames> reviewEntities = reviewEntitiesPage.getContent();
+        if (reviewEntities.isEmpty()) return new ArrayList<>();
+
+        List<UserGames> ratingEntities = userGamesRepository
+                .findByUserIdAndInteraction(userId, InteractionEnum.Rated);
+
+        Map<Long, Integer> ratingMap = ratingEntities.stream()
+                .collect(Collectors.toMap(
+                    r -> r.getGame().getId(),
+                    UserGames::getRating,
+                    (existing, replacement) -> existing
+                ));
+
+        // 5. Маппим в DTO
+        return reviewEntities.stream()
+                .map(review -> {
+                    ReviewDto dto = new ReviewDto();
+                    dto.setId(review.getGame().getId()); 
+                    dto.setAuthorId(review.getUser().getId());
+                    dto.setLogin(review.getUser().getUsername());
+                    dto.setAuthorAvatar(review.getUser().getAvatarUrl());
+                    dto.setGameTitile(review.getGame().getName());
+                    dto.setReview(review.getReview());
+                    dto.setRating(ratingMap.get(review.getGame().getId())); 
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     @Transactional
     public void recordRating(Authentication authentication, Long gameId, Integer rating) {
@@ -143,6 +180,7 @@ public class InteractionService {
                     
                     dto.setId(review.getId()); 
                     dto.setLogin(review.getUser().getUsername());
+                    dto.setAuthorAvatar(review.getUser().getAvatarUrl());
                     dto.setReview(review.getReview());
                     dto.setRating(rating != null ? rating.getRating() : null);
                     dto.setAuthorId(review.getUser().getId());
@@ -257,5 +295,39 @@ public class InteractionService {
             newReaction.setType(type);
             reactionRepository.save(newReaction);
         }
+    }
+    public Page<GameEntity> getFavoritesFiltered(Authentication authentication, String search, Long tagId, Pageable pageable) {
+        Long userId = userRepository.findByEmail(authentication.getName()).get().getId();
+        Page<GameEntity> games = userGamesRepository.findFavoritesFiltered(userId, search, tagId, pageable);
+    return games;
+}
+    @Transactional
+    public List<ReviewDto> getReviewsByUserId(Long userId) {
+        // 1. Находим все отзывы пользователя
+        List<UserGames> reviewEntities = userGamesRepository.findByUserIdAndInteraction(
+                userId, InteractionEnum.Review);
+
+        // 2. Находим все оценки пользователя для сопоставления
+        List<UserGames> ratingEntities = userGamesRepository.findByUserIdAndInteraction(
+                userId, InteractionEnum.Rated);
+
+        Map<Long, Integer> ratingMap = ratingEntities.stream()
+                .collect(Collectors.toMap(
+                    r -> r.getGame().getId(),
+                    UserGames::getRating,
+                    (existing, replacement) -> existing
+                ));
+
+        // 3. Маппим в DTO
+        return reviewEntities.stream()
+                .map(review -> {
+                    ReviewDto dto = new ReviewDto();
+                    dto.setId(review.getGame().getId()); // ID игры для перехода
+                    dto.setGameTitile(review.getGame().getName());
+                    dto.setReview(review.getReview());
+                    dto.setRating(ratingMap.get(review.getGame().getId()));
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }

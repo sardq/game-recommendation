@@ -19,6 +19,7 @@ import com.diplome.game_recommendation.dtos.GameDetailsDto;
 import com.diplome.game_recommendation.dtos.GameDto;
 import com.diplome.game_recommendation.dtos.TagDto;
 import com.diplome.game_recommendation.helpers.configuration.Constants;
+import com.diplome.game_recommendation.integration.CurrencyService;
 import com.diplome.game_recommendation.integration.NewsService;
 import com.diplome.game_recommendation.integration.PriceService;
 import com.diplome.game_recommendation.models.GameEntity;
@@ -33,13 +34,15 @@ public class GameController {
     private final GameService service;
     private final PriceService priceService;
     private final NewsService newsService;
+    private final CurrencyService currencyService;
     private final ModelMapper mapper;
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    public GameController(GameService service, PriceService priceService, NewsService newsService, ModelMapper mapper) {
+    public GameController(GameService service, PriceService priceService,CurrencyService currencyService, NewsService newsService, ModelMapper mapper) {
         this.service = service;
         this.priceService = priceService;
+        this.currencyService = currencyService;
         this.newsService = newsService;
         this.mapper = mapper;
     }
@@ -136,6 +139,7 @@ public class GameController {
         GameDetailsDto dto = toDetailsDto(game);
         dto.setDeals(priceService.getBestDeals(game.getName()));
         dto.setNews(newsService.getLatestNews(game.getName()));
+        dto.setUsdRate(currencyService.getUsdRate()); 
         return ResponseEntity.ok(dto);
     }
 
