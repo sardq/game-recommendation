@@ -101,10 +101,12 @@ public class GameService {
 
         updateEntityWithExternalData(existing, response);
 
-        existing.setScreenshotUrls(screenshots != null ? screenshots : new ArrayList<>()); 
-        existing.setTrailerUrls(trailers != null ? trailers : new ArrayList<>());
-        existing.setWalkthroughUrls(walkthroughs != null ? walkthroughs : new ArrayList<>());
-        existing.setStoreLinks(stores.stream().map(s -> s.getUrl()).toList());
+        existing.setScreenshotUrls(new ArrayList<>(screenshots)); 
+        existing.setTrailerUrls(new ArrayList<>(trailers));
+        existing.setWalkthroughUrls(new ArrayList<>(walkthroughs));
+         existing.setStoreLinks(stores.stream()
+            .map(s -> s.getUrl())
+            .collect(Collectors.toList()));
 
         // 6. Сохраняем тот же объект. Теперь localRating не затрется!
         return gameRepository.save(existing);
