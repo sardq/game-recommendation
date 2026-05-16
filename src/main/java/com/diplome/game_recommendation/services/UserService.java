@@ -43,7 +43,6 @@ public class UserService {
     private final UserAuthenticationProvider userAuthenticationProvider;
     private static final String LOG_RESPONSE = "Ответ: {}";
     private final FileService fileService;
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Value("${DEFAULT_PASSWORD:123456}")
     private String defaultPassword;
     @Value("${minio.url}")
@@ -63,62 +62,47 @@ public class UserService {
     }
     @Transactional(readOnly = true)
     public Page<UserEntity> getAll(int page, int size) {
-        logger.info("Получение тегов: {}, {}", page, size);
         var result = repository.findAll(PageRequest.of(page, size));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
     @Transactional(readOnly = true)
     public UserEntity get(Long id) {
-        logger.info("Получение пользователя: {}", id);
         var result = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(UserEntity.class, id));
-        logger.info(LOG_RESPONSE, result);
         return result;
 
     }
 
     @Transactional(readOnly = true)
     public UserEntity getByEmail(String email) {
-        logger.info("Получение пользователя с помощью почты :{}", email);
         var result = repository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email"));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
 
     @Transactional(readOnly = true)
     public UserEntity getByLogin(String username) {
-        logger.info("Получение пользователя с помощью username :{}", username);
         var result = repository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid username"));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
 
     public UserDto login(CredentialsDto credentialsDto) {
-        logger.info("Попытка входа: {}", credentialsDto);
         UserEntity user = repository.findByEmail(credentialsDto.getEmail())
                 .orElseThrow(() -> new AppException("Неизвестный пользователь", HttpStatus.NOT_FOUND));
         boolean passwordMatches = passwordEncoder.matches(
                 CharBuffer.wrap(credentialsDto.getPassword()),
                 user.getPasswordHash());
         if (!passwordMatches) {
-            logger.warn("Неверный пароль для пользователя");
             throw new AppException("Неверный логин или пароль", HttpStatus.BAD_REQUEST);
         }
-        logger.info("Успешный вход пользователя: {} ",
-                user.getEmail());
         String token = userAuthenticationProvider.createToken(
                 user.getEmail());
         UserDto userDto = userMapper.toUserDto(user);
         userDto.setToken(token);
-        logger.debug("Создан токен для пользователя: {}",
-                user.getEmail() );
         return userDto;
     }
     public UserDto register(UserSignupDto UserEntity) {
-        logger.info("Попытка регистрации: {}", UserEntity);
 
         Optional<UserEntity> optionalUser = repository.findByEmail(UserEntity.getEmail());
 
@@ -129,7 +113,6 @@ public class UserService {
         user.setPasswordHash(passwordEncoder.encode(CharBuffer.wrap(UserEntity.getPassword())));
         user.setRegistrationDate(LocalDate.now());
         UserEntity savedUser = repository.save(user);
-        logger.info("Пользователь зарегистрирован: {}", savedUser);
 
         return userMapper.toUserDto(savedUser);
     }
@@ -151,7 +134,6 @@ public class UserService {
         if (userDto.getBirthDate() != null) {
             user.setBirthDate(userDto.getBirthDate());
         }
-        // if (userDto.getUsername() != null) user.setUsername(userDto.getUsername());
         UserEntity updatedUser = repository.save(user);
         return userMapper.toUserDto(updatedUser);
     }

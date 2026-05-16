@@ -3,10 +3,7 @@ package com.diplome.game_recommendation.controllers;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +21,6 @@ import com.diplome.game_recommendation.services.TagService;
 @RequestMapping(Constants.API_URL + "/tags")
 public class TagController {
     private final TagService tagService;
-    private static final Logger logger = LoggerFactory.getLogger(TagController.class);
     private final ModelMapper mapper;
 
     public TagController(TagService tagService, ModelMapper mapper) {
@@ -37,7 +33,6 @@ public class TagController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        logger.info("Получение тегов");
         List<TagDto> result = tagService.getAll(page, size).getContent()
                 .stream()
                 .map(this::toDto)
@@ -47,7 +42,6 @@ public class TagController {
 
     @GetMapping("/{id}")
     public TagEntity get(@PathVariable Long id) {
-        logger.info("Получение тега id={}", id);
         return tagService.get(id);
     }
 

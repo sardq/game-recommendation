@@ -37,7 +37,6 @@ public class GameController {
     private final CurrencyService currencyService;
     private final ModelMapper mapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
     public GameController(GameService service, PriceService priceService,CurrencyService currencyService, NewsService newsService, ModelMapper mapper) {
         this.service = service;
@@ -118,8 +117,6 @@ public class GameController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        logger.info("Получение игр page={}, size={}", page, size);
-
         return service.getGames(page, size)
                 .getContent()
                 .stream()
@@ -149,8 +146,6 @@ public class GameController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        logger.info("Фильтрация игр search={}", search);
-
         return service.getAllByFilters(search, page, size)
                 .getContent()
                 .stream()
@@ -164,8 +159,6 @@ public class GameController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        logger.info("Игры по тегу tagId={}", tagId);
-
         return service.getGamesByTag(tagId, page, size)
                 .getContent()
                 .stream()
@@ -175,8 +168,6 @@ public class GameController {
 
     @GetMapping("/favorites/{userId}")
     public List<GameDto> favorites(@PathVariable Long userId) {
-        logger.info("Избранные игры userId={}", userId);
-
         return service.getFavorites(userId)
                 .stream()
                 .map(this::toDto)
@@ -187,8 +178,6 @@ public class GameController {
     public List<GameDto> popular( 
         @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        logger.info("Популярные игры");
-
         return service.getPopularGames(page, size)
                 .getContent()
                 .stream()

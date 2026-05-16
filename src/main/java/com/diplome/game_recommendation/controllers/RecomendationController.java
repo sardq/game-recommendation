@@ -30,22 +30,18 @@ public class RecomendationController {
 
         @GetMapping("/{userId}")
         public List<RecommendationDto> get(@PathVariable Long userId) {
-            logger.info("Получение рекомендаций userId={}", userId);
             return service.getRecommendationsForUser(userId);
         }
         @GetMapping("/user")
         public List<RecommendationDto> get(Authentication authentication) {
-            logger.info("Получение рекомендаций");
             return service.getFastRecommendations(authentication);
         }
         @PostMapping("/recalculate/{userId}")
     public void recalculatePreferences(@PathVariable Long userId) {
-        logger.info("Ручной пересчет предпочтений для userId={}", userId);
         service.recalculateUserPreferences(userId);
     }
     @PostMapping("/recalculate")
     public void recalculatePreferencesAuth(Authentication authentication) {
-        logger.info("Ручной пересчет предпочтений");
         service.generateAndSaveRecommendations(authentication);
     }
     @GetMapping("/sessions/user")

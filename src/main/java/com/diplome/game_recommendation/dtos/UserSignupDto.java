@@ -5,13 +5,13 @@ import jakarta.validation.constraints.Size;
 
 public class UserSignupDto {
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 4, max = 50)
     private String username;
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 5, max = 100)
     private String email;
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 30)
     private String password;
 
     public String getEmail() {

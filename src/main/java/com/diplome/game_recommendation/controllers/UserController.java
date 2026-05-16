@@ -26,7 +26,6 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
@@ -42,7 +41,6 @@ public class UserController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        logger.info("Получение пользователей page={}, size={}", page, size);
 
         return userService.getAll(page, size)
                 .getContent()
@@ -53,13 +51,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getById(@PathVariable Long id) {
-        logger.info("Получение пользователя id={}", id);
         return toDto(userService.get(id));
     }
 
     @GetMapping("/{userId}/history")
     public List<UserGames> history(@PathVariable Long userId) {
-        logger.info("История пользователя userId={}", userId);
         return userService.getUserHistory(userId);
     }
     @PutMapping("/update-birthdate")
@@ -82,7 +78,6 @@ public class UserController {
     }
     @GetMapping("/public/{userId}")
     public ResponseEntity<PublicUserDto> getPublicProfile(@PathVariable Long userId) {
-        // Просто вызываем сервис
         PublicUserDto profile = userService.getPublicProfile(userId);
         return ResponseEntity.ok(profile);
     }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +15,7 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
 
     Page<GameEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
     boolean existsByRawgId(Long rawgId);
+    @EntityGraph(attributePaths = {"gameTags", "platforms"})
     Page<GameEntity> findAll(Pageable pageable);
 
     Page<GameEntity> findByRatingGreaterThanEqual(Double rating, Pageable pageable);

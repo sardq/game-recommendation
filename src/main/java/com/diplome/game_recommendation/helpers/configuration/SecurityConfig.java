@@ -2,6 +2,8 @@ package com.diplome.game_recommendation.helpers.configuration;
 
 import java.util.List;
 
+import org.springframework.boot.servlet.filter.OrderedHiddenHttpMethodFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,9 +31,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+       .cors(Customizer.withDefaults())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(userAuthenticationEntryPoint))
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
@@ -40,24 +42,30 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "/reset-password",
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login","/api/games/**", "/api/auth/register", "/reset-password",
                                 "/api/otp/**")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/games/**", "/api/tags/**","/api/interactions/reviews/game/**")
+                        .requestMatchers(HttpMethod.GET, "/api/games/**", "/api/tags/**","/api/users/public/**","/api/interactions/reviews/**")
                         .permitAll()
                         .anyRequest().authenticated());
-        return http.build();
-    }
+                            return http.build();
+}
 
-   @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-        }
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("*")); // Разрешить всё
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(false); // ВНИМАНИЕ: если AllowedOrigins = "*", credentials нельзя ставить в true
+    
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
+
+@Bean
+public FilterRegistrationBean<OrderedHiddenHttpMethodFilter> hiddenHttpMethodFilter() {
+    return new FilterRegistrationBean<>(new org.springframework.boot.servlet.filter.OrderedHiddenHttpMethodFilter());
+}
 }

@@ -27,8 +27,6 @@ import com.diplome.game_recommendation.repositories.GameRepository;
 import com.diplome.game_recommendation.repositories.UserGameRepository;
 @Service
 public class GameService {
-     private static final Logger logger = LoggerFactory.getLogger(TagService.class);
-    private static final String LOG_RESPONSE = "Ответ: {}";
     private final GameRepository gameRepository;
     private final RawgApiService rawgApiService;
     private final VideoApiService videoApiService;
@@ -40,20 +38,15 @@ public class GameService {
         this.videoApiService = videoApiService;
     }
     public Page<GameEntity> getGames(int page, int size){
-        logger.info("Получение игр: {}, {}", page, size);
         var result = gameRepository.findAll(PageRequest.of(page, size));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
      public Page<GameEntity> getGamesByTag(Long tagId, int page, int size){
-        logger.info("Получение игр по тегу: {}, {}", page, size);
         var result = gameRepository.findByTagId(tagId, PageRequest.of(page, size));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
     @Transactional(readOnly = true)
     public Page<GameEntity> getAllByFilters(String search, int page, int size) {
-        logger.info("Фильтрация игр выполнена, page={}, pageSize={}", page, size);
 
         Pageable pageable = PageRequest.of(page, size);
         Page<GameEntity> result;
@@ -64,13 +57,10 @@ public class GameService {
             result = gameRepository.findAll(pageable);
         }
 
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
     public GameEntity getGame(Long gameId){
-        logger.info("Получение игры");
         var result = gameRepository.findById(gameId).orElse(null);
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
     public List<GameEntity> getFavorites(Long userId){
@@ -168,7 +158,5 @@ public class GameService {
         game.setLocalRatingCount(count != null ? count : 0);
         
         gameRepository.save(game);
-        logger.info("Обновлен локальный рейтинг для игры {}: {} (голосов: {})", 
-                    game.getName(), game.getLocalRating(), game.getLocalRatingCount());
     }
 }

@@ -18,8 +18,6 @@ import com.diplome.game_recommendation.repositories.UserRepository;
 
 @Service
 public class TagService {
-    private static final Logger logger = LoggerFactory.getLogger(TagService.class);
-    private static final String LOG_RESPONSE = "Ответ: {}";
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
     public TagService(TagRepository tagRepository, UserRepository userRepository){
@@ -28,21 +26,16 @@ public class TagService {
     }
     @Transactional(readOnly = true)
     public Page<TagEntity> getAll(int page, int size) {
-        logger.info("Получение тегов: {}, {}", page, size);
         var result = tagRepository.findByKeep(true, PageRequest.of(page, size));
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
 
     @Transactional(readOnly = true)
     public TagEntity get(Long id) {
-        logger.info("Получение тега {}", id);
         var result = tagRepository.findById(id).orElse(null);
-        logger.info(LOG_RESPONSE, result);
         return result;
     }
     public Page<TagEntity> searchTagsByName(String search, int page, int size) {
-    logger.info("Получение тегов по поиску: {}, {}", page, size);
     return tagRepository.filterBySearch(search, PageRequest.of(page, size));
 }
 @Transactional

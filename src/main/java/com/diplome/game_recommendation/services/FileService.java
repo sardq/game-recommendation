@@ -56,7 +56,6 @@ public class FileService {
                 minioClient.makeBucket(
                     MakeBucketArgs.builder().bucket(bucketName).build()
                 );
-                System.out.println("Создан новый бакет для аватаров: " + bucketName);
             }
 
             String policy = """
