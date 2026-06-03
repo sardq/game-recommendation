@@ -71,7 +71,6 @@ class UserRepositoryTest {
 
     @Test
     void findByEmailIgnoreCase_ShouldReturnUserEvenWithDifferentCase() {
-        // Проверяем поиск в верхнем регистре
         String upperEmail = uniqueEmail.toUpperCase();
         
         Optional<UserEntity> found = userRepository.findByEmailIgnoreCase(upperEmail);
@@ -90,7 +89,6 @@ class UserRepositoryTest {
 
     @Test
     void findByUsernameIgnoreCase_ShouldReturnUserEvenWithDifferentCase() {
-        // Проверяем поиск логина в нижнем регистре
         String lowerLogin = uniqueLogin.toLowerCase();
         
         Optional<UserEntity> found = userRepository.findByUsernameIgnoreCase(lowerLogin);
@@ -119,14 +117,11 @@ class UserRepositoryTest {
 
     @Test
     void save_ShouldUpdateExistingUser() {
-        // Arrange
         testUser.setUsername("UpdatedLogin");
         
-        // Act
         UserEntity updated = userRepository.save(testUser);
         userRepository.flush();
         
-        // Assert
         Optional<UserEntity> found = userRepository.findById(testUser.getId());
         assertThat(found).isPresent();
         assertThat(found.get().getUsername()).isEqualTo("UpdatedLogin");

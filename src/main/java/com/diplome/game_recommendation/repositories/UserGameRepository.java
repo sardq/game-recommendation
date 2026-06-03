@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,4 +48,5 @@ public interface UserGameRepository extends JpaRepository<UserGames, Long> {
       @Param("search") String search, 
       @Param("tagId") Long tagId, 
       Pageable pageable);
+       boolean existsByUserIdAndGameIdInAndTimeAfter(Long userId, List<Long> gameIds, LocalDateTime time);
 }

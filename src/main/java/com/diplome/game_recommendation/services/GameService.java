@@ -98,18 +98,15 @@ public class GameService {
             .map(s -> s.getUrl())
             .collect(Collectors.toList()));
 
-        // 6. Сохраняем тот же объект. Теперь localRating не затрется!
         return gameRepository.save(existing);
     }
     private void updateEntityWithExternalData(GameEntity existing, RawgGameDetailsResponse r) {
-        // rawgId и name уже есть в базе, их можно не менять или обновить для точности
         existing.setDescription(r.getDescription());
 
         if (r.getReleased() != null) {
             existing.setReleaseDate(java.sql.Date.valueOf(r.getReleased()));
         }
 
-        // Сохраняем рейтинг RAWG (не путать с нашим localRating!)
         existing.setRating(r.getRating());
 
         if (r.getMetacritic() != null) {

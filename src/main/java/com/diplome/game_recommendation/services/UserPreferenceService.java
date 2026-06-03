@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diplome.game_recommendation.dtos.TagPreferenceDto;
 import com.diplome.game_recommendation.models.GameEntity;
@@ -70,7 +67,7 @@ public class UserPreferenceService {
             case Favorite:
                 return 0.8;
             case Rated:
-                return interaction.getRating() / 10.0;
+                return interaction.getRating() / 5.0;
             default:
                 return 0;
         }

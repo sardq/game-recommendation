@@ -95,7 +95,7 @@ public class RecomendationService {
         UserEntity user = userRepository.findByEmail(authentication.getName()).orElse(new UserEntity());
         int interactions = userGameRepository.countByUserId(user.getId());
         boolean hasPrefs = userPreferenceRepository.existsByUserId(user.getId());
-        if (interactions < 1 && !hasPrefs) {
+        if (interactions < 5 && !hasPrefs) {
             return getColdStartRecommendations();
         }
 
@@ -126,7 +126,7 @@ public class RecomendationService {
 
         return finalScores.entrySet().stream()
                 .sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
-                .limit(20)
+                .limit(50)
                 .map(e -> mapToRecommendation(e.getKey(), e.getValue()))
                 .toList();
     }
@@ -168,7 +168,7 @@ public class RecomendationService {
 
         return finalScores.entrySet().stream()
                 .sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
-                .limit(20)
+                .limit(50)
                 .map(e -> mapToRecommendation(e.getKey(), e.getValue()))
                 .toList();
     }
@@ -340,21 +340,59 @@ public class RecomendationService {
     }
     @Transactional
     public void generateAndSaveRecommendations(Authentication authentication) {
-        Long userId = userRepository.findByEmail(authentication.getName()).orElseThrow().getId();
+        UserEntity user = userRepository.findByEmail(authentication.getName()).orElseThrow();
+        Long userId = user.getId();
+
+        // 1. Обновляем веса (как и было)
         recalculateUserPreferences(userId);
 
-        List<RecommendationDto> calculatedRecs = getRecommendationsForUser(userId);
+        // 2. Получаем рекомендации
+        List<RecommendationDto> finalRecs;
+        
+        if (shouldApplySalt(userId)) {
+            // Если пользователь игнорировал прошлую подборку:
+            // Получаем расширенный список (например, топ-50) и перемешиваем
+            List<RecommendationDto> candidates = getRecommendationsForUser(userId);
+            Collections.shuffle(candidates); // Вот она - "соль"
+            finalRecs = candidates.stream().limit(20).toList();
+        } else {
+            // Если всё хорошо, просто берем стандартный топ-20
+            finalRecs = getRecommendationsForUser(userId);
+        }
 
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+        // 3. Сохраняем новую сессию
         RecommendationSession session = new RecommendationSession(user, LocalDateTime.now());
         sessionRepository.save(session);
 
         int rank = 1;
-        for (RecommendationDto dto : calculatedRecs) {
+        for (RecommendationDto dto : finalRecs) {
             GameEntity game = gameRepository.findById(dto.getGameId()).orElseThrow();
             RecommendationItems item = new RecommendationItems(game, session, rank, dto.getRecommendationScore());
             recommendationItemsRepository.save(item);
             rank++;
         }
+    }
+    private boolean shouldApplySalt(Long userId) {
+    // Достаем последнюю сессию пользователя
+        return sessionRepository.findByUserIdOrderByGeneratedAtDesc(userId)
+                .stream()
+                .findFirst()
+                .map(lastSession -> {
+                    // Берем ID всех игр из той сессии
+                    List<Long> lastGameIds = lastSession.getItems().stream()
+                            .map(i -> i.getGame().getId())
+                            .toList();
+
+                    // Проверяем, появились ли новые записи в UserGames для этих игр 
+                    // ПОСЛЕ времени генерации сессии
+                    // (Для этого используем ваш userGameRepository)
+                    boolean interactionExists = userGameRepository.existsByUserIdAndGameIdInAndTimeAfter(
+                            userId, 
+                            lastGameIds, 
+                            lastSession.getGeneratedAt()
+                    );
+
+                    return !interactionExists; // Если взаимодействий НЕТ — возвращаем true (нужна соль)
+                }).orElse(false);
     }
 }

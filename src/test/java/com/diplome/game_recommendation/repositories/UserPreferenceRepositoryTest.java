@@ -58,7 +58,6 @@ class UserPreferenceRepositoryTest {
     void setUp() {
         uniqueSuffix = UUID.randomUUID().toString().substring(0, 8);
 
-        // 1. Создаем пользователя (email < 30 символов)
         testUser = new UserEntity();
         testUser.setUsername("user_" + uniqueSuffix);
         testUser.setRegistrationDate(LocalDate.now());
@@ -66,7 +65,6 @@ class UserPreferenceRepositoryTest {
         testUser.setEmail(uniqueSuffix + "@t.com");
         testUser = userRepository.save(testUser);
 
-        // 2. Создаем теги
         actionTag = new TagEntity();
         actionTag.setName("Action_" + uniqueSuffix);
         actionTag = tagRepository.save(actionTag);
@@ -75,7 +73,6 @@ class UserPreferenceRepositoryTest {
         rpgTag.setName("RPG_" + uniqueSuffix);
         rpgTag = tagRepository.save(rpgTag);
 
-        // 3. Создаем предпочтения
         UserPreference pref1 = new UserPreference();
         pref1.setUser(testUser);
         pref1.setTag(actionTag);
@@ -97,11 +94,9 @@ class UserPreferenceRepositoryTest {
 
     @Test
     void findByUserIdOrderByPreferenceWeightDesc_ShouldSortCorrectly() {
-        // Act
         List<UserPreference> result = userPreferenceRepository
                 .findByUserIdOrderByPreferenceWeightDesc(testUser.getId());
 
-        // Assert: RPG с весом 10.0 должен быть первым, Action с 5.5 - вторым
         assertThat(result).hasSize(2);
         assertThat(result.get(0).getTag().getName()).isEqualTo(rpgTag.getName());
         assertThat(result.get(0).getPreferenceWeight()).isEqualTo(10.0);
@@ -130,29 +125,24 @@ class UserPreferenceRepositoryTest {
 
     @Test
     void deleteByUserId_ShouldRemoveAllUserPreferences() {
-        // Act
         userPreferenceRepository.deleteByUserId(testUser.getId());
         userPreferenceRepository.flush(); // Принудительно применяем изменения
 
-        // Assert
         assertThat(userPreferenceRepository.findByUserId(testUser.getId())).isEmpty();
         assertThat(userPreferenceRepository.existsByUserId(testUser.getId())).isFalse();
     }
 
     @Test
     void save_ShouldUpdateExistingPreferenceWeight() {
-        // Arrange: Находим существующее предпочтение и меняем вес
         Optional<UserPreference> prefOpt = userPreferenceRepository
                 .findByUserIdAndTagId(testUser.getId(), actionTag.getId());
         
         UserPreference pref = prefOpt.get();
         pref.setPreferenceWeight(20.0);
 
-        // Act
         userPreferenceRepository.save(pref);
         userPreferenceRepository.flush();
 
-        // Assert
         Optional<UserPreference> updated = userPreferenceRepository
                 .findByUserIdAndTagId(testUser.getId(), actionTag.getId());
         assertThat(updated.get().getPreferenceWeight()).isEqualTo(20.0);

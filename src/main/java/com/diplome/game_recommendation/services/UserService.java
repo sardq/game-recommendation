@@ -20,12 +20,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.CharBuffer;
@@ -141,23 +138,20 @@ public class UserService {
     public String updateAvatar(String email, MultipartFile file) {
         UserEntity user = repository.findByEmail(email).orElseThrow();
         String fileName = fileService.uploadAvatar(file, user.getId());
-        String fullUrl = minioExternalUrl + "/" + bucket + "/" + fileName;
+        String fullUrl = "/storage/" + "/" + bucket + "/" + fileName;
         user.setAvatarUrl(fullUrl);
         repository.save(user);
         return fullUrl;
     }
     @Transactional(readOnly = true)
     public PublicUserDto getPublicProfile(Long userId) {
-        // 1. Ищем пользователя
         UserEntity user = repository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-        // 2. Создаем и наполняем DTO
         PublicUserDto dto = new PublicUserDto();
         dto.setUsername(user.getUsername());
         dto.setAvatarUrl(user.getAvatarUrl());
 
-        // 3. Получаем отзывы через InteractionService
         dto.setReviews(interactionService.getReviewsByUserId(userId));
 
         return dto;

@@ -17,7 +17,12 @@ public class TagEntity extends BaseEntity{
     private Boolean keep;
     private String description;
     private String imageUrl;
-    public TagEntity(){}
+    public TagEntity() {}
+    public TagEntity(String name2, String string, boolean b){
+        this.name = name2;
+        this.description = string;
+        this.keep = b;
+    }
     public TagEntity(String name,String nameRu, String description, String imageUrl, Boolean keep, String slug)
     {
         this.slug = slug;

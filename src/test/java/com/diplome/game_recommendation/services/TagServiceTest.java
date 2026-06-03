@@ -74,7 +74,7 @@ class TagServiceTest {
 
     @Test
     void getAll_ShouldReturnPageOfTags_WithKeepTrue() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -83,10 +83,10 @@ class TagServiceTest {
 
         when(tagRepository.findByKeep(eq(true), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         assertEquals(testTag1, result.getContent().get(0));
@@ -96,7 +96,7 @@ class TagServiceTest {
 
     @Test
     void getAll_ShouldReturnEmptyPage_WhenNoTags() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -104,10 +104,10 @@ class TagServiceTest {
 
         when(tagRepository.findByKeep(eq(true), eq(pageable))).thenReturn(emptyPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.getContent().isEmpty());
         assertEquals(0, result.getTotalElements());
@@ -116,7 +116,7 @@ class TagServiceTest {
 
     @Test
     void getAll_ShouldHandleDifferentPageSizes() {
-        // Arrange
+        
         int page = 2;
         int size = 5;
         Pageable pageable = PageRequest.of(page, size);
@@ -125,10 +125,10 @@ class TagServiceTest {
 
         when(tagRepository.findByKeep(eq(true), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         assertEquals(20, result.getTotalElements());
@@ -139,13 +139,13 @@ class TagServiceTest {
 
     @Test
     void get_WhenTagExists_ShouldReturnTag() {
-        // Arrange
+        
         when(tagRepository.findById(TEST_TAG_ID_1)).thenReturn(Optional.of(testTag1));
 
-        // Act
+        
         TagEntity result = tagService.get(TEST_TAG_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_TAG_ID_1, result.getId());
         assertEquals("Action", result.getName());
@@ -155,27 +155,27 @@ class TagServiceTest {
 
     @Test
     void get_WhenTagDoesNotExist_ShouldReturnNull() {
-        // Arrange
+        
         Long nonExistentId = 999L;
         when(tagRepository.findById(nonExistentId)).thenReturn(Optional.empty());
 
-        // Act
+        
         TagEntity result = tagService.get(nonExistentId);
 
-        // Assert
+        
         assertNull(result);
         verify(tagRepository).findById(nonExistentId);
     }
 
     @Test
     void get_ShouldHandleTagWithKeepFalse() {
-        // Arrange
+        
         when(tagRepository.findById(TEST_TAG_ID_3)).thenReturn(Optional.of(testTag3));
 
-        // Act
+        
         TagEntity result = tagService.get(TEST_TAG_ID_3);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_TAG_ID_3, result.getId());
         assertEquals("Strategy", result.getName());
@@ -185,7 +185,7 @@ class TagServiceTest {
 
     @Test
     void searchTagsByName_ShouldReturnMatchingTags() {
-        // Arrange
+        
         String searchQuery = "act";
         int page = 0;
         int size = 10;
@@ -195,10 +195,10 @@ class TagServiceTest {
 
         when(tagRepository.filterBySearch(eq(searchQuery), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.searchTagsByName(searchQuery, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.getContent().size());
         assertEquals("Action", result.getContent().get(0).getName());
@@ -207,7 +207,7 @@ class TagServiceTest {
 
     @Test
     void searchTagsByName_WithEmptySearch_ShouldReturnAllTags() {
-        // Arrange
+        
         String searchQuery = "";
         int page = 0;
         int size = 10;
@@ -217,10 +217,10 @@ class TagServiceTest {
 
         when(tagRepository.filterBySearch(eq(searchQuery), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.searchTagsByName(searchQuery, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         verify(tagRepository).filterBySearch(searchQuery, pageable);
@@ -228,7 +228,7 @@ class TagServiceTest {
 
     @Test
     void searchTagsByName_WithNoMatches_ShouldReturnEmptyPage() {
-        // Arrange
+        
         String searchQuery = "nonexistent";
         int page = 0;
         int size = 10;
@@ -237,10 +237,10 @@ class TagServiceTest {
 
         when(tagRepository.filterBySearch(eq(searchQuery), eq(pageable))).thenReturn(emptyPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.searchTagsByName(searchQuery, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.getContent().isEmpty());
         verify(tagRepository).filterBySearch(searchQuery, pageable);
@@ -248,7 +248,7 @@ class TagServiceTest {
 
     @Test
     void searchTagsByName_ShouldHandlePartialMatches() {
-        // Arrange
+        
         String searchQuery = "R";
         int page = 0;
         int size = 10;
@@ -258,10 +258,10 @@ class TagServiceTest {
 
         when(tagRepository.filterBySearch(eq(searchQuery), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.searchTagsByName(searchQuery, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.getContent().size());
         assertEquals("RPG", result.getContent().get(0).getName());
@@ -270,12 +270,11 @@ class TagServiceTest {
 
     @Test
     void getTagsSortedByPreference_ShouldReturnTagsSortedByUserPreference() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
         
-        // Create tags with different preference scores
         TagEntity preferredTag1 = new TagEntity();
         preferredTag1.setId(10L);
         preferredTag1.setName("Action");
@@ -290,10 +289,10 @@ class TagServiceTest {
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(createUser()));
         when(tagRepository.getTagsSortedByPreference(eq(TEST_USER_ID), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getTagsSortedByPreference(authentication, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         assertEquals(10L, result.getContent().get(0).getId());
@@ -304,7 +303,7 @@ class TagServiceTest {
 
     @Test
     void getTagsSortedByPreference_ShouldHandleEmptyResult() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -313,10 +312,10 @@ class TagServiceTest {
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(createUser()));
         when(tagRepository.getTagsSortedByPreference(eq(TEST_USER_ID), eq(pageable))).thenReturn(emptyPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getTagsSortedByPreference(authentication, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.getContent().isEmpty());
         verify(tagRepository).getTagsSortedByPreference(TEST_USER_ID, pageable);
@@ -324,13 +323,12 @@ class TagServiceTest {
 
     @Test
     void getTagsSortedByPreference_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(java.util.NoSuchElementException.class, 
             () -> tagService.getTagsSortedByPreference(authentication, page, size));
         
@@ -339,7 +337,7 @@ class TagServiceTest {
 
     @Test
     void getAll_ShouldLogCorrectly() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -347,50 +345,48 @@ class TagServiceTest {
 
         when(tagRepository.findByKeep(eq(true), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
-        // Logging is internal, just verify repository was called
         verify(tagRepository).findByKeep(true, pageable);
     }
 
     @Test
     void get_ShouldLogCorrectly() {
-        // Arrange
+        
         when(tagRepository.findById(TEST_TAG_ID_1)).thenReturn(Optional.of(testTag1));
 
-        // Act
+        
         TagEntity result = tagService.get(TEST_TAG_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         verify(tagRepository).findById(TEST_TAG_ID_1);
     }
 
     @Test
     void searchTagsByName_ShouldHandleNullSearchQuery() {
-        // Arrange
+        
         String searchQuery = null;
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
         
-        // Assuming filterBySearch handles null, otherwise test will fail
         when(tagRepository.filterBySearch(isNull(), eq(pageable))).thenReturn(new PageImpl<>(List.of(), pageable, 0));
 
-        // Act
+        
         Page<TagEntity> result = tagService.searchTagsByName(searchQuery, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         verify(tagRepository).filterBySearch(isNull(), eq(pageable));
     }
 
     @Test
     void getTagsSortedByPreference_ShouldPreserveOrder() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -414,10 +410,10 @@ class TagServiceTest {
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(createUser()));
         when(tagRepository.getTagsSortedByPreference(eq(TEST_USER_ID), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getTagsSortedByPreference(authentication, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(3, result.getContent().size());
         assertEquals(1L, result.getContent().get(0).getId());
@@ -428,21 +424,20 @@ class TagServiceTest {
 
     @Test
     void getAll_ShouldOnlyReturnTagsWithKeepTrue() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
         
-        // Only tags with keep=true should be returned
         List<TagEntity> keptTags = Arrays.asList(testTag1, testTag2);
         Page<TagEntity> expectedPage = new PageImpl<>(keptTags, pageable, keptTags.size());
 
         when(tagRepository.findByKeep(eq(true), eq(pageable))).thenReturn(expectedPage);
 
-        // Act
+        
         Page<TagEntity> result = tagService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         // Verify that testTag3 (keep=false) is not in the results

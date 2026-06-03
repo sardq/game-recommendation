@@ -66,7 +66,6 @@ class TagRepositoryTest {
     void setUp() {
         String unique = UUID.randomUUID().toString().substring(0, 8);
 
-        // 1. Создаем теги
         actionTag = new TagEntity();
         actionTag.setName("Action_" + unique);
         actionTag.setNameRu("Экшен_" + unique);
@@ -78,13 +77,11 @@ class TagRepositoryTest {
         rpgTag.setKeep(false); // Для проверки фильтра по keep
         rpgTag = tagRepository.save(rpgTag);
 
-        // 2. Создаем игру
         testGame = new GameEntity();
         testGame.setName("Test Game " + unique);
         testGame.setRawgId((long) (Math.random() * 1000000));
         testGame = gameRepository.save(testGame);
 
-        // 3. Привязываем Action к игре
         gameTagRepository.save(new GameTag(testGame, actionTag));
     }
 
@@ -112,18 +109,15 @@ class TagRepositoryTest {
 
     @Test
     void filterBySearch_ShouldFindByNameOrNameRu() {
-        // Поиск по части английского имени
         Page<TagEntity> resultEn = tagRepository.filterBySearch("Action", PageRequest.of(0, 10));
         assertThat(resultEn.getContent()).extracting(TagEntity::getName).contains(actionTag.getName());
 
-        // Поиск по русскому имени (Экшен)
         Page<TagEntity> resultRu = tagRepository.filterBySearch("экшен", PageRequest.of(0, 10));
         assertThat(resultRu.getContent()).extracting(TagEntity::getNameRu).contains(actionTag.getNameRu());
     }
 
     @Test
     void getTagsSortedByPreference_ShouldOrderByWeight() {
-        // 1. Создаем пользователя (соблюдаем лимит email 30 символов)
         UserEntity user = new UserEntity();
         String userUnique = UUID.randomUUID().toString().substring(0, 8);
         user.setUsername("u_" + userUnique);
@@ -132,7 +126,6 @@ class TagRepositoryTest {
         user.setPasswordHash("password");
         user = userRepository.save(user);
 
-        // 2. Создаем предпочтения: RPG - вес 10.0, Action - вес 5.0
         UserPreference prefAction = new UserPreference();
         prefAction.setUser(user);
         prefAction.setTag(actionTag);
@@ -145,10 +138,8 @@ class TagRepositoryTest {
         prefRpg.setPreferenceWeight(10.0);
         userPreferenceRepository.save(prefRpg);
 
-        // 3. Act
         Page<TagEntity> result = tagRepository.getTagsSortedByPreference(user.getId(), PageRequest.of(0, 10));
 
-        // 4. Assert: RPG (10.0) должен быть первым в списке
         assertThat(result.getContent()).hasSize(2);
         assertThat(result.getContent().get(0).getName()).isEqualTo(rpgTag.getName());
         assertThat(result.getContent().get(1).getName()).isEqualTo(actionTag.getName());

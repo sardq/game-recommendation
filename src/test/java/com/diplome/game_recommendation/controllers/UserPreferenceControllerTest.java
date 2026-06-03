@@ -114,16 +114,16 @@ class UserPreferenceControllerTest {
 
     @Test
     void get_ShouldReturnListOfUserPreferenceDtos() {
-        // Arrange
+        
         List<UserPreference> preferences = Arrays.asList(testPreference1, testPreference2);
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.getUserPreferences(authentication)).thenReturn(preferences);
 
-        // Act
+        
         List<UserPreferenceDto> result = userPreferenceController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         
@@ -144,14 +144,14 @@ class UserPreferenceControllerTest {
 
     @Test
     void get_WhenNoPreferences_ShouldReturnEmptyList() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.getUserPreferences(authentication)).thenReturn(List.of());
 
-        // Act
+        
         List<UserPreferenceDto> result = userPreferenceController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(userPreferenceService).getUserPreferences(authentication);
@@ -160,24 +160,23 @@ class UserPreferenceControllerTest {
 
     @Test
     void refresh_ShouldUpdateUserPreferences() {
-        // Arrange
+        
         doNothing().when(userPreferenceService).updateUserPreferences(TEST_USER_ID);
 
-        // Act
+        
         userPreferenceController.refresh(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceService).updateUserPreferences(TEST_USER_ID);
     }
 
     @Test
     void refresh_WithInvalidUserId_ShouldPropagateException() {
-        // Arrange
+        
         Long invalidUserId = -1L;
         doThrow(new RuntimeException("User not found"))
             .when(userPreferenceService).updateUserPreferences(invalidUserId);
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userPreferenceController.refresh(invalidUserId));
         
@@ -186,12 +185,11 @@ class UserPreferenceControllerTest {
 
     @Test
     void refresh_WithNonExistentUserId_ShouldThrowException() {
-        // Arrange
+        
         Long nonExistentUserId = 999L;
         doThrow(new RuntimeException("User not found"))
             .when(userPreferenceService).updateUserPreferences(nonExistentUserId);
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userPreferenceController.refresh(nonExistentUserId));
         
@@ -200,63 +198,63 @@ class UserPreferenceControllerTest {
 
     @Test
     void initPreferences_ShouldInitializeColdStartPreferences() {
-        // Arrange
+        
         List<TagPreferenceDto> tags = Arrays.asList(testTagPreferenceDto1, testTagPreferenceDto2);
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         doNothing().when(userPreferenceService)
             .initializeColdStartPreferencesWithRating(authentication, tags);
 
-        // Act
+        
         userPreferenceController.initPreferences(tags, authentication);
 
-        // Assert
+        
         verify(userPreferenceService).initializeColdStartPreferencesWithRating(authentication, tags);
     }
 
     @Test
     void initPreferences_WithEmptyList_ShouldStillCallService() {
-        // Arrange
+        
         List<TagPreferenceDto> emptyTags = List.of();
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         doNothing().when(userPreferenceService)
             .initializeColdStartPreferencesWithRating(authentication, emptyTags);
 
-        // Act
+        
         userPreferenceController.initPreferences(emptyTags, authentication);
 
-        // Assert
+        
         verify(userPreferenceService).initializeColdStartPreferencesWithRating(authentication, emptyTags);
     }
 
     @Test
     void initPreferences_WithSingleTag_ShouldInitialize() {
-        // Arrange
+        
         List<TagPreferenceDto> singleTag = List.of(testTagPreferenceDto1);
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         doNothing().when(userPreferenceService)
             .initializeColdStartPreferencesWithRating(authentication, singleTag);
 
-        // Act
+        
         userPreferenceController.initPreferences(singleTag, authentication);
 
-        // Assert
+        
         verify(userPreferenceService).initializeColdStartPreferencesWithRating(authentication, singleTag);
     }
 
 
     @Test
     void hasPreferences_WhenPreferencesExist_ShouldReturnTrue() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.countByUserId(authentication)).thenReturn(5L);
 
-        // Act
+        
         ResponseEntity<Boolean> response = userPreferenceController.hasPreferences(authentication);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -269,14 +267,14 @@ class UserPreferenceControllerTest {
 
     @Test
     void hasPreferences_WhenNoPreferences_ShouldReturnFalse() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.countByUserId(authentication)).thenReturn(0L);
 
-        // Act
+        
         ResponseEntity<Boolean> response = userPreferenceController.hasPreferences(authentication);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -291,16 +289,16 @@ class UserPreferenceControllerTest {
     @Test
     void toDto_ShouldMapUserPreferenceCorrectly() {
         // This tests the private toDto method indirectly through get
-        // Arrange
+        
         List<UserPreference> preferences = List.of(testPreference1);
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.getUserPreferences(authentication)).thenReturn(preferences);
 
-        // Act
+        
         List<UserPreferenceDto> result = userPreferenceController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         
@@ -314,7 +312,7 @@ class UserPreferenceControllerTest {
     @Test
     void toDto_ShouldHandleNullValues() {
         // This tests the private toDto method with null values
-        // Arrange
+        
         TagEntity tagWithNulls = new TagEntity();
         tagWithNulls.setId(TEST_TAG_ID_1);
         tagWithNulls.setName(null);
@@ -329,10 +327,10 @@ class UserPreferenceControllerTest {
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.getUserPreferences(authentication)).thenReturn(preferences);
 
-        // Act
+        
         List<UserPreferenceDto> result = userPreferenceController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         
@@ -350,7 +348,7 @@ class UserPreferenceControllerTest {
 
     @Test
     void get_ShouldHandleMultiplePreferences() {
-        // Arrange
+        
         List<UserPreference> manyPreferences = new java.util.ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             TagEntity tag = new TagEntity();
@@ -367,10 +365,10 @@ class UserPreferenceControllerTest {
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userPreferenceService.getUserPreferences(authentication)).thenReturn(manyPreferences);
 
-        // Act
+        
         List<UserPreferenceDto> result = userPreferenceController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(10, result.size());
         
@@ -384,17 +382,17 @@ class UserPreferenceControllerTest {
 
     @Test
     void initPreferences_ShouldPassCorrectTagsToService() {
-        // Arrange
+        
         List<TagPreferenceDto> tags = Arrays.asList(testTagPreferenceDto1, testTagPreferenceDto2);
         
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         doNothing().when(userPreferenceService)
             .initializeColdStartPreferencesWithRating(authentication, tags);
 
-        // Act
+        
         userPreferenceController.initPreferences(tags, authentication);
 
-        // Assert
+        
         verify(userPreferenceService).initializeColdStartPreferencesWithRating(authentication, tags);
     }
 }

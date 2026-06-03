@@ -54,16 +54,12 @@ class RecommendationItemsRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // 1. Создаем и сохраняем сессию
         testSession = new RecommendationSession();
-        // Установите необходимые поля для сессии, если они есть
         testSession = sessionRepository.save(testSession);
 
-        // 2. Создаем две разные игры
         game1 = createTestGame("Witcher 3", 101L);
         game2 = createTestGame("Cyberpunk", 102L);
 
-        // 3. Создаем айтемы рекомендаций (в неправильном порядке по рангу)
         RecommendationItems item2 = new RecommendationItems(game2, testSession, 2, 0.85);
         RecommendationItems item1 = new RecommendationItems(game1, testSession, 1, 0.95);
 
@@ -82,14 +78,11 @@ class RecommendationItemsRepositoryTest {
 
     @Test
     void save_ShouldPersistItemWithScore() {
-        // Arrange
         GameEntity game3 = createTestGame("Doom", 103L);
         RecommendationItems newItem = new RecommendationItems(game3, testSession, 3, 0.75);
 
-        // Act
         RecommendationItems saved = recommendationItemsRepository.save(newItem);
 
-        // Assert
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getScore()).isEqualTo(0.75);
         assertThat(saved.getSession().getId()).isEqualTo(testSession.getId());

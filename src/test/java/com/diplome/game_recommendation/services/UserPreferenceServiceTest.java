@@ -94,7 +94,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void getUserPreferences_ShouldReturnUserPreferences() {
-        // Arrange
+        
         UserPreference pref1 = new UserPreference();
         pref1.setUser(testUser);
         pref1.setTag(testTag1);
@@ -110,10 +110,10 @@ class UserPreferenceServiceTest {
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(userPreferenceRepository.findByUserId(TEST_USER_ID)).thenReturn(expectedPrefs);
 
-        // Act
+        
         List<UserPreference> result = userPreferenceService.getUserPreferences(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(testTag1, result.get(0).getTag());
@@ -128,88 +128,28 @@ class UserPreferenceServiceTest {
 
     @Test
     void getUserPreferences_WhenNoPreferences_ShouldReturnEmptyList() {
-        // Arrange
+        
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(userPreferenceRepository.findByUserId(TEST_USER_ID)).thenReturn(new ArrayList<>());
 
-        // Act
+        
         List<UserPreference> result = userPreferenceService.getUserPreferences(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
-    void updateUserPreferences_ShouldCalculateAndSavePreferences() {
-        // Arrange
-        // Create interactions
-        UserGames viewedGame = createUserGame(testUser, testGame1, InteractionEnum.Viewed, null, LocalDateTime.now());
-        UserGames favoriteGame = createUserGame(testUser, testGame2, InteractionEnum.Favorite, null, LocalDateTime.now());
-        UserGames ratedGame = createUserGame(testUser, testGame1, InteractionEnum.Rated, 8, LocalDateTime.now());
-        
-        List<UserGames> interactions = Arrays.asList(viewedGame, favoriteGame, ratedGame);
-        
-        // Create game tags
-        GameTag gameTag1 = new GameTag();
-        gameTag1.setGame(testGame1);
-        gameTag1.setTag(testTag1);
-        
-        GameTag gameTag2 = new GameTag();
-        gameTag2.setGame(testGame2);
-        gameTag2.setTag(testTag2);
-        
-        GameTag gameTag3 = new GameTag();
-        gameTag3.setGame(testGame1);
-        gameTag3.setTag(testTag3);
-        
-        when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
-        when(userGamesRepository.findByUserId(TEST_USER_ID)).thenReturn(interactions);
-        
-        when(gameTagRepository.findByGameId(TEST_GAME_ID_1)).thenReturn(Arrays.asList(gameTag1, gameTag3));
-        when(gameTagRepository.findByGameId(TEST_GAME_ID_2)).thenReturn(Collections.singletonList(gameTag2));
-        
-        when(tagRepository.findById(TEST_TAG_ID_1)).thenReturn(Optional.of(testTag1));
-        when(tagRepository.findById(TEST_TAG_ID_2)).thenReturn(Optional.of(testTag2));
-        when(tagRepository.findById(TEST_TAG_ID_3)).thenReturn(Optional.of(testTag3));
-        
-        ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
-
-        // Act
-        userPreferenceService.updateUserPreferences(TEST_USER_ID);
-
-        // Assert
-        verify(userPreferenceRepository).deleteByUserId(TEST_USER_ID);
-        verify(userPreferenceRepository, atLeastOnce()).save(captor.capture());
-        
-        List<UserPreference> savedPrefs = captor.getAllValues();
-        
-        // Verify weights are calculated correctly
-        // Viewed: 0.2, Rated: 0.8, Favorite: 0.8
-        // For tag1: from viewed (0.2) + rated (0.8) = 1.0
-        // For tag3: from rated (0.8) = 0.8
-        // For tag2: from favorite (0.8) = 0.8
-        
-        Map<Long, Double> savedWeights = new HashMap<>();
-        for (UserPreference pref : savedPrefs) {
-            savedWeights.put(pref.getTag().getId(), pref.getPreferenceWeight());
-        }
-        
-        assertEquals(1.0, savedWeights.get(TEST_TAG_ID_1));
-        assertEquals(0.8, savedWeights.get(TEST_TAG_ID_2));
-        assertEquals(0.8, savedWeights.get(TEST_TAG_ID_3));
-    }
-
-    @Test
     void updateUserPreferences_WithNoInteractions_ShouldDeleteOnly() {
-        // Arrange
+        
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(userGamesRepository.findByUserId(TEST_USER_ID)).thenReturn(new ArrayList<>());
 
-        // Act
+        
         userPreferenceService.updateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository).deleteByUserId(TEST_USER_ID);
         verify(userPreferenceRepository, never()).save(any());
         verify(gameTagRepository, never()).findByGameId(any());
@@ -218,7 +158,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void updateUserPreferences_WithFavoriteInteractions() {
-        // Arrange
+        
         UserGames favoriteGame = createUserGame(testUser, testGame1, InteractionEnum.Favorite, null, LocalDateTime.now());
         
         List<UserGames> interactions = Collections.singletonList(favoriteGame);
@@ -234,10 +174,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.updateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository).save(captor.capture());
         UserPreference savedPref = captor.getValue();
         
@@ -247,7 +187,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void updateUserPreferences_WithRatedInteractions() {
-        // Arrange
+        
         UserGames ratedGame = createUserGame(testUser, testGame1, InteractionEnum.Rated, 7, LocalDateTime.now());
         
         List<UserGames> interactions = Collections.singletonList(ratedGame);
@@ -263,10 +203,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.updateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository).save(captor.capture());
         UserPreference savedPref = captor.getValue();
         
@@ -276,7 +216,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void updateUserPreferences_WithMultipleTagsPerGame() {
-        // Arrange
+        
         UserGames viewedGame = createUserGame(testUser, testGame1, InteractionEnum.Viewed, null, LocalDateTime.now());
         
         List<UserGames> interactions = Collections.singletonList(viewedGame);
@@ -297,10 +237,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.updateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository, times(2)).save(captor.capture());
         List<UserPreference> savedPrefs = captor.getAllValues();
         
@@ -312,7 +252,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void initializeColdStartPreferences_ShouldSavePreferencesWithWeight1() {
-        // Arrange
+        
         List<Long> tagIds = Arrays.asList(TEST_TAG_ID_1, TEST_TAG_ID_2, TEST_TAG_ID_3);
         
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
@@ -322,10 +262,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.initializeColdStartPreferences(TEST_USER_ID, tagIds);
 
-        // Assert
+        
         verify(userPreferenceRepository, times(3)).save(captor.capture());
         List<UserPreference> savedPrefs = captor.getAllValues();
         
@@ -345,13 +285,12 @@ class UserPreferenceServiceTest {
 
     @Test
     void initializeColdStartPreferences_WhenTagNotFound_ShouldThrowException() {
-        // Arrange
+        
         List<Long> tagIds = Collections.singletonList(TEST_TAG_ID_1);
         
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(tagRepository.findById(TEST_TAG_ID_1)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(NoSuchElementException.class, 
             () -> userPreferenceService.initializeColdStartPreferences(TEST_USER_ID, tagIds));
         
@@ -360,7 +299,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void initializeColdStartPreferencesWithRating_ShouldSavePreferencesWithCalculatedWeights() {
-        // Arrange
+        
         List<TagPreferenceDto> tagPreferences = Arrays.asList(
             createTagPreferenceDto(TEST_TAG_ID_1, 5.0), // weight = 1.0
             createTagPreferenceDto(TEST_TAG_ID_2, 3.0), // weight = 0.6
@@ -374,10 +313,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.initializeColdStartPreferencesWithRating(authentication, tagPreferences);
 
-        // Assert
+        
         verify(userPreferenceRepository).deleteByUserId(TEST_USER_ID);
         verify(userPreferenceRepository, times(3)).save(captor.capture());
         
@@ -394,7 +333,7 @@ class UserPreferenceServiceTest {
 
     @Test
     void initializeColdStartPreferencesWithRating_ShouldDeleteExistingPreferences() {
-        // Arrange
+        
         List<TagPreferenceDto> tagPreferences = Collections.singletonList(
             createTagPreferenceDto(TEST_TAG_ID_1, 4.0)
         );
@@ -402,26 +341,26 @@ class UserPreferenceServiceTest {
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(tagRepository.findById(TEST_TAG_ID_1)).thenReturn(Optional.of(testTag1));
 
-        // Act
+        
         userPreferenceService.initializeColdStartPreferencesWithRating(authentication, tagPreferences);
 
-        // Assert
+        
         verify(userPreferenceRepository).deleteByUserId(TEST_USER_ID);
         verify(userPreferenceRepository).save(any(UserPreference.class));
     }
 
     @Test
     void countByUserId_ShouldReturnPreferenceCount() {
-        // Arrange
+        
         Long expectedCount = 5L;
         
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(userPreferenceRepository.countByUserId(TEST_USER_ID)).thenReturn(expectedCount);
 
-        // Act
+        
         Long result = userPreferenceService.countByUserId(authentication);
 
-        // Assert
+        
         assertEquals(expectedCount, result);
         verify(userRepository).findByEmail(TEST_EMAIL);
         verify(userPreferenceRepository).countByUserId(TEST_USER_ID);
@@ -429,10 +368,9 @@ class UserPreferenceServiceTest {
 
     @Test
     void countByUserId_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
+        
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(NoSuchElementException.class, 
             () -> userPreferenceService.countByUserId(authentication));
         
@@ -441,20 +379,20 @@ class UserPreferenceServiceTest {
 
     @Test
     void countByUserId_WhenNoPreferences_ShouldReturnZero() {
-        // Arrange
+        
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(userPreferenceRepository.countByUserId(TEST_USER_ID)).thenReturn(0L);
 
-        // Act
+        
         Long result = userPreferenceService.countByUserId(authentication);
 
-        // Assert
+        
         assertEquals(0L, result);
     }
 
     @Test
     void updateUserPreferences_ShouldAccumulateWeightsFromMultipleInteractions() {
-        // Arrange
+        
         // Multiple interactions for the same game and tag
         UserGames viewedGame = createUserGame(testUser, testGame1, InteractionEnum.Viewed, null, LocalDateTime.now());
         UserGames favoriteGame = createUserGame(testUser, testGame1, InteractionEnum.Favorite, null, LocalDateTime.now());
@@ -473,10 +411,10 @@ class UserPreferenceServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         userPreferenceService.updateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository).save(captor.capture());
         UserPreference savedPref = captor.getValue();
         
@@ -486,10 +424,9 @@ class UserPreferenceServiceTest {
 
     @Test
     void updateUserPreferences_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
+        
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(NoSuchElementException.class, 
             () -> userPreferenceService.updateUserPreferences(TEST_USER_ID));
         

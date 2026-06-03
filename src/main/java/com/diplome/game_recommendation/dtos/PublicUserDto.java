@@ -6,5 +6,5 @@ import java.util.*;
 public class PublicUserDto {
     private String username;
     private String avatarUrl;
-    private List<ReviewDto> reviews; // последние отзывы пользователя
+    private List<ReviewDto> reviews; 
 }

@@ -83,7 +83,6 @@ class UserGameRepositoryTest {
 
     @Test
     void getAverageRatingForGame_ShouldReturnCorrectAverage() {
-        // Arrange: два пользователя ставят оценки 4 и 5
         UserGames rating1 = new UserGames();
         rating1.setUser(testUser);
         rating1.setGame(testGame);
@@ -99,16 +98,16 @@ class UserGameRepositoryTest {
         rating2.setRating(5);
         userGameRepository.save(rating2);
 
-        // Act
+        
         Double avg = userGameRepository.getAverageRatingForGame(testGame.getId());
 
-        // Assert
+        
         assertThat(avg).isEqualTo(4.5);
     }
 
     @Test
     void getCountOfRatingsForGame_ShouldReturnCorrectCount() {
-        // Arrange
+        
         UserGames rating = new UserGames();
         rating.setUser(testUser);
         rating.setGame(testGame);
@@ -116,16 +115,15 @@ class UserGameRepositoryTest {
         rating.setRating(5);
         userGameRepository.save(rating);
 
-        // Act
+        
         Integer count = userGameRepository.getCountOfRatingsForGame(testGame.getId());
 
-        // Assert
+        
         assertThat(count).isEqualTo(1);
     }
 
     @Test
     void findByGameIdAndReviewIsNotNullOrderByTimeDesc_ShouldReturnReviewsOnly() {
-        // Arrange: создаем один обзор и одну просто оценку (без текста)
         UserGames review = new UserGames();
         review.setUser(testUser);
         review.setGame(testGame);
@@ -141,42 +139,36 @@ class UserGameRepositoryTest {
         justRating.setRating(5);
         userGameRepository.save(justRating);
 
-        // Act
+        
         Page<UserGames> result = userGameRepository.findByGameIdAndReviewIsNotNullOrderByTimeDesc(
                 testGame.getId(), PageRequest.of(0, 10));
 
-        // Assert: должен вернуться только 1 объект (обзор)
         assertThat(result.getContent()).hasSize(1);
         assertThat(result.getContent().get(0).getReview()).isEqualTo("Great game!");
     }
 
     @Test
     void findFavoritesFiltered_ShouldFilterByNameAndTag() {
-        // Arrange
-        // 1. Создаем тег и привязываем к игре
+        
         TagEntity rpgTag = new TagEntity();
         rpgTag.setName("RPG_" + uniqueSuffix);
         rpgTag = tagRepository.save(rpgTag);
         gameTagRepository.save(new GameTag(testGame, rpgTag));
 
-        // 2. Добавляем в избранное
         UserGames favorite = new UserGames();
         favorite.setUser(testUser);
         favorite.setGame(testGame);
         favorite.setInteraction(InteractionEnum.Favorite);
         userGameRepository.save(favorite);
 
-        // Act & Assert Case 1: Поиск по части имени (Witcher)
         Page<GameEntity> searchResult = userGameRepository.findFavoritesFiltered(
                 testUser.getId(), "Witcher", null, PageRequest.of(0, 10));
         assertThat(searchResult.getContent()).extracting(GameEntity::getId).contains(testGame.getId());
 
-        // Act & Assert Case 2: Поиск по правильному тегу
         Page<GameEntity> tagResult = userGameRepository.findFavoritesFiltered(
                 testUser.getId(), null, rpgTag.getId(), PageRequest.of(0, 10));
         assertThat(tagResult.getContent()).hasSize(1);
 
-        // Act & Assert Case 3: Поиск по несуществующему тегу
         Page<GameEntity> emptyResult = userGameRepository.findFavoritesFiltered(
                 testUser.getId(), null, 999L, PageRequest.of(0, 10));
         assertThat(emptyResult.getContent()).isEmpty();
@@ -184,35 +176,35 @@ class UserGameRepositoryTest {
 
     @Test
     void findByUserIdAndInteraction_ShouldReturnInteractions() {
-        // Arrange
+        
         UserGames interaction = new UserGames();
         interaction.setUser(testUser);
         interaction.setGame(testGame);
         interaction.setInteraction(InteractionEnum.Favorite);
         userGameRepository.save(interaction);
 
-        // Act
+        
         List<UserGames> result = userGameRepository.findByUserIdAndInteraction(testUser.getId(), InteractionEnum.Favorite);
 
-        // Assert
+        
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getInteraction()).isEqualTo(InteractionEnum.Favorite);
     }
 
     @Test
     void findByUserIdAndGameIdAndInteraction_ShouldReturnOptional() {
-        // Arrange
+        
         UserGames review = new UserGames();
         review.setUser(testUser);
         review.setGame(testGame);
         review.setInteraction(InteractionEnum.Review);
         userGameRepository.save(review);
 
-        // Act
+        
         Optional<UserGames> found = userGameRepository.findByUserIdAndGameIdAndInteraction(
                 testUser.getId(), testGame.getId(), InteractionEnum.Review);
 
-        // Assert
+        
         assertThat(found).isPresent();
     }
 

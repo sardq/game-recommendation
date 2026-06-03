@@ -104,7 +104,7 @@ class TagControllerTest {
 
     @Test
     void getAll_ShouldReturnListOfTagDtos() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -115,10 +115,10 @@ class TagControllerTest {
         when(mapper.map(testTag1, TagDto.class)).thenReturn(testTagDto1);
         when(mapper.map(testTag2, TagDto.class)).thenReturn(testTagDto2);
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(TEST_TAG_ID_1, result.get(0).getId());
@@ -134,7 +134,7 @@ class TagControllerTest {
 
     @Test
     void getAll_ShouldUseDefaultPagination() {
-        // Arrange
+        
         int defaultPage = 0;
         int defaultSize = 20;
         PageRequest pageable = PageRequest.of(defaultPage, defaultSize);
@@ -142,10 +142,10 @@ class TagControllerTest {
 
         when(tagService.getAll(defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(tagService).getAll(defaultPage, defaultSize);
@@ -153,7 +153,7 @@ class TagControllerTest {
 
     @Test
     void getAll_ShouldHandleEmptyResult() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -161,10 +161,10 @@ class TagControllerTest {
 
         when(tagService.getAll(page, size)).thenReturn(emptyPage);
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(tagService).getAll(page, size);
@@ -173,7 +173,7 @@ class TagControllerTest {
 
     @Test
     void getAll_ShouldSetNameRuCorrectly() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -188,23 +188,23 @@ class TagControllerTest {
         when(tagService.getAll(page, size)).thenReturn(tagPage);
         when(mapper.map(testTag1, TagDto.class)).thenReturn(dtoWithoutNameRu);
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_TAG_NAME_RU_1, result.get(0).getNameRu());
     }
 
     @Test
     void get_ShouldReturnTagEntity() {
-        // Arrange
+        
         when(tagService.get(TEST_TAG_ID_1)).thenReturn(testTag1);
 
-        // Act
+        
         TagEntity result = tagController.get(TEST_TAG_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_TAG_ID_1, result.getId());
         assertEquals(TEST_TAG_NAME_1, result.getName());
@@ -215,20 +215,20 @@ class TagControllerTest {
 
     @Test
     void get_WhenTagNotFound_ShouldReturnNull() {
-        // Arrange
+        
         when(tagService.get(TEST_TAG_ID_1)).thenReturn(null);
 
-        // Act
+        
         TagEntity result = tagController.get(TEST_TAG_ID_1);
 
-        // Assert
+        
         assertNull(result);
         verify(tagService).get(TEST_TAG_ID_1);
     }
 
     @Test
     void searchTags_WithSearchQuery_ShouldReturnFilteredTags() {
-        // Arrange
+        
         String search = TEST_SEARCH_QUERY;
         int page = 0;
         int size = 5;
@@ -239,10 +239,10 @@ class TagControllerTest {
         when(tagService.searchTagsByName(search, page, size)).thenReturn(tagPage);
         when(mapper.map(testTag1, TagDto.class)).thenReturn(testTagDto1);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(TEST_TAG_ID_1, result.get(0).getId());
@@ -254,7 +254,7 @@ class TagControllerTest {
 
     @Test
     void searchTags_WithBlankSearch_ShouldReturnAllTags() {
-        // Arrange
+        
         String search = "";
         int page = 0;
         int size = 5;
@@ -266,10 +266,10 @@ class TagControllerTest {
         when(mapper.map(testTag1, TagDto.class)).thenReturn(testTagDto1);
         when(mapper.map(testTag2, TagDto.class)).thenReturn(testTagDto2);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         
@@ -279,7 +279,7 @@ class TagControllerTest {
 
     @Test
     void searchTags_WithWhitespaceSearch_ShouldReturnAllTags() {
-        // Arrange
+        
         String search = "   ";
         int page = 0;
         int size = 5;
@@ -292,10 +292,10 @@ class TagControllerTest {
         when(mapper.map(testTag2, TagDto.class)).thenReturn(testTagDto2);
         when(mapper.map(testTag3, TagDto.class)).thenReturn(testTagDto3);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(3, result.size());
         
@@ -305,7 +305,7 @@ class TagControllerTest {
 
     @Test
     void searchTags_ShouldUseDefaultPagination() {
-        // Arrange
+        
         String search = TEST_SEARCH_QUERY;
         int defaultPage = 0;
         int defaultSize = 5;
@@ -314,10 +314,10 @@ class TagControllerTest {
 
         when(tagService.searchTagsByName(search, defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(tagService).searchTagsByName(search, defaultPage, defaultSize);
@@ -325,7 +325,7 @@ class TagControllerTest {
 
     @Test
     void searchTags_WithNoResults_ShouldReturnEmptyList() {
-        // Arrange
+        
         String search = "nonexistent";
         int page = 0;
         int size = 5;
@@ -334,10 +334,10 @@ class TagControllerTest {
 
         when(tagService.searchTagsByName(search, page, size)).thenReturn(emptyPage);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(tagService).searchTagsByName(search, page, size);
@@ -345,7 +345,7 @@ class TagControllerTest {
 
     @Test
     void getRecommendedTags_ShouldReturnPageOfTags() {
-        // Arrange
+        
         int page = 0;
         int size = 5;
         PageRequest pageable = PageRequest.of(page, size);
@@ -355,10 +355,10 @@ class TagControllerTest {
         lenient().when(authentication.getName()).thenReturn("test@example.com");
         when(tagService.getTagsSortedByPreference(authentication, page, size)).thenReturn(tagPage);
 
-        // Act
+        
         ResponseEntity<Page<TagEntity>> response = tagController.getRecommendedTags(authentication, page, size);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -373,7 +373,7 @@ class TagControllerTest {
 
     @Test
     void getRecommendedTags_ShouldUseDefaultPagination() {
-        // Arrange
+        
         int defaultPage = 0;
         int defaultSize = 5;
         PageRequest pageable = PageRequest.of(defaultPage, defaultSize);
@@ -383,10 +383,10 @@ class TagControllerTest {
         when(tagService.getTagsSortedByPreference(authentication, defaultPage, defaultSize))
             .thenReturn(emptyPage);
 
-        // Act
+        
         ResponseEntity<Page<TagEntity>> response = tagController.getRecommendedTags(authentication, defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(response);
         Page<TagEntity> result = response.getBody();
         assertNotNull(result);
@@ -397,7 +397,7 @@ class TagControllerTest {
 
     @Test
     void getRecommendedTags_WhenNoPreferences_ShouldReturnEmptyPage() {
-        // Arrange
+        
         int page = 0;
         int size = 5;
         PageRequest pageable = PageRequest.of(page, size);
@@ -407,10 +407,10 @@ class TagControllerTest {
         when(tagService.getTagsSortedByPreference(authentication, page, size))
             .thenReturn(emptyPage);
 
-        // Act
+        
         ResponseEntity<Page<TagEntity>> response = tagController.getRecommendedTags(authentication, page, size);
 
-        // Assert
+        
         assertNotNull(response);
         Page<TagEntity> result = response.getBody();
         assertNotNull(result);
@@ -421,8 +421,7 @@ class TagControllerTest {
 
     @Test
     void toDto_ShouldSetNameRuCorrectly() {
-        // This tests the private toDto method indirectly through getAll
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -437,10 +436,10 @@ class TagControllerTest {
         when(tagService.getAll(page, size)).thenReturn(tagPage);
         when(mapper.map(testTag1, TagDto.class)).thenReturn(dtoWithNameRu);
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_TAG_NAME_RU_1, result.get(0).getNameRu());
     }
@@ -452,7 +451,7 @@ class TagControllerTest {
 
     @Test
     void getAll_ShouldHandleLargePageSize() {
-        // Arrange
+        
         int page = 0;
         int size = 1000;
         PageRequest pageable = PageRequest.of(page, size);
@@ -467,24 +466,23 @@ class TagControllerTest {
 
         when(tagService.getAll(page, size)).thenReturn(tagPage);
         
-        // Mock mapper for each tag
         for (TagEntity tag : manyTags) {
             TagDto dto = new TagDto();
             dto.setId(tag.getId());
             when(mapper.map(tag, TagDto.class)).thenReturn(dto);
         }
 
-        // Act
+        
         List<TagDto> result = tagController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(size, result.size());
     }
 
     @Test
     void searchTags_WithEmptySearchAndDefaultParams_ShouldWork() {
-        // Arrange
+        
         String search = "";
         int defaultPage = 0;
         int defaultSize = 5;
@@ -493,10 +491,10 @@ class TagControllerTest {
 
         when(tagService.getAll(defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
+        
         List<TagDto> result = tagController.searchTags(search, defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(result);
         verify(tagService).getAll(defaultPage, defaultSize);
     }

@@ -112,7 +112,7 @@ class UserServiceTest {
 
     @Test
     void getAll_ShouldReturnPageOfUsers() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size);
@@ -121,10 +121,10 @@ class UserServiceTest {
 
         when(repository.findAll(pageable)).thenReturn(expectedPage);
 
-        // Act
+        
         Page<UserEntity> result = userService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         verify(repository).findAll(pageable);
@@ -132,13 +132,13 @@ class UserServiceTest {
 
     @Test
     void get_WhenUserExists_ShouldReturnUser() {
-        // Arrange
+        
         when(repository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
 
-        // Act
+        
         UserEntity result = userService.get(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_USER_ID, result.getId());
         assertEquals(TEST_EMAIL, result.getEmail());
@@ -147,23 +147,22 @@ class UserServiceTest {
 
     @Test
     void get_WhenUserNotFound_ShouldThrowNotFoundException() {
-        // Arrange
+        
         when(repository.findById(TEST_USER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(NotFoundException.class, () -> userService.get(TEST_USER_ID));
         verify(repository).findById(TEST_USER_ID);
     }
 
     @Test
     void getByEmail_WhenUserExists_ShouldReturnUser() {
-        // Arrange
+        
         when(repository.findByEmailIgnoreCase(TEST_EMAIL)).thenReturn(Optional.of(testUser));
 
-        // Act
+        
         UserEntity result = userService.getByEmail(TEST_EMAIL);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_EMAIL, result.getEmail());
         verify(repository).findByEmailIgnoreCase(TEST_EMAIL);
@@ -171,23 +170,22 @@ class UserServiceTest {
 
     @Test
     void getByEmail_WhenUserNotFound_ShouldThrowIllegalArgumentException() {
-        // Arrange
+        
         when(repository.findByEmailIgnoreCase(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> userService.getByEmail(TEST_EMAIL));
         verify(repository).findByEmailIgnoreCase(TEST_EMAIL);
     }
 
     @Test
     void getByLogin_WhenUserExists_ShouldReturnUser() {
-        // Arrange
+        
         when(repository.findByUsernameIgnoreCase(TEST_USERNAME)).thenReturn(Optional.of(testUser));
 
-        // Act
+        
         UserEntity result = userService.getByLogin(TEST_USERNAME);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_USERNAME, result.getUsername());
         verify(repository).findByUsernameIgnoreCase(TEST_USERNAME);
@@ -195,17 +193,16 @@ class UserServiceTest {
 
     @Test
     void getByLogin_WhenUserNotFound_ShouldThrowIllegalArgumentException() {
-        // Arrange
+        
         when(repository.findByUsernameIgnoreCase(TEST_USERNAME)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> userService.getByLogin(TEST_USERNAME));
         verify(repository).findByUsernameIgnoreCase(TEST_USERNAME);
     }
 
     @Test
     void login_WithValidCredentials_ShouldReturnUserDtoWithToken() {
-        // Arrange
+        
         CredentialsDto credentials = new CredentialsDto();
         credentials.setEmail(TEST_EMAIL);
         credentials.setPassword(TEST_PASSWORD.toCharArray());
@@ -216,10 +213,10 @@ class UserServiceTest {
         when(userAuthenticationProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
         when(userMapper.toUserDto(testUser)).thenReturn(testUserDto);
 
-        // Act
+        
         UserDto result = userService.login(credentials);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_EMAIL, result.getEmail());
         assertEquals(TEST_TOKEN, result.getToken());
@@ -231,14 +228,13 @@ class UserServiceTest {
 
     @Test
     void login_WithInvalidEmail_ShouldThrowAppException() {
-        // Arrange
+        
         CredentialsDto credentials = new CredentialsDto();
         credentials.setEmail("wrong@example.com");
         credentials.setPassword(TEST_PASSWORD.toCharArray());
 
         when(repository.findByEmail(credentials.getEmail())).thenReturn(Optional.empty());
 
-        // Act & Assert
         AppException exception = assertThrows(AppException.class, 
             () -> userService.login(credentials));
         
@@ -250,7 +246,7 @@ class UserServiceTest {
 
     @Test
     void login_WithInvalidPassword_ShouldThrowAppException() {
-        // Arrange
+        
         CredentialsDto credentials = new CredentialsDto();
         credentials.setEmail(TEST_EMAIL);
         credentials.setPassword("wrongpassword".toCharArray());
@@ -259,7 +255,6 @@ class UserServiceTest {
         when(passwordEncoder.matches(CharBuffer.wrap("wrongpassword"), testUser.getPasswordHash()))
             .thenReturn(false);
 
-        // Act & Assert
         AppException exception = assertThrows(AppException.class, 
             () -> userService.login(credentials));
         
@@ -270,17 +265,17 @@ class UserServiceTest {
 
     @Test
     void register_WithNewEmail_ShouldRegisterUser() {
-        // Arrange
+        
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
         when(userMapper.signUpToUser(testSignupDto)).thenReturn(testUser);
         when(passwordEncoder.encode(CharBuffer.wrap(TEST_PASSWORD))).thenReturn("encoded_password");
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
         when(userMapper.toUserDto(testUser)).thenReturn(testUserDto);
 
-        // Act
+        
         UserDto result = userService.register(testSignupDto);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_EMAIL, result.getEmail());
         
@@ -299,10 +294,9 @@ class UserServiceTest {
 
     @Test
     void register_WithExistingEmail_ShouldThrowAppException() {
-        // Arrange
+        
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
 
-        // Act & Assert
         AppException exception = assertThrows(AppException.class, 
             () -> userService.register(testSignupDto));
         
@@ -313,7 +307,7 @@ class UserServiceTest {
 
     @Test
     void getUserHistory_ShouldReturnSortedUserHistory() {
-        // Arrange
+        
         UserGames game1 = new UserGames();
         game1.setTime(LocalDateTime.now().minusDays(1));
         
@@ -327,10 +321,10 @@ class UserServiceTest {
         
         when(userGameRepository.findByUserId(TEST_USER_ID)).thenReturn(history);
 
-        // Act
+        
         List<UserGames> result = userService.getUserHistory(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(3, result.size());
         // Should be sorted descending by time
@@ -341,13 +335,13 @@ class UserServiceTest {
 
     @Test
     void getUserHistory_WhenNoHistory_ShouldReturnEmptyList() {
-        // Arrange
+        
         when(userGameRepository.findByUserId(TEST_USER_ID)).thenReturn(new ArrayList<>());
 
-        // Act
+        
         List<UserGames> result = userService.getUserHistory(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(userGameRepository).findByUserId(TEST_USER_ID);
@@ -355,28 +349,27 @@ class UserServiceTest {
 
     @Test
     void resetPassword_ShouldResetPassword() {
-        // Arrange
+        
         String newPassword = "newPassword123";
         
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
 
-        // Act
+        
         userService.resetPassword(TEST_EMAIL, newPassword);
 
-        // Assert
+        
         verify(repository).findByEmail(TEST_EMAIL);
         verify(repository).save(testUser);
     }
 
     @Test
     void resetPassword_WhenEmailNotFound_ShouldThrowRuntimeException() {
-        // Arrange
+        
         String newPassword = "newPassword123";
         
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userService.resetPassword(TEST_EMAIL, newPassword));
         
@@ -385,7 +378,7 @@ class UserServiceTest {
 
     @Test
     void updateProfile_ShouldUpdateUserBirthDate() throws ParseException {
-        // Arrange
+        
         UserDto updateDto = new UserDto();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         updateDto.setBirthDate(formatter.parse("15-05-1995"));
@@ -394,10 +387,10 @@ class UserServiceTest {
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
         when(userMapper.toUserDto(testUser)).thenReturn(testUserDto);
 
-        // Act
+        
         UserDto result = userService.updateProfile(TEST_EMAIL, updateDto);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(formatter.parse("15-05-1995"), testUser.getBirthDate());
         verify(repository).save(testUser);
@@ -406,7 +399,7 @@ class UserServiceTest {
 
     @Test
     void updateProfile_WithNullBirthDate_ShouldNotUpdate() throws ParseException {
-        // Arrange
+        
         UserDto updateDto = new UserDto();
         updateDto.setBirthDate(null);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -415,10 +408,10 @@ class UserServiceTest {
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
         when(userMapper.toUserDto(testUser)).thenReturn(testUserDto);
 
-        // Act
+        
         UserDto result = userService.updateProfile(TEST_EMAIL, updateDto);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(formatter.parse("01-01-1990"), testUser.getBirthDate()); // Original date unchanged
         verify(repository).save(testUser);
@@ -426,7 +419,7 @@ class UserServiceTest {
 
     @Test
     void updateProfile_WhenUserNotFound_ShouldThrowRuntimeException() throws ParseException {
-        // Arrange
+        
         UserDto updateDto = new UserDto();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -434,7 +427,6 @@ class UserServiceTest {
         
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userService.updateProfile(TEST_EMAIL, updateDto));
         
@@ -443,7 +435,7 @@ class UserServiceTest {
 
     @Test
     void updateAvatar_ShouldUploadAndUpdateAvatarUrl() throws Exception {
-        // Arrange
+        
         MultipartFile file = new MockMultipartFile(
             "avatar", 
             "avatar.jpg", 
@@ -457,10 +449,10 @@ class UserServiceTest {
         when(fileService.uploadAvatar(file, TEST_USER_ID)).thenReturn(uploadedFileName);
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
 
-        // Act
+        
         String result = userService.updateAvatar(TEST_EMAIL, file);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.contains(uploadedFileName));
         assertTrue(result.contains("http://minio.com"));
@@ -472,7 +464,7 @@ class UserServiceTest {
 
     @Test
     void updateAvatar_WhenUserNotFound_ShouldThrowException() throws Exception {
-        // Arrange
+        
         MultipartFile file = new MockMultipartFile(
             "avatar", 
             "avatar.jpg", 
@@ -482,7 +474,6 @@ class UserServiceTest {
         
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(NoSuchElementException.class, 
             () -> userService.updateAvatar(TEST_EMAIL, file));
         
@@ -492,16 +483,16 @@ class UserServiceTest {
 
     @Test
     void getPublicProfile_ShouldReturnUserPublicProfile() {
-        // Arrange
+        
         List<ReviewDto> reviews = Arrays.asList(new ReviewDto(), new ReviewDto());
         
         when(repository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(interactionService.getReviewsByUserId(TEST_USER_ID)).thenReturn(reviews);
 
-        // Act
+        
         PublicUserDto result = userService.getPublicProfile(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_USERNAME, result.getUsername());
         assertEquals(TEST_AVATAR_URL, result.getAvatarUrl());
@@ -513,10 +504,9 @@ class UserServiceTest {
 
     @Test
     void getPublicProfile_WhenUserNotFound_ShouldThrowRuntimeException() {
-        // Arrange
+        
         when(repository.findById(TEST_USER_ID)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userService.getPublicProfile(TEST_USER_ID));
         
@@ -525,14 +515,11 @@ class UserServiceTest {
 
     @Test
     void getPublicProfile_WhenUserHasNoReviews_ShouldReturnEmptyList() {
-        // Arrange
         when(repository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(interactionService.getReviewsByUserId(TEST_USER_ID)).thenReturn(new ArrayList<>());
 
-        // Act
         PublicUserDto result = userService.getPublicProfile(TEST_USER_ID);
 
-        // Assert
         assertNotNull(result);
         assertEquals(TEST_USERNAME, result.getUsername());
         assertTrue(result.getReviews().isEmpty());
@@ -540,7 +527,7 @@ class UserServiceTest {
 
     @Test
     void getAll_ShouldHandleLargePageSize() {
-        // Arrange
+        
         int page = 0;
         int size = 1000;
         Pageable pageable = PageRequest.of(page, size);
@@ -555,10 +542,10 @@ class UserServiceTest {
 
         when(repository.findAll(pageable)).thenReturn(expectedPage);
 
-        // Act
+        
         Page<UserEntity> result = userService.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(size, result.getContent().size());
         verify(repository).findAll(pageable);
@@ -566,7 +553,7 @@ class UserServiceTest {
 
     @Test
     void getUserHistory_ShouldHandleHistoryWithSameTimestamps() {
-        // Arrange
+        
         LocalDateTime now = LocalDateTime.now();
         UserGames game1 = new UserGames();
         game1.setTime(now);
@@ -578,18 +565,17 @@ class UserServiceTest {
         
         when(userGameRepository.findByUserId(TEST_USER_ID)).thenReturn(history);
 
-        // Act
+        
         List<UserGames> result = userService.getUserHistory(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
-        // Should not throw exception with equal timestamps
     }
 
     @Test
     void login_ShouldHandleEmptyPassword() {
-        // Arrange
+        
         CredentialsDto credentials = new CredentialsDto();
         credentials.setEmail(TEST_EMAIL);
         credentials.setPassword("".toCharArray());
@@ -598,23 +584,22 @@ class UserServiceTest {
         when(passwordEncoder.matches(CharBuffer.wrap(""), testUser.getPasswordHash()))
             .thenReturn(false);
 
-        // Act & Assert
         assertThrows(AppException.class, () -> userService.login(credentials));
     }
 
     @Test
     void register_ShouldSetRegistrationDate() {
-        // Arrange
+        
         when(repository.findByEmail(TEST_EMAIL)).thenReturn(Optional.empty());
         when(userMapper.signUpToUser(testSignupDto)).thenReturn(testUser);
         when(passwordEncoder.encode(any())).thenReturn("encoded_password");
         when(repository.save(any(UserEntity.class))).thenReturn(testUser);
         when(userMapper.toUserDto(testUser)).thenReturn(testUserDto);
 
-        // Act
+        
         userService.register(testSignupDto);
 
-        // Assert
+        
         ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
         verify(repository).save(captor.capture());
         

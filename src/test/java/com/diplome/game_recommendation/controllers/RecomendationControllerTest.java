@@ -46,7 +46,6 @@ class RecomendationControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Setup test RecommendationDto objects
         testRecommendation1 = new RecommendationDto();
         testRecommendation1.setGameId(1L);
         testRecommendation1.setName("Game 1");
@@ -67,7 +66,6 @@ class RecomendationControllerTest {
 
         testRecommendations = Arrays.asList(testRecommendation1, testRecommendation2);
 
-        // Setup test RecommendationSessionDto
         testSessionDto = new RecommendationSessionDto();
         testSessionDto.setId(TEST_SESSION_ID);
         testSessionDto.setGeneratedAt(LocalDateTime.now());
@@ -75,7 +73,6 @@ class RecomendationControllerTest {
 
         testSessions = Arrays.asList(testSessionDto);
 
-        // Setup test RecommendationSessionDetailsDto
         testSessionDetailsDto = new RecommendationSessionDetailsDto();
         testSessionDetailsDto.setId(TEST_SESSION_ID);
         testSessionDetailsDto.setGeneratedAt(LocalDateTime.now());
@@ -84,14 +81,14 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByUserId_ShouldReturnRecommendations() {
-        // Arrange
+        
         when(recomendationService.getRecommendationsForUser(TEST_USER_ID))
             .thenReturn(testRecommendations);
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(1L, result.get(0).getGameId());
@@ -107,14 +104,14 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByUserId_WhenNoRecommendations_ShouldReturnEmptyList() {
-        // Arrange
+        
         when(recomendationService.getRecommendationsForUser(TEST_USER_ID))
             .thenReturn(List.of());
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(recomendationService).getRecommendationsForUser(TEST_USER_ID);
@@ -122,15 +119,15 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByAuthentication_ShouldReturnFastRecommendations() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(recomendationService.getFastRecommendations(authentication))
             .thenReturn(testRecommendations);
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(1L, result.get(0).getGameId());
@@ -141,15 +138,15 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByAuthentication_WhenNoFastRecommendations_ShouldReturnColdStart() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(recomendationService.getFastRecommendations(authentication))
             .thenReturn(List.of());
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(recomendationService).getFastRecommendations(authentication);
@@ -157,39 +154,39 @@ class RecomendationControllerTest {
 
     @Test
     void recalculatePreferences_ByUserId_ShouldRecalculate() {
-        // Arrange
+        
         doNothing().when(recomendationService).recalculateUserPreferences(TEST_USER_ID);
 
-        // Act
+        
         recomendationController.recalculatePreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(recomendationService).recalculateUserPreferences(TEST_USER_ID);
     }
 
     @Test
     void recalculatePreferences_ByAuthentication_ShouldGenerateAndSave() {
-        // Arrange
+        
         doNothing().when(recomendationService).generateAndSaveRecommendations(authentication);
 
-        // Act
+        
         recomendationController.recalculatePreferencesAuth(authentication);
 
-        // Assert
+        
         verify(recomendationService).generateAndSaveRecommendations(authentication);
     }
 
     @Test
     void getSessions_ShouldReturnUserSessions() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(recomendationService.getUserSessions(authentication))
             .thenReturn(testSessions);
 
-        // Act
+        
         List<RecommendationSessionDto> result = recomendationController.getSessions(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(TEST_SESSION_ID, result.get(0).getId());
@@ -201,15 +198,15 @@ class RecomendationControllerTest {
 
     @Test
     void getSessions_WhenNoSessions_ShouldReturnEmptyList() {
-        // Arrange
+        
         lenient().when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(recomendationService.getUserSessions(authentication))
             .thenReturn(List.of());
 
-        // Act
+        
         List<RecommendationSessionDto> result = recomendationController.getSessions(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(recomendationService).getUserSessions(authentication);
@@ -217,14 +214,14 @@ class RecomendationControllerTest {
 
     @Test
     void getSession_ShouldReturnSessionDetails() {
-        // Arrange
+        
         when(recomendationService.getSessionDetails(TEST_SESSION_ID))
             .thenReturn(testSessionDetailsDto);
 
-        // Act
+        
         RecommendationSessionDetailsDto result = recomendationController.getSession(TEST_SESSION_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_SESSION_ID, result.getId());
         assertEquals(2, result.getItems().size());
@@ -237,11 +234,10 @@ class RecomendationControllerTest {
 
     @Test
     void getSession_WhenSessionNotFound_ShouldThrowException() {
-        // Arrange
+        
         when(recomendationService.getSessionDetails(TEST_SESSION_ID))
             .thenThrow(new RuntimeException("Session not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> recomendationController.getSession(TEST_SESSION_ID));
         
@@ -250,15 +246,15 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByUserId_ShouldHandleLargeUserId() {
-        // Arrange
+        
         Long largeUserId = 999999999L;
         when(recomendationService.getRecommendationsForUser(largeUserId))
             .thenReturn(testRecommendations);
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(largeUserId);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         verify(recomendationService).getRecommendationsForUser(largeUserId);
@@ -266,12 +262,11 @@ class RecomendationControllerTest {
 
     @Test
     void recalculatePreferences_ByUserId_ShouldHandleInvalidUserId() {
-        // Arrange
+        
         Long invalidUserId = -1L;
         doThrow(new RuntimeException("User not found"))
             .when(recomendationService).recalculateUserPreferences(invalidUserId);
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> recomendationController.recalculatePreferences(invalidUserId));
         
@@ -281,28 +276,28 @@ class RecomendationControllerTest {
 
     @Test
     void get_ByUserId_ShouldHandleZeroRecommendations() {
-        // Arrange
+        
         when(recomendationService.getRecommendationsForUser(TEST_USER_ID))
             .thenReturn(List.of());
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     void get_ByUserId_ShouldPreserveRecommendationOrder() {
-        // Arrange
+        
         when(recomendationService.getRecommendationsForUser(TEST_USER_ID))
             .thenReturn(testRecommendations);
 
-        // Act
+        
         List<RecommendationDto> result = recomendationController.get(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(0.95, result.get(0).getRecommendationScore());
         assertEquals(0.85, result.get(1).getRecommendationScore());
@@ -311,7 +306,7 @@ class RecomendationControllerTest {
 
     @Test
     void getSession_ShouldReturnDetailsWithCorrectStructure() {
-        // Arrange
+        
         RecommendationSessionDetailsDto detailedDto = new RecommendationSessionDetailsDto();
         detailedDto.setId(TEST_SESSION_ID);
         detailedDto.setGeneratedAt(LocalDateTime.now());
@@ -320,10 +315,10 @@ class RecomendationControllerTest {
         when(recomendationService.getSessionDetails(TEST_SESSION_ID))
             .thenReturn(detailedDto);
 
-        // Act
+        
         RecommendationSessionDetailsDto result = recomendationController.getSession(TEST_SESSION_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertNotNull(result.getItems());
         assertFalse(result.getItems().isEmpty());
@@ -338,13 +333,13 @@ class RecomendationControllerTest {
 
     @Test
     void recalculatePreferences_ByAuthentication_ShouldLogCorrectly() {
-        // Arrange
+        
         doNothing().when(recomendationService).generateAndSaveRecommendations(authentication);
 
-        // Act
+        
         recomendationController.recalculatePreferencesAuth(authentication);
 
-        // Assert
+        
         verify(recomendationService).generateAndSaveRecommendations(authentication);
     }
 

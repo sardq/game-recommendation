@@ -303,11 +303,9 @@ public class InteractionService {
 }
     @Transactional
     public List<ReviewDto> getReviewsByUserId(Long userId) {
-        // 1. Находим все отзывы пользователя
         List<UserGames> reviewEntities = userGamesRepository.findByUserIdAndInteraction(
                 userId, InteractionEnum.Review);
 
-        // 2. Находим все оценки пользователя для сопоставления
         List<UserGames> ratingEntities = userGamesRepository.findByUserIdAndInteraction(
                 userId, InteractionEnum.Rated);
 
@@ -318,7 +316,6 @@ public class InteractionService {
                     (existing, replacement) -> existing
                 ));
 
-        // 3. Маппим в DTO
         return reviewEntities.stream()
                 .map(review -> {
                     ReviewDto dto = new ReviewDto();

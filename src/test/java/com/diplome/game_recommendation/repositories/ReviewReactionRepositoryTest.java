@@ -61,7 +61,6 @@ class ReviewReactionRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // 1. Создаем пользователя
         user = new UserEntity();
         user.setUsername("reviewer_" + UUID.randomUUID().toString().substring(0, 5));
         user.setEmail(UUID.randomUUID().toString().substring(0, 10) + "@test.com");
@@ -69,13 +68,11 @@ class ReviewReactionRepositoryTest {
         user.setPasswordHash("password");
         user = userRepository.save(user);
 
-        // 2. Создаем игру
         GameEntity game = new GameEntity();
         game.setName("Game for Review");
         game.setRawgId((long) (Math.random() * 1000000));
         game = gameRepository.save(game);
 
-        // 3. Создаем отзыв (UserGames)
         review = new UserGames();
         review.setUser(user);
         review.setGame(game);
@@ -87,60 +84,46 @@ class ReviewReactionRepositoryTest {
 
     @Test
     void countByReviewIdAndType_ShouldReturnCorrectCount() {
-        // Arrange: добавляем 2 лайка от разных пользователей (нужны разные пользователи для уникальности реакций, если это заложено в логике)
         createReaction(user, review, likeType);
         
         UserEntity anotherUser = createAnotherUser();
         createReaction(anotherUser, review, likeType);
 
-        // Act
         long count = reviewReactionRepository.countByReviewIdAndType(review.getId(), likeType);
 
-        // Assert
         assertThat(count).isEqualTo(2);
     }
 
     @Test
     void findByUserIdAndReviewId_ShouldReturnOptionalReaction() {
-        // Arrange
         createReaction(user, review, dislikeType);
 
-        // Act
         Optional<ReviewReaction> found = reviewReactionRepository.findByUserIdAndReviewId(user.getId(), review.getId());
 
-        // Assert
         assertThat(found).isPresent();
         assertThat(found.get().getType()).isEqualTo(dislikeType);
     }
 
     @Test
     void findByReviewId_ShouldReturnAllReactionsForReview() {
-        // Arrange
         createReaction(user, review, likeType);
         UserEntity anotherUser = createAnotherUser();
         createReaction(anotherUser, review, dislikeType);
-
-        // Act
         List<ReviewReaction> result = reviewReactionRepository.findByReviewId(review.getId());
 
-        // Assert
         assertThat(result).hasSize(2);
     }
 
     @Test
     void getReactionCounts_ShouldReturnAggregatedCounts() {
-        // Arrange: 2 лайка и 1 дизлайк
         createReaction(user, review, likeType);
         createReaction(createAnotherUser(), review, likeType);
         createReaction(createAnotherUser(), review, dislikeType);
 
-        // Act
         List<Object[]> counts = reviewReactionRepository.getReactionCounts(review.getId());
 
-        // Assert
         assertThat(counts).isNotEmpty();
         
-        // Проверяем структуру Object[]: [0] - ReactionType, [1] - Count
         for (Object[] row : counts) {
             ReactionType type = (ReactionType) row[0];
             Long count = (Long) row[1];

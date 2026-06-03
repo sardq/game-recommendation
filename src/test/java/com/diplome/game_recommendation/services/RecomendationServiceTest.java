@@ -113,7 +113,7 @@ class RecomendationServiceTest {
 
     @Test
     void recalculateUserPreferences_ShouldCalculateAndSavePreferences() {
-        // Arrange
+        
         UserGames viewedGame = createUserGame(testUser, testGame1, InteractionEnum.Viewed, null, LocalDateTime.now());
         UserGames favoriteGame = createUserGame(testUser, testGame2, InteractionEnum.Favorite, null, LocalDateTime.now());
         UserGames ratedGame = createUserGame(testUser, testGame3, InteractionEnum.Rated, 5, LocalDateTime.now());
@@ -140,17 +140,16 @@ class RecomendationServiceTest {
         
         ArgumentCaptor<UserPreference> captor = ArgumentCaptor.forClass(UserPreference.class);
 
-        // Act
+        
         recomendationService.recalculateUserPreferences(TEST_USER_ID);
 
-        // Assert
+        
         verify(userPreferenceRepository).deleteByUserId(TEST_USER_ID);
         verify(userPreferenceRepository, atLeastOnce()).save(captor.capture());
         
         List<UserPreference> savedPrefs = captor.getAllValues();
         assertFalse(savedPrefs.isEmpty());
         
-        // Verify weights are normalized (between 0 and 1)
         for (UserPreference pref : savedPrefs) {
             assertTrue(pref.getPreferenceWeight() >= 0 && pref.getPreferenceWeight() <= 1);
             assertEquals(testUser, pref.getUser());
@@ -161,7 +160,7 @@ class RecomendationServiceTest {
 
     @Test
     void getRecommendationsForUser_ByUserId_ShouldExcludePlayedGames() {
-        // Arrange
+        
         when(userGameRepository.countByUserId(TEST_USER_ID)).thenReturn(5);
         
         UserPreference pref = new UserPreference();
@@ -183,23 +182,21 @@ class RecomendationServiceTest {
         librecRecs.add(librecRec);
         when(librecEngineService.recommend(TEST_USER_ID)).thenReturn(librecRecs);
         
-        // User has already played game1
         UserGames playedGame = createUserGame(testUser, testGame1, InteractionEnum.Viewed, null, LocalDateTime.now());
         when(userGameRepository.findByUserId(TEST_USER_ID)).thenReturn(Collections.singletonList(playedGame));
 
-        // Act
+        
         List<RecommendationDto> result = recomendationService.getRecommendationsForUser(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
-        // Game1 should be excluded because it's already played
         assertFalse(result.stream().anyMatch(r -> r.getGameId().equals(TEST_GAME_ID_1)));
     }
 
 
     @Test
     void getSimilarGames_ShouldReturnGamesWithCommonTags() {
-        // Arrange
+        
         when(gameRepository.findById(TEST_GAME_ID_1)).thenReturn(Optional.of(testGame1));
         
         GameTag gameTag1 = new GameTag();
@@ -219,7 +216,7 @@ class RecomendationServiceTest {
         
         GameTag similarGameTag = new GameTag();
         similarGameTag.setGame(similarGame);
-        similarGameTag.setTag(testTag1); // Shares tag1 with target
+        similarGameTag.setTag(testTag1); 
         
         List<GameTag> allGameTags = new ArrayList<>();
         allGameTags.addAll(targetGameTags);
@@ -229,10 +226,10 @@ class RecomendationServiceTest {
         when(gameRepository.findAll()).thenReturn(Arrays.asList(testGame1, similarGame));
         when(gameRepository.findById(200L)).thenReturn(Optional.of(similarGame));
 
-        // Act
+        
         List<RecommendationDto> result = recomendationService.getSimilarGames(TEST_GAME_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(200L, result.get(0).getGameId());
@@ -241,7 +238,7 @@ class RecomendationServiceTest {
 
     @Test
     void getSimilarGames_WhenNoSimilar_ShouldReturnEmpty() {
-        // Arrange
+        
         when(gameRepository.findById(TEST_GAME_ID_1)).thenReturn(Optional.of(testGame1));
         
         GameTag gameTag = new GameTag();
@@ -256,18 +253,17 @@ class RecomendationServiceTest {
         
         GameTag otherGameTag = new GameTag();
         otherGameTag.setGame(otherGame);
-        otherGameTag.setTag(testTag2); // No common tags
+        otherGameTag.setTag(testTag2); 
         
         when(gameTagRepository.findAll()).thenReturn(Arrays.asList(gameTag, otherGameTag));
         when(gameRepository.findAll()).thenReturn(Arrays.asList(testGame1, otherGame));
         when(gameRepository.findById(200L)).thenReturn(Optional.of(otherGame));
 
-        // Act
+        
         List<RecommendationDto> result = recomendationService.getSimilarGames(TEST_GAME_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
-        // Score should be 0 because no common tags
         assertEquals(0.0, result.get(0).getRecommendationScore());
     }
 
@@ -275,7 +271,7 @@ class RecomendationServiceTest {
 
     @Test
     void getSessionDetails_ShouldReturnSessionWithItems() {
-        // Arrange
+        
         Long sessionId = 1L;
         RecommendationSession session = new RecommendationSession(testUser, LocalDateTime.now());
         session.setId(sessionId);
@@ -289,10 +285,10 @@ class RecomendationServiceTest {
         when(gameRepository.findById(TEST_GAME_ID_1)).thenReturn(Optional.of(testGame1));
         when(gameRepository.findById(TEST_GAME_ID_2)).thenReturn(Optional.of(testGame2));
 
-        // Act
+        
         RecommendationSessionDetailsDto result = recomendationService.getSessionDetails(sessionId);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(sessionId, result.getId());
         assertEquals(2, result.getItems().size());
@@ -302,17 +298,16 @@ class RecomendationServiceTest {
 
     @Test
     void getSessionDetails_WhenSessionNotFound_ShouldThrowException() {
-        // Arrange
+        
         Long sessionId = 999L;
         when(sessionRepository.findById(sessionId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> recomendationService.getSessionDetails(sessionId));
     }
 
     @Test
     void generateRecommendationSession_ShouldCreateAndSaveSession() {
-        // Arrange
+        
         List<RecommendationDto> recommendations = createMockRecommendations();
         
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
@@ -322,14 +317,13 @@ class RecomendationServiceTest {
         ArgumentCaptor<RecommendationSession> sessionCaptor = ArgumentCaptor.forClass(RecommendationSession.class);
         ArgumentCaptor<RecommendationItems> itemsCaptor = ArgumentCaptor.forClass(RecommendationItems.class);
 
-        // Mock the getRecommendationsForUser method indirectly by spying
         RecomendationService spyService = spy(recomendationService);
         doReturn(recommendations).when(spyService).getRecommendationsForUser(eq(TEST_USER_ID));
         
-        // Act
+        
         spyService.generateRecommendationSession(TEST_USER_ID);
 
-        // Assert
+        
         verify(sessionRepository).save(sessionCaptor.capture());
         RecommendationSession savedSession = sessionCaptor.getValue();
         assertEquals(testUser, savedSession.getUser());
@@ -344,7 +338,7 @@ class RecomendationServiceTest {
 
     @Test
     void getFastRecommendations_WhenSessionExists_ShouldReturnCachedRecommendations() {
-        // Arrange
+        
         when(userRepository.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(testUser));
         
         RecommendationSession session = new RecommendationSession(testUser, LocalDateTime.now());
@@ -361,10 +355,10 @@ class RecomendationServiceTest {
         when(gameRepository.findById(TEST_GAME_ID_1)).thenReturn(Optional.of(testGame1));
         when(gameRepository.findById(TEST_GAME_ID_2)).thenReturn(Optional.of(testGame2));
 
-        // Act
+        
         List<RecommendationDto> result = recomendationService.getFastRecommendations(authentication);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(TEST_GAME_ID_1, result.get(0).getGameId());
@@ -376,22 +370,21 @@ class RecomendationServiceTest {
 
     @Test
     void mapToRecommendation_ShouldCorrectlyMapAndCalculatePercentage() {
-        // Arrange
+        
         when(gameRepository.findById(TEST_GAME_ID_1)).thenReturn(Optional.of(testGame1));
         
-        // Act
+        
         RecommendationDto result = recomendationService.getSimilarGames(TEST_GAME_ID_1).stream()
             .findFirst()
             .orElse(null);
         
         if (result != null) {
-            // Assert
+            
             assertNotNull(result);
             assertTrue(result.getMatchPercentage() >= 0 && result.getMatchPercentage() <= 100);
         }
     }
 
-    // Helper methods
     private UserGames createUserGame(UserEntity user, GameEntity game, InteractionEnum interaction, 
                                       Integer rating, LocalDateTime time) {
         UserGames ug = new UserGames();

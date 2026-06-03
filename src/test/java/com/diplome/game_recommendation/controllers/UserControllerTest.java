@@ -124,7 +124,7 @@ class UserControllerTest {
 
     @Test
     void getAll_ShouldReturnListOfUserDtos() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         PageRequest pageable = PageRequest.of(page, size);
@@ -135,10 +135,10 @@ class UserControllerTest {
         when(modelMapper.map(testUser1, UserDto.class)).thenReturn(testUserDto1);
         when(modelMapper.map(testUser2, UserDto.class)).thenReturn(testUserDto2);
 
-        // Act
+        
         List<UserDto> result = userController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(TEST_USER_ID_1, result.get(0).getId());
@@ -157,7 +157,7 @@ class UserControllerTest {
 
     @Test
     void getAll_ShouldUseDefaultPagination() {
-        // Arrange
+        
         int defaultPage = 0;
         int defaultSize = 10;
         PageRequest pageable = PageRequest.of(defaultPage, defaultSize);
@@ -165,10 +165,10 @@ class UserControllerTest {
 
         when(userService.getAll(defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
+        
         List<UserDto> result = userController.getAll(defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(userService).getAll(defaultPage, defaultSize);
@@ -176,7 +176,7 @@ class UserControllerTest {
 
     @Test
     void getAll_ShouldHandleEmptyResult() {
-        // Arrange
+        
         int page = 0;
         int size = 10;
         PageRequest pageable = PageRequest.of(page, size);
@@ -184,10 +184,10 @@ class UserControllerTest {
 
         when(userService.getAll(page, size)).thenReturn(emptyPage);
 
-        // Act
+        
         List<UserDto> result = userController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(modelMapper, never()).map(any(), any());
@@ -195,7 +195,7 @@ class UserControllerTest {
 
     @Test
     void getAll_ShouldHandleLargePageSize() {
-        // Arrange
+        
         int page = 0;
         int size = 1000;
         PageRequest pageable = PageRequest.of(page, size);
@@ -217,24 +217,24 @@ class UserControllerTest {
             when(modelMapper.map(user, UserDto.class)).thenReturn(dto);
         }
 
-        // Act
+        
         List<UserDto> result = userController.getAll(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(size, result.size());
     }
 
     @Test
     void getById_ShouldReturnUserDto() {
-        // Arrange
+        
         when(userService.get(TEST_USER_ID_1)).thenReturn(testUser1);
         when(modelMapper.map(testUser1, UserDto.class)).thenReturn(testUserDto1);
 
-        // Act
+        
         UserDto result = userController.getById(TEST_USER_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(TEST_USER_ID_1, result.getId());
         assertEquals(TEST_EMAIL_1, result.getEmail());
@@ -247,10 +247,9 @@ class UserControllerTest {
 
     @Test
     void getById_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
+        
         when(userService.get(TEST_USER_ID_1)).thenThrow(new RuntimeException("User not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> userController.getById(TEST_USER_ID_1));
         verify(userService).get(TEST_USER_ID_1);
         verify(modelMapper, never()).map(any(), any());
@@ -258,25 +257,24 @@ class UserControllerTest {
 
     @Test
     void getById_WithInvalidId_ShouldThrowException() {
-        // Arrange
+        
         Long invalidId = -1L;
         when(userService.get(invalidId)).thenThrow(new RuntimeException("User not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> userController.getById(invalidId));
         verify(userService).get(invalidId);
     }
 
     @Test
     void history_ShouldReturnUserHistory() {
-        // Arrange
+        
         List<UserGames> history = Arrays.asList(testUserGame1, testUserGame2);
         when(userService.getUserHistory(TEST_USER_ID_1)).thenReturn(history);
 
-        // Act
+        
         List<UserGames> result = userController.history(TEST_USER_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(1L, result.get(0).getId());
@@ -287,13 +285,13 @@ class UserControllerTest {
 
     @Test
     void history_WhenNoHistory_ShouldReturnEmptyList() {
-        // Arrange
+        
         when(userService.getUserHistory(TEST_USER_ID_1)).thenReturn(List.of());
 
-        // Act
+        
         List<UserGames> result = userController.history(TEST_USER_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(userService).getUserHistory(TEST_USER_ID_1);
@@ -301,7 +299,7 @@ class UserControllerTest {
 
     @Test
     void updateProfile_ShouldReturnUpdatedUserDto() throws ParseException {
-        // Arrange
+        
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         UserDto updateDto = new UserDto();
@@ -315,10 +313,10 @@ class UserControllerTest {
         when(authentication.getName()).thenReturn(TEST_EMAIL_1);
         when(userService.updateProfile(TEST_EMAIL_1, updateDto)).thenReturn(updatedUserDto);
 
-        // Act
+        
         ResponseEntity<UserDto> response = userController.updateProfile(updateDto, authentication);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -332,7 +330,7 @@ class UserControllerTest {
 
     @Test
     void updateProfile_WithNullBirthDate_ShouldNotUpdateBirthDate() throws ParseException {
-        // Arrange
+        
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         UserDto updateDto = new UserDto();
@@ -341,10 +339,10 @@ class UserControllerTest {
         when(authentication.getName()).thenReturn(TEST_EMAIL_1);
         when(userService.updateProfile(TEST_EMAIL_1, updateDto)).thenReturn(testUserDto1);
 
-        // Act
+        
         ResponseEntity<UserDto> response = userController.updateProfile(updateDto, authentication);
 
-        // Assert
+        
         assertNotNull(response);
         UserDto result = response.getBody();
         assertNotNull(result);
@@ -353,7 +351,7 @@ class UserControllerTest {
 
     @Test
     void updateProfile_WhenUserNotFound_ShouldThrowException() throws ParseException {
-        // Arrange
+        
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         UserDto updateDto = new UserDto();
@@ -363,7 +361,6 @@ class UserControllerTest {
         when(userService.updateProfile(TEST_EMAIL_1, updateDto))
             .thenThrow(new RuntimeException("User not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userController.updateProfile(updateDto, authentication));
         
@@ -372,7 +369,7 @@ class UserControllerTest {
 
     @Test
     void uploadAvatar_ShouldReturnAvatarUrl() {
-        // Arrange
+        
         MultipartFile file = new MockMultipartFile(
             "avatar", 
             "avatar.jpg", 
@@ -383,10 +380,10 @@ class UserControllerTest {
         when(authentication.getName()).thenReturn(TEST_EMAIL_1);
         when(userService.updateAvatar(TEST_EMAIL_1, file)).thenReturn(TEST_NEW_AVATAR_URL);
 
-        // Act
+        
         ResponseEntity<String> response = userController.uploadAvatar(file, authentication);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(TEST_NEW_AVATAR_URL, response.getBody());
@@ -396,7 +393,7 @@ class UserControllerTest {
 
     @Test
     void uploadAvatar_WithEmptyFile_ShouldStillProcess() {
-        // Arrange
+        
         MultipartFile emptyFile = new MockMultipartFile(
             "avatar", 
             "empty.jpg", 
@@ -407,10 +404,10 @@ class UserControllerTest {
         when(authentication.getName()).thenReturn(TEST_EMAIL_1);
         when(userService.updateAvatar(TEST_EMAIL_1, emptyFile)).thenReturn(TEST_NEW_AVATAR_URL);
 
-        // Act
+        
         ResponseEntity<String> response = userController.uploadAvatar(emptyFile, authentication);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(userService).updateAvatar(TEST_EMAIL_1, emptyFile);
@@ -418,7 +415,7 @@ class UserControllerTest {
 
     @Test
     void uploadAvatar_WhenServiceFails_ShouldThrowException() {
-        // Arrange
+        
         MultipartFile file = new MockMultipartFile(
             "avatar", 
             "avatar.jpg", 
@@ -430,7 +427,6 @@ class UserControllerTest {
         when(userService.updateAvatar(TEST_EMAIL_1, file))
             .thenThrow(new RuntimeException("Upload failed"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userController.uploadAvatar(file, authentication));
         
@@ -439,13 +435,13 @@ class UserControllerTest {
 
     @Test
     void getPublicProfile_ShouldReturnPublicUserDto() {
-        // Arrange
+        
         when(userService.getPublicProfile(TEST_USER_ID_3)).thenReturn(testPublicUserDto);
 
-        // Act
+        
         ResponseEntity<PublicUserDto> response = userController.getPublicProfile(TEST_USER_ID_3);
 
-        // Assert
+        
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -460,11 +456,10 @@ class UserControllerTest {
 
     @Test
     void getPublicProfile_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
+        
         when(userService.getPublicProfile(TEST_USER_ID_3))
             .thenThrow(new RuntimeException("User not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, 
             () -> userController.getPublicProfile(TEST_USER_ID_3));
         
@@ -473,7 +468,7 @@ class UserControllerTest {
 
     @Test
     void getPublicProfile_ShouldHandleUserWithNoReviews() {
-        // Arrange
+        
         PublicUserDto userWithNoReviews = new PublicUserDto();
         userWithNoReviews.setUsername(TEST_USERNAME_2);
         userWithNoReviews.setAvatarUrl(null);
@@ -481,10 +476,10 @@ class UserControllerTest {
         
         when(userService.getPublicProfile(TEST_USER_ID_2)).thenReturn(userWithNoReviews);
 
-        // Act
+        
         ResponseEntity<PublicUserDto> response = userController.getPublicProfile(TEST_USER_ID_2);
 
-        // Assert
+        
         assertNotNull(response);
         PublicUserDto result = response.getBody();
         assertNotNull(result);
@@ -495,14 +490,14 @@ class UserControllerTest {
     @Test
     void toDto_ShouldMapCorrectly() {
         // Test private toDto method indirectly through getById
-        // Arrange
+        
         when(userService.get(TEST_USER_ID_1)).thenReturn(testUser1);
         when(modelMapper.map(testUser1, UserDto.class)).thenReturn(testUserDto1);
 
-        // Act
+        
         UserDto result = userController.getById(TEST_USER_ID_1);
 
-        // Assert
+        
         assertNotNull(result);
         verify(modelMapper).map(testUser1, UserDto.class);
     }
@@ -514,13 +509,12 @@ class UserControllerTest {
 
     @Test
     void updateProfile_ShouldHandleAuthenticationWithNullEmail() {
-        // Arrange
+        
         UserDto updateDto = new UserDto();
         when(authentication.getName()).thenReturn(null);
         when(userService.updateProfile(null, updateDto))
             .thenThrow(new IllegalArgumentException("Email cannot be null"));
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, 
             () -> userController.updateProfile(updateDto, authentication));
     }

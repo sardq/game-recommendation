@@ -54,32 +54,27 @@ class GameRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Создаем уникальный ID, чтобы не было конфликта с существующими играми в вашей БД
         uniqueRawgId = (long) (Math.random() * 1000000);
         String uniqueName = "Test Game " + UUID.randomUUID().toString().substring(0, 5);
 
-        // 1. Создаем тег (с уникальным именем)
         actionTag = new TagEntity();
         actionTag.setName("Action-" + uniqueRawgId);
         actionTag.setSlug("action-" + uniqueRawgId);
         actionTag = tagRepository.save(actionTag);
 
-        // 2. Создаем игру
         testGame = new GameEntity();
-        testGame.setName(uniqueName); // Уникальное имя
+        testGame.setName(uniqueName); 
         testGame.setRawgId(uniqueRawgId);
         testGame.setRating(4.9);
         testGame.setReleaseDate(new Date());
         testGame = gameRepository.save(testGame);
 
-        // 3. Создаем связь
         GameTag gameTag = new GameTag(testGame, actionTag);
         gameTagRepository.save(gameTag);
     }
 
     @Test
     void findByNameContainingIgnoreCase_ShouldReturnGame() {
-        // Ищем именно то уникальное имя, которое создали
         Page<GameEntity> result = gameRepository.findByNameContainingIgnoreCase(testGame.getName(), PageRequest.of(0, 10));
         
         assertThat(result.getContent()).anyMatch(g -> g.getName().equals(testGame.getName()));
@@ -95,7 +90,6 @@ class GameRepositoryTest {
     void findByTagId_ShouldReturnGameWithTag() {
         Page<GameEntity> result = gameRepository.findByTagId(actionTag.getId(), PageRequest.of(0, 10));
         
-        // Проверяем, что среди результатов есть наша созданная игра
         assertThat(result.getContent()).extracting(GameEntity::getId).contains(testGame.getId());
     }
 
@@ -111,13 +105,11 @@ class GameRepositoryTest {
         List<Long> tagIds = List.of(actionTag.getId(), rpgTag.getId());
         Page<GameEntity> result = gameRepository.findByTagIds(tagIds, PageRequest.of(0, 10));
 
-        // Проверяем, что наша игра есть в списке
         assertThat(result.getContent()).extracting(GameEntity::getId).contains(testGame.getId());
     }
 
     @Test
     void filterBySearch_ShouldWorkWithLike() {
-        // Обрезаем имя для поиска по подстроке
         String searchPart = testGame.getName().substring(0, 8);
         Page<GameEntity> result = gameRepository.filterBySearch(searchPart, PageRequest.of(0, 10));
         

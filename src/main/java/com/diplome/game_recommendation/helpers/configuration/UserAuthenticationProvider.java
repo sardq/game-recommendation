@@ -8,18 +8,15 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.diplome.game_recommendation.helpers.exceptions.InvalidJwtTokenException;
 import com.diplome.game_recommendation.models.UserEntity;
 import com.diplome.game_recommendation.repositories.UserRepository;
-import com.diplome.game_recommendation.services.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

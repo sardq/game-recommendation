@@ -72,7 +72,6 @@ class GameControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Setup test games
         testGame1 = new GameEntity();
         testGame1.setId(TEST_GAME_ID_1);
         testGame1.setName("Test Game 1");
@@ -101,7 +100,6 @@ class GameControllerTest {
         testGame2.setPlaytime(15);
         testGame2.setPosterUrl("http://test.com/poster2.jpg");
 
-        // Setup test tag
         testTag = new TagEntity();
         testTag.setId(TEST_TAG_ID);
         testTag.setName("Action");
@@ -113,7 +111,6 @@ class GameControllerTest {
         testGameTag.setTag(testTag);
         testGame1.setGameTags(Set.of(testGameTag));
 
-        // Setup test DTOs
         testGameDto1 = new GameDto();
         testGameDto1.setId(TEST_GAME_ID_1);
         testGameDto1.setName("Test Game 1");
@@ -149,7 +146,6 @@ class GameControllerTest {
 
     @Test
     void getAll_ShouldReturnListOfGameDtos() {
-        // Arrange
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -160,10 +156,8 @@ class GameControllerTest {
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
         when(mapper.map(testGame2, GameDto.class)).thenReturn(testGameDto2);
 
-        // Act
         List<GameDto> result = gameController.getAll(page, size);
 
-        // Assert
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(TEST_GAME_ID_1, result.get(0).getId());
@@ -175,17 +169,14 @@ class GameControllerTest {
 
     @Test
     void getAll_ShouldUseDefaultPagination() {
-        // Arrange
         int defaultPage = 0;
         int defaultSize = 20;
         Page<GameEntity> emptyPage = new PageImpl<>(new ArrayList<>());
         
         when(gameService.getGames(defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
         List<GameDto> result = gameController.getAll(defaultPage, defaultSize);
 
-        // Assert
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(gameService).getGames(defaultPage, defaultSize);
@@ -193,24 +184,20 @@ class GameControllerTest {
 
     @Test
     void getAll_ShouldHandleEmptyResult() {
-        // Arrange
         int page = 0;
         int size = 20;
         Page<GameEntity> emptyPage = new PageImpl<>(new ArrayList<>());
         
         when(gameService.getGames(page, size)).thenReturn(emptyPage);
 
-        // Act
         List<GameDto> result = gameController.getAll(page, size);
 
-        // Assert
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     void getAll_ShouldSetLocalRatingWhenNull() {
-        // Arrange
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -224,23 +211,18 @@ class GameControllerTest {
         when(gameService.getGames(page, size)).thenReturn(gamePage);
         when(mapper.map(testGame1, GameDto.class)).thenReturn(dtoWithNullRating);
 
-        // Act
         List<GameDto> result = gameController.getAll(page, size);
 
-        // Assert
         assertNotNull(result);
         assertEquals(4.2, result.get(0).getLocalRating());
     }
 
     @Test
     void loadGame_ShouldLoadGameAndReturnId() {
-        // Arrange
         when(gameService.loadGameIfNeeded(TEST_GAME_ID_1)).thenReturn(testGame1);
 
-        // Act
         ResponseEntity<Long> response = gameController.loadGame(TEST_GAME_ID_1);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(TEST_GAME_ID_1, response.getBody());
@@ -250,10 +232,8 @@ class GameControllerTest {
 
     @Test
     void loadGame_WhenGameNotFound_ShouldThrowException() {
-        // Arrange
         when(gameService.loadGameIfNeeded(TEST_GAME_ID_1)).thenThrow(new RuntimeException("Game not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> gameController.loadGame(TEST_GAME_ID_1));
         verify(gameService).loadGameIfNeeded(TEST_GAME_ID_1);
     }
@@ -261,7 +241,6 @@ class GameControllerTest {
 
     @Test
     void filter_ShouldReturnFilteredGames() {
-        // Arrange
         String search = TEST_SEARCH_QUERY;
         int page = 0;
         int size = 20;
@@ -272,10 +251,10 @@ class GameControllerTest {
         when(gameService.getAllByFilters(search, page, size)).thenReturn(gamePage);
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
 
-        // Act
+        
         List<GameDto> result = gameController.filter(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(TEST_GAME_ID_1, result.get(0).getId());
@@ -285,7 +264,7 @@ class GameControllerTest {
 
     @Test
     void filter_WithEmptySearch_ShouldReturnAllGames() {
-        // Arrange
+        
         String search = "";
         int page = 0;
         int size = 20;
@@ -297,17 +276,17 @@ class GameControllerTest {
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
         when(mapper.map(testGame2, GameDto.class)).thenReturn(testGameDto2);
 
-        // Act
+        
         List<GameDto> result = gameController.filter(search, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
     }
 
     @Test
     void getByTag_ShouldReturnGamesByTag() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -317,10 +296,10 @@ class GameControllerTest {
         when(gameService.getGamesByTag(TEST_TAG_ID, page, size)).thenReturn(gamePage);
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
 
-        // Act
+        
         List<GameDto> result = gameController.getByTag(TEST_TAG_ID, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(TEST_GAME_ID_1, result.get(0).getId());
@@ -330,7 +309,7 @@ class GameControllerTest {
 
     @Test
     void getByTag_WhenNoGames_ShouldReturnEmptyList() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -338,27 +317,27 @@ class GameControllerTest {
         
         when(gameService.getGamesByTag(TEST_TAG_ID, page, size)).thenReturn(emptyPage);
 
-        // Act
+        
         List<GameDto> result = gameController.getByTag(TEST_TAG_ID, page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     void favorites_ShouldReturnFavoriteGames() {
-        // Arrange
+        
         List<GameEntity> favoriteGames = Arrays.asList(testGame1, testGame2);
         
         when(gameService.getFavorites(TEST_USER_ID)).thenReturn(favoriteGames);
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
         when(mapper.map(testGame2, GameDto.class)).thenReturn(testGameDto2);
 
-        // Act
+        
         List<GameDto> result = gameController.favorites(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(TEST_GAME_ID_1, result.get(0).getId());
@@ -369,20 +348,20 @@ class GameControllerTest {
 
     @Test
     void favorites_WhenNoFavorites_ShouldReturnEmptyList() {
-        // Arrange
+        
         when(gameService.getFavorites(TEST_USER_ID)).thenReturn(new ArrayList<>());
 
-        // Act
+        
         List<GameDto> result = gameController.favorites(TEST_USER_ID);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     void popular_ShouldReturnPopularGames() {
-        // Arrange
+        
         int page = 0;
         int size = 20;
         PageRequest pageable = PageRequest.of(page, size);
@@ -393,10 +372,10 @@ class GameControllerTest {
         when(mapper.map(testGame1, GameDto.class)).thenReturn(testGameDto1);
         when(mapper.map(testGame2, GameDto.class)).thenReturn(testGameDto2);
 
-        // Act
+        
         List<GameDto> result = gameController.popular(page, size);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.size());
         
@@ -405,17 +384,17 @@ class GameControllerTest {
 
     @Test
     void popular_ShouldUseDefaultPagination() {
-        // Arrange
+        
         int defaultPage = 0;
         int defaultSize = 20;
         Page<GameEntity> emptyPage = new PageImpl<>(new ArrayList<>());
         
         when(gameService.getPopularGames(defaultPage, defaultSize)).thenReturn(emptyPage);
 
-        // Act
+        
         List<GameDto> result = gameController.popular(defaultPage, defaultSize);
 
-        // Assert
+        
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
@@ -423,7 +402,7 @@ class GameControllerTest {
     
     @Test
     void toDetailsDto_ShouldHandleNullFields() {
-        // Arrange
+        
         GameEntity gameWithNulls = new GameEntity();
         gameWithNulls.setId(TEST_GAME_ID_1);
         gameWithNulls.setName("Test Game");
@@ -439,10 +418,10 @@ class GameControllerTest {
         when(newsService.getLatestNews(anyString())).thenReturn(new ArrayList<>());
         when(currencyService.getUsdRate()).thenReturn(testUsdRate);
 
-        // Act
+        
         ResponseEntity<GameDetailsDto> response = gameController.get(TEST_GAME_ID_1);
 
-        // Assert
+        
         assertNotNull(response);
         GameDetailsDto result = response.getBody();
         assertNotNull(result);

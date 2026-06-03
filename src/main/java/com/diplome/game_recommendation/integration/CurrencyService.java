@@ -16,7 +16,7 @@ public class CurrencyService {
             Map usd = (Map) valute.get("USD");
             return (Double) usd.get("Value");
         } catch (Exception e) {
-            return 90.0; // Значение по умолчанию, если API недоступно
+            return 90.0; 
         }
     }
 }

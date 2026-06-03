@@ -37,8 +37,7 @@ class RecommendationSessionRepositoryTest {
     private RecommendationSessionRepository recommendationSessionRepository;
 
     @Autowired
-    private UserRepository userRepository; // Предполагаем наличие репозитория пользователей
-
+    private UserRepository userRepository; 
     @MockitoBean
     private GigachatService gigachatService;
 
@@ -50,7 +49,6 @@ class RecommendationSessionRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // 1. Создаем уникального пользователя
         testUser = new UserEntity();
         testUser.setUsername("user_" + UUID.randomUUID().toString().substring(0, 5));
         testUser.setEmail(UUID.randomUUID() + "@test.com");
@@ -58,25 +56,19 @@ class RecommendationSessionRepositoryTest {
 
         now = LocalDateTime.now();
 
-        // 2. Создаем две сессии с разным временем
-        // Сессия 1: создана 2 часа назад
         RecommendationSession oldSession = new RecommendationSession(testUser, now.minusHours(2));
         recommendationSessionRepository.save(oldSession);
 
-        // Сессия 2: создана 5 минут назад (самая новая)
         RecommendationSession newSession = new RecommendationSession(testUser, now.minusMinutes(5));
         recommendationSessionRepository.save(newSession);
     }
 
     @Test
     void save_ShouldPersistSessionWithUserReference() {
-        // Arrange
         RecommendationSession session = new RecommendationSession(testUser, LocalDateTime.now());
 
-        // Act
         RecommendationSession saved = recommendationSessionRepository.save(session);
 
-        // Assert
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getUser().getId()).isEqualTo(testUser.getId());
     }

@@ -55,33 +55,29 @@ class GameTagRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Генерируем уникальное число для имен и ID
         uniqueId = (long) (Math.random() * 10000000);
         
-        // 1. Создаем уникальный тег
         testTag = new TagEntity();
         testTag.setName("Tag-" + uniqueId);
         testTag.setSlug("slug-" + uniqueId);
         testTag = tagRepository.save(testTag);
 
-        // 2. Создаем уникальную игру
         testGame = new GameEntity();
         testGame.setName("Game-" + UUID.randomUUID().toString().substring(0, 5));
         testGame.setRawgId(uniqueId);
         testGame.setReleaseDate(new Date());
         testGame = gameRepository.save(testGame);
 
-        // 3. Создаем связь между ними
         GameTag gameTag = new GameTag(testGame, testTag);
         gameTagRepository.save(gameTag);
     }
 
     @Test
     void findByGameId_ShouldReturnListOfTagsForGame() {
-        // Act
+        
         List<GameTag> result = gameTagRepository.findByGameId(testGame.getId());
 
-        // Assert
+        
         assertThat(result).isNotEmpty();
         assertThat(result.get(0).getGame().getId()).isEqualTo(testGame.getId());
         assertThat(result.get(0).getTag().getId()).isEqualTo(testTag.getId());
@@ -89,10 +85,10 @@ class GameTagRepositoryTest {
 
     @Test
     void findByTagId_ShouldReturnListOfGamesForTag() {
-        // Act
+        
         List<GameTag> result = gameTagRepository.findByTagId(testTag.getId());
 
-        // Assert
+        
         assertThat(result).isNotEmpty();
         assertThat(result.get(0).getTag().getId()).isEqualTo(testTag.getId());
         assertThat(result.get(0).getGame().getId()).isEqualTo(testGame.getId());
@@ -100,25 +96,24 @@ class GameTagRepositoryTest {
 
     @Test
     void existsByGameIdAndTagId_ShouldReturnTrueForExistingLink() {
-        // Act
+        
         boolean exists = gameTagRepository.existsByGameIdAndTagId(testGame.getId(), testTag.getId());
 
-        // Assert
+        
         assertThat(exists).isTrue();
     }
 
     @Test
     void existsByGameIdAndTagId_ShouldReturnFalseForNonExistentLink() {
-        // Act
+        
         boolean exists = gameTagRepository.existsByGameIdAndTagId(testGame.getId(), 999999L);
 
-        // Assert
+        
         assertThat(exists).isFalse();
     }
 
     @Test
     void findByGameId_WithMultipleTags_ShouldReturnAllAssociatedTags() {
-        // Arrange: Добавим этой же игре второй тег
         TagEntity secondTag = new TagEntity();
         secondTag.setName("SecondTag-" + uniqueId);
         secondTag.setSlug("second-slug-" + uniqueId);
@@ -127,10 +122,10 @@ class GameTagRepositoryTest {
         GameTag secondLink = new GameTag(testGame, secondTag);
         gameTagRepository.save(secondLink);
 
-        // Act
+        
         List<GameTag> result = gameTagRepository.findByGameId(testGame.getId());
 
-        // Assert
+        
         assertThat(result).hasSize(2);
         assertThat(result).extracting(gt -> gt.getTag().getName())
                 .containsExactlyInAnyOrder(testTag.getName(), secondTag.getName());

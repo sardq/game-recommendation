@@ -22,7 +22,6 @@ import com.diplome.game_recommendation.dtos.InteractionDto;
 import com.diplome.game_recommendation.dtos.ReviewDto;
 import com.diplome.game_recommendation.helpers.configuration.*;
 import com.diplome.game_recommendation.models.GameEntity;
-import com.diplome.game_recommendation.models.ReactionType;
 import com.diplome.game_recommendation.models.UserGames;
 import com.diplome.game_recommendation.services.InteractionService;
 @RestController

@@ -58,18 +58,15 @@ class AuthControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Setup CredentialsDto
         credentialsDto = new CredentialsDto();
         credentialsDto.setEmail(TEST_EMAIL);
         credentialsDto.setPassword(TEST_PASSWORD.toCharArray());
 
-        // Setup UserSignupDto
         userSignupDto = new UserSignupDto();
         userSignupDto.setEmail(TEST_EMAIL);
         userSignupDto.setPassword(TEST_PASSWORD);
         userSignupDto.setUsername(TEST_USERNAME);
 
-        // Setup UserDto
         userDto = new UserDto();
         userDto.setId(TEST_USER_ID);
         userDto.setEmail(TEST_EMAIL);
@@ -82,7 +79,6 @@ class AuthControllerTest {
         userEntity.setEmail(TEST_EMAIL);
         userEntity.setUsername(TEST_USERNAME);
 
-        // Setup reset password request
         resetPasswordRequest = new HashMap<>();
         resetPasswordRequest.put("email", TEST_EMAIL);
     }
@@ -93,10 +89,8 @@ class AuthControllerTest {
         when(userService.login(credentialsDto)).thenReturn(userDto);
         when(authProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
 
-        // Act
         ResponseEntity<UserDto> response = authController.login(credentialsDto);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         
@@ -111,10 +105,8 @@ class AuthControllerTest {
 
     @Test
     void login_ShouldHandleServiceException() {
-        // Arrange
         when(userService.login(credentialsDto)).thenThrow(new RuntimeException("Invalid credentials"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> authController.login(credentialsDto));
         verify(userService).login(credentialsDto);
         verify(authProvider, never()).createToken(anyString());
@@ -122,13 +114,10 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_WithValidEmail_ShouldReturnOkResponse() {
-        // Arrange
         doNothing().when(userService).resetPassword(TEST_EMAIL, NEW_PASSWORD);
 
-        // Act
         ResponseEntity<String> response = authController.resetPassword(resetPasswordRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Password reset instructions sent.", response.getBody());
@@ -138,13 +127,10 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_WithNullEmail_ShouldReturnBadRequest() {
-        // Arrange
         resetPasswordRequest.put("email", null);
 
-        // Act
         ResponseEntity<String> response = authController.resetPassword(resetPasswordRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Email is required", response.getBody());
@@ -154,13 +140,10 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_WithBlankEmail_ShouldReturnBadRequest() {
-        // Arrange
         resetPasswordRequest.put("email", "");
 
-        // Act
         ResponseEntity<String> response = authController.resetPassword(resetPasswordRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Email is required", response.getBody());
@@ -170,13 +153,10 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_WithEmptyEmail_ShouldReturnBadRequest() {
-        // Arrange
         resetPasswordRequest.put("email", "   ");
 
-        // Act
         ResponseEntity<String> response = authController.resetPassword(resetPasswordRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         
@@ -185,24 +165,19 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_WhenEmailNotFound_ShouldPropagateException() {
-        // Arrange
         doThrow(new RuntimeException("User not found")).when(userService).resetPassword(TEST_EMAIL, NEW_PASSWORD);
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> authController.resetPassword(resetPasswordRequest));
         verify(userService).resetPassword(TEST_EMAIL, NEW_PASSWORD);
     }
 
     @Test
     void register_WithValidData_ShouldReturnCreatedUser() {
-        // Arrange
         when(userService.register(userSignupDto)).thenReturn(userDto);
         when(authProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
 
-        // Act
         ResponseEntity<UserDto> response = authController.register(userSignupDto);
 
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(URI.create("/users/" + TEST_USER_ID), response.getHeaders().getLocation());
@@ -218,10 +193,8 @@ class AuthControllerTest {
 
     @Test
     void register_WhenEmailAlreadyExists_ShouldPropagateException() {
-        // Arrange
         when(userService.register(userSignupDto)).thenThrow(new RuntimeException("Email already exists"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> authController.register(userSignupDto));
         verify(userService).register(userSignupDto);
         verify(authProvider, never()).createToken(anyString());
@@ -229,11 +202,9 @@ class AuthControllerTest {
 
     @Test
     void register_WithInvalidData_ShouldThrowException() {
-        // Arrange
         userSignupDto.setEmail("invalid-email");
         when(userService.register(userSignupDto)).thenThrow(new IllegalArgumentException("Invalid email"));
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> authController.register(userSignupDto));
         verify(userService).register(userSignupDto);
         verify(authProvider, never()).createToken(anyString());
@@ -241,15 +212,12 @@ class AuthControllerTest {
 
     @Test
     void getMe_WithValidAuthentication_ShouldReturnUserDto() {
-        // Arrange
         when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userService.getByEmail(TEST_EMAIL)).thenReturn(userEntity);
         when(mapper.map(userEntity, UserDto.class)).thenReturn(userDto);
 
-        // Act
         UserDto result = authController.getMe(authentication);
 
-        // Assert
         assertNotNull(result);
         assertEquals(TEST_EMAIL, result.getEmail());
         assertEquals(TEST_USERNAME, result.getUsername());
@@ -262,18 +230,15 @@ class AuthControllerTest {
 
     @Test
     void getMe_WhenAuthenticationIsNull_ShouldThrowException() {
-        // Act & Assert
         assertThrows(NullPointerException.class, () -> authController.getMe(null));
         verify(userService, never()).getByEmail(anyString());
     }
 
     @Test
     void getMe_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
         when(authentication.getName()).thenReturn(TEST_EMAIL);
         when(userService.getByEmail(TEST_EMAIL)).thenThrow(new RuntimeException("User not found"));
 
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> authController.getMe(authentication));
         verify(authentication).getName();
         verify(userService).getByEmail(TEST_EMAIL);
@@ -281,7 +246,6 @@ class AuthControllerTest {
 
     @Test
     void getMe_ShouldMapCorrectly() {
-        // Arrange
         UserEntity customUser = new UserEntity();
         customUser.setId(99L);
         customUser.setEmail("custom@example.com");
@@ -296,10 +260,8 @@ class AuthControllerTest {
         when(userService.getByEmail("custom@example.com")).thenReturn(customUser);
         when(mapper.map(customUser, UserDto.class)).thenReturn(expectedDto);
 
-        // Act
         UserDto result = authController.getMe(authentication);
 
-        // Assert
         assertNotNull(result);
         assertEquals(99L, result.getId());
         assertEquals("custom@example.com", result.getEmail());
@@ -308,20 +270,16 @@ class AuthControllerTest {
 
     @Test
     void resetPassword_ShouldAlwaysUseNewPasswordConstant() {
-        // Arrange
         doNothing().when(userService).resetPassword(TEST_EMAIL, "newPassword");
 
-        // Act
         ResponseEntity<String> response = authController.resetPassword(resetPasswordRequest);
 
-        // Assert
         assertNotNull(response);
         verify(userService).resetPassword(TEST_EMAIL, "newPassword");
     }
 
     @Test
     void login_ShouldSetTokenEvenIfUserDtoAlreadyHasToken() {
-        // Arrange
         UserDto userWithExistingToken = new UserDto();
         userWithExistingToken.setId(TEST_USER_ID);
         userWithExistingToken.setEmail(TEST_EMAIL);
@@ -330,10 +288,8 @@ class AuthControllerTest {
         when(userService.login(credentialsDto)).thenReturn(userWithExistingToken);
         when(authProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
 
-        // Act
         ResponseEntity<UserDto> response = authController.login(credentialsDto);
 
-        // Assert
         assertNotNull(response);
         assertEquals(TEST_TOKEN, response.getBody().getToken());
         assertNotEquals("old-token", response.getBody().getToken());
@@ -341,7 +297,6 @@ class AuthControllerTest {
 
     @Test
     void register_ShouldCreateUserWithCorrectLocationHeader() {
-        // Arrange
         UserDto createdUser = new UserDto();
         createdUser.setId(5L);
         createdUser.setEmail("new@example.com");
@@ -349,39 +304,30 @@ class AuthControllerTest {
         when(userService.register(any(UserSignupDto.class))).thenReturn(createdUser);
         when(authProvider.createToken(anyString())).thenReturn("new-token");
 
-        // Act
         ResponseEntity<UserDto> response = authController.register(userSignupDto);
 
-        // Assert
         assertNotNull(response);
         assertEquals(URI.create("/users/5"), response.getHeaders().getLocation());
     }
 
     @Test
     void login_ShouldLogRequest() {
-        // Arrange
         when(userService.login(credentialsDto)).thenReturn(userDto);
         when(authProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
 
-        // Act
         ResponseEntity<UserDto> response = authController.login(credentialsDto);
 
-        // Assert
         assertNotNull(response);
-        // Logger verification is done via the logging framework
         verify(userService).login(credentialsDto);
     }
 
     @Test
     void register_ShouldLogRequest() {
-        // Arrange
         when(userService.register(userSignupDto)).thenReturn(userDto);
         when(authProvider.createToken(TEST_EMAIL)).thenReturn(TEST_TOKEN);
 
-        // Act
         ResponseEntity<UserDto> response = authController.register(userSignupDto);
 
-        // Assert
         assertNotNull(response);
         verify(userService).register(userSignupDto);
     }
