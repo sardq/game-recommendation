@@ -138,7 +138,7 @@ public class UserService {
     public String updateAvatar(String email, MultipartFile file) {
         UserEntity user = repository.findByEmail(email).orElseThrow();
         String fileName = fileService.uploadAvatar(file, user.getId());
-        String fullUrl = "/storage/" + "/" + bucket + "/" + fileName;
+        String fullUrl = "/storage/" + bucket + "/" + fileName;
         user.setAvatarUrl(fullUrl);
         repository.save(user);
         return fullUrl;
