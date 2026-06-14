@@ -24,6 +24,10 @@ public interface UserGameRepository extends JpaRepository<UserGames, Long> {
     List<UserGames> findByUserIdOrderByTimeDesc(Long userId);
     Page<UserGames> findByUserIdAndInteraction(Long userId, InteractionEnum interaction, Pageable pageable);
     List<UserGames> findByUserIdAndInteraction(Long userId, InteractionEnum interaction);
+    @Query("SELECT ug.user.id FROM UserGames ug " +
+           "GROUP BY ug.user.id " +
+           "HAVING COUNT(ug.id) >= :minCount")
+    List<Long> findUsersWithManyInteractions(@Param("minCount") long minCount);
     Page<UserGames> findByGameIdAndReviewIsNotNullOrderByTimeDesc(Long gameId, Pageable pageable);
     Page<UserGames> findByGameIdAndRatingIsNotNullOrderByTimeDesc(Long gameId, Pageable pageable);
     Optional<UserGames> findByUserIdAndGameIdAndInteraction(Long userId,Long gameid, InteractionEnum interaction);

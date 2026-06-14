@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diplome.game_recommendation.dtos.EvaluationMetricsDto;
 import com.diplome.game_recommendation.dtos.RecommendationDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDetailsDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDto;
@@ -49,5 +50,9 @@ public class RecomendationController {
     @GetMapping("/session/{sessionId}")
     public RecommendationSessionDetailsDto getSession(@PathVariable Long sessionId) {
         return service.getSessionDetails(sessionId);
+    }
+    @GetMapping("/evaluate")
+    public EvaluationMetricsDto evaluate() {
+        return service.evaluateSystem();
     }
 }

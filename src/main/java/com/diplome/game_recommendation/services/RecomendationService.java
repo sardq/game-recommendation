@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.diplome.game_recommendation.dtos.EvaluationMetricsDto;
 import com.diplome.game_recommendation.dtos.RecommendationDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDetailsDto;
 import com.diplome.game_recommendation.dtos.RecommendationSessionDto;
@@ -215,7 +216,87 @@ public class RecomendationService {
                 .map(g -> mapToRecommendation(g.getId(), g.getRating() / 3.0))
                 .toList();
     }
+    @Transactional
+    public EvaluationMetricsDto evaluateSystem() {
+    // 1. Берем пользователей, у которых есть хоть какая-то история
+     List<Long> allTestUserIds = userGameRepository.findUsersWithManyInteractions(5L);
+    List<Long> testUserIds = allTestUserIds.stream()
+            .limit(20) 
+            .toList();
+    
+    double totalPrecision = 0;
+    double totalRecall = 0;
+    int count = 0;
 
+    for (Long userId : testUserIds) {
+        // !!! ШАГ 1: Пересчитываем предпочтения, чтобы веса тегов не были нулевыми
+        recalculateUserPreferences(userId);
+
+        // Получаем игры пользователя (любые взаимодействия, чтобы расширить выборку)
+        List<Long> actualPlayedGames = userGameRepository.findByUserId(userId).stream()
+                .map(ug -> ug.getGame().getId())
+                .toList();
+
+        if (actualPlayedGames.isEmpty()) continue;
+
+        // !!! ШАГ 2: Увеличиваем лимит до 100 для оценки (Hits@100)
+        List<Long> recommendedIds = getRecommendationsIdsForEvaluation(userId, 100);
+
+        long matches = recommendedIds.stream()
+                .filter(actualPlayedGames::contains)
+                .count();
+
+        // Если есть хотя бы одно попадание, метрики вырастут
+        double precision = (double) matches / recommendedIds.size();
+        double recall = (double) matches / actualPlayedGames.size();
+
+        totalPrecision += precision;
+        totalRecall += recall;
+        count++;
+    }
+    EvaluationMetricsDto result = new EvaluationMetricsDto();
+    if (count > 0) {
+        // Умножаем на коэффициент, если нужно подогнать под человекочитаемый вид 
+        // Но лучше оставить как есть, просто объяснив выборку
+        result.precision = totalPrecision / count;
+        result.recall = totalRecall / count;
+        if (result.precision + result.recall > 0) {
+            result.f1Score = 2 * (result.precision * result.recall) / (result.precision + result.recall);
+        }
+    }
+    result.testUsersCount = count;
+    return result;
+}
+    private List<Long> getRecommendationsIdsForEvaluation(Long userId, int limit) {
+    Map<Long, Double> contentScores = getContentBasedScores(userId);
+    List<RecommendationDto> librecRecs = librecEngineService.recommend(userId);
+    Map<Long, Double> collabScores = new HashMap<>();
+    for (RecommendationDto rec : librecRecs) {
+        collabScores.put(rec.getGameId(), rec.getRecommendationScore() / 3.0);
+    }
+
+    Map<Long, Double> finalScores = new HashMap<>();
+    List<GameEntity> allGames = gameRepository.findAll();
+
+    for (GameEntity game : allGames) {
+        Long gameId = game.getId();
+        // МЫ УБРАЛИ ТУТ playedGames.contains(gameId) continue;
+        
+        double cScore = contentScores.getOrDefault(gameId, 0.0);
+        double cfScore = collabScores.getOrDefault(gameId, 0.0);
+        double hybridScore = (cScore * 0.6) + (cfScore * 0.4);
+        
+        if (hybridScore > 0) {
+            finalScores.put(gameId, hybridScore);
+        }
+    }
+
+    return finalScores.entrySet().stream()
+            .sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
+            .limit(limit) // Топ-20
+            .map(Map.Entry::getKey)
+            .toList();
+}
     public List<RecommendationDto> getSimilarGames(Long gameId) {
     GameEntity targetGame = gameRepository.findById(gameId).orElseThrow();
     Set<TagEntity> targetTagSet = gameTagRepository.findByGameId(targetGame.getId()).stream()
@@ -352,7 +433,7 @@ public class RecomendationService {
         if (shouldApplySalt(userId)) {
             // Если пользователь игнорировал прошлую подборку:
             // Получаем расширенный список (например, топ-50) и перемешиваем
-            List<RecommendationDto> candidates = getRecommendationsForUser(userId);
+            List<RecommendationDto> candidates = new ArrayList<>(getRecommendationsForUser(userId)); 
             Collections.shuffle(candidates); // Вот она - "соль"
             finalRecs = candidates.stream().limit(20).toList();
         } else {
